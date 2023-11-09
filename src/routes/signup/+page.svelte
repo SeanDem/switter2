@@ -1,10 +1,20 @@
-<script>
+<script lang="ts">
 	import { supabase } from '$lib/supabaseClient';
+	import { onMount } from 'svelte';
 
 	let email = '';
 	let password = '';
 
-	async function signUp() {
+	onMount(async () => {
+		const res = await supabase.auth.signUp({
+			email: 'test@gmail.com',
+			password: 'testpass'
+		});
+		console.log(res);
+	});
+
+	async function signUp(event: SubmitEvent) {
+		event.preventDefault();
 		const { data, error } = await supabase.auth.signUp({ email, password });
 		console.log(data, error);
 		if (error) console.error('Error signing up:', error);
@@ -12,8 +22,8 @@
 	}
 </script>
 
-<form on:submit|preventDefault={signUp}>
+<div on:submit|preventDefault={signUp}>
 	<input type="email" bind:value={email} placeholder="Email" />
 	<input type="password" bind:value={password} placeholder="Password" />
 	<button type="submit">Sign Up</button>
-</form>
+</div>

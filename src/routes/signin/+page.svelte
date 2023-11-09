@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { supabase } from '$lib/supabaseClient';
 
 	let email = '';
@@ -11,8 +11,8 @@
 	}
 </script>
 
-<form on:submit|preventDefault={signIn}>
+<div on:submit|preventDefault={signIn}>
 	<input type="email" bind:value={email} placeholder="Email" />
 	<input type="password" bind:value={password} placeholder="Password" />
 	<button type="submit">Sign In</button>
-</form>
+</div>
