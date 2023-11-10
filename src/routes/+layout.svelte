@@ -4,8 +4,8 @@
 	import { webVitals } from '$lib/vitals';
 	import { afterUpdate, onMount } from 'svelte';
 	import Header from './Header.svelte';
-	import { supabase } from '$lib/supabaseClient';
 	import './styles.css';
+	import { supabase } from '$lib/supabaseClient';
 
 	export let data;
 
@@ -16,23 +16,17 @@
 			analyticsId: data.analyticsId
 		});
 	}
-
 	onMount(() => {
-		try {
-			console.log('onMount');
-			// your onMount code
-		} catch (error) {
-			console.error('onMount error:', error);
-		}
-	});
-
-	afterUpdate(() => {
-		try {
-			console.log('afterUpdate');
-			// your afterUpdate code
-		} catch (error) {
-			console.error('afterUpdate error:', error);
-		}
+		console.log('mount');
+		supabase.auth.onAuthStateChange((event, session) => {
+			if (session && session.user) {
+				document.cookie = `uid=${session.user.id}; path=/;`;
+			} else {
+				document.cookie = 'uid=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+			}
+			console.log('auth change');
+			console.log(event, session);
+		});
 	});
 </script>
 
