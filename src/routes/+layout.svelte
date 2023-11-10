@@ -1,8 +1,8 @@
-<script>
+<script lang="ts">
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 	import { webVitals } from '$lib/vitals';
-	import { onMount } from 'svelte';
+	import { afterUpdate, onMount } from 'svelte';
 	import Header from './Header.svelte';
 	import { supabase } from '$lib/supabaseClient';
 	import './styles.css';
@@ -18,9 +18,21 @@
 	}
 
 	onMount(() => {
-		supabase.auth.onAuthStateChange((event, session) => {
-			console.log(event, session);
-		});
+		try {
+			console.log('onMount');
+			// your onMount code
+		} catch (error) {
+			console.error('onMount error:', error);
+		}
+	});
+
+	afterUpdate(() => {
+		try {
+			console.log('afterUpdate');
+			// your afterUpdate code
+		} catch (error) {
+			console.error('afterUpdate error:', error);
+		}
 	});
 </script>
 
