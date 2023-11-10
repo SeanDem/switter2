@@ -1,7 +1,8 @@
 import { supabase } from '$lib/supabaseClient';
 
 export const load = async () => {
+	const { data } = await supabase.from('countries').select();
 	return {
-		countries: supabase.from('countries').select() ?? []
+		countries: data ?? []
 	};
 };
