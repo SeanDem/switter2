@@ -1,11 +1,15 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
+	import SignIn from './SignIn.svelte';
+	import SignUp from './SignUp.svelte';
+	import { supabase } from '$lib/supabaseClient';
 	import { webVitals } from '$lib/vitals';
-	import { afterUpdate, onMount } from 'svelte';
+	import type { User } from '@supabase/supabase-js';
+	import { onMount } from 'svelte';
 	import Header from './Header.svelte';
 	import './styles.css';
-	import { supabase } from '$lib/supabaseClient';
+	import { userStore } from '$lib/store/store';
 
 	export let data;
 
@@ -17,29 +21,30 @@
 		});
 	}
 	onMount(() => {
-		console.log('mount');
 		supabase.auth.onAuthStateChange((event, session) => {
 			if (session && session.user) {
+				userStore.set(session.user);
 				document.cookie = `uid=${session.user.id}; path=/;`;
 			} else {
 				document.cookie = 'uid=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
 			}
-			console.log('auth change');
-			console.log(event, session);
 		});
 	});
 </script>
 
 <div class="app">
-	<Header />
-
 	<main>
-		<slot />
+		{#if $userStore}
+			<Header />
+			<slot />
+			<footer>
+				<div>footer</div>
+			</footer>
+		{:else}
+			<SignIn />
+			<SignUp />
+		{/if}
 	</main>
-
-	<footer>
-		<div>footer</div>
-	</footer>
 </div>
 
 <style>
