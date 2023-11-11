@@ -1,16 +1,14 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
-	import SignIn from './SignIn.svelte';
-	import SignUp from './SignUp.svelte';
+	import { userStore } from '$lib/store/store';
 	import { supabase } from '$lib/supabaseClient';
 	import { webVitals } from '$lib/vitals';
-	import type { User } from '@supabase/supabase-js';
 	import { onMount } from 'svelte';
 	import Header from './Header.svelte';
+	import SignIn from './SignIn.svelte';
+	import SignUp from './SignUp.svelte';
 	import './styles.css';
-	import { userStore } from '$lib/store/store';
-
 	export let data;
 
 	$: if (browser && data?.analyticsId) {
@@ -20,8 +18,10 @@
 			analyticsId: data.analyticsId
 		});
 	}
+
 	onMount(() => {
 		supabase.auth.onAuthStateChange((event, session) => {
+			console.log('AuthStateChange: ', event);
 			if (session && session.user) {
 				userStore.set(session.user);
 				document.cookie = `uid=${session.user.id}; path=/;`;
@@ -37,9 +37,7 @@
 		{#if $userStore}
 			<Header />
 			<slot />
-			<footer>
-				<div>footer</div>
-			</footer>
+			<footer />
 		{:else}
 			<SignIn />
 			<SignUp />
