@@ -1,6 +1,6 @@
 import { supabase } from '$lib/supabaseClient';
 import type { PostgrestResponse } from '@supabase/supabase-js';
-import type { Sweet } from './type';
+import type { Sweet } from './sweetType';
 
 class SweetDAO {
 	static async createSweet(uid: string, text: string, mediaUrls?: string[]): Promise<Sweet> {
@@ -23,7 +23,11 @@ class SweetDAO {
 		return data;
 	}
 
-	static async updateSweet(sweetId: string, newText: string, newMediaUrls: string[]): Promise<Sweet> {
+	static async updateSweet(
+		sweetId: string,
+		newText: string,
+		newMediaUrls: string[]
+	): Promise<Sweet> {
 		const { data, error } = await supabase
 			.from('sweet')
 			.update({ text: newText, media_urls: newMediaUrls })

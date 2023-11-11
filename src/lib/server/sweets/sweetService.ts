@@ -1,5 +1,5 @@
 import SweetDAO from './sweetDao';
-import type { Sweet } from './type';
+import type { Sweet } from './sweetType';
 
 class SweetService {
 	static async createSweet(uid: string, text: string, mediaUrls?: string[]): Promise<Sweet> {
