@@ -38,7 +38,7 @@ export class SweetDao {
 	}
 
 	static async deleteSweet(sweetId: string): Promise<PostgrestResponse<Sweet>> {
-		const { data, error } = await supabase.from('Sweet').delete().eq('sweet_id', sweetId);
+		const { data, error } = await supabase.from('sweet').delete().eq('sweet_id', sweetId);
 
 		if (error) throw error;
 		return data!;

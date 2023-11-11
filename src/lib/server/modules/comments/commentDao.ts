@@ -2,7 +2,7 @@ import { supabase } from '$lib/supabaseClient';
 
 export class CommentDAO {
 	static async createComment(comment: Omit<Comment, 'comment_id'>): Promise<Comment> {
-		const { data, error } = await supabase.from('Comment').insert([comment]);
+		const { data, error } = await supabase.from('comment').insert([comment]);
 
 		if (error) throw new Error(error.message);
 		return data![0];
@@ -10,7 +10,7 @@ export class CommentDAO {
 
 	static async getCommentById(comment_id: string): Promise<Comment | null> {
 		const { data, error } = await supabase
-			.from('Comment')
+			.from('comment')
 			.select('*')
 			.eq('comment_id', comment_id)
 			.single();
@@ -24,7 +24,7 @@ export class CommentDAO {
 		commentUpdates: Partial<Comment>
 	): Promise<Comment> {
 		const { data, error } = await supabase
-			.from('Comment')
+			.from('comment')
 			.update(commentUpdates)
 			.eq('comment_id', comment_id);
 
@@ -33,14 +33,14 @@ export class CommentDAO {
 	}
 
 	static async deleteComment(comment_id: string): Promise<boolean> {
-		const { error } = await supabase.from('Comment').delete().eq('comment_id', comment_id);
+		const { error } = await supabase.from('comment').delete().eq('comment_id', comment_id);
 
 		if (error) throw new Error(error.message);
 		return true;
 	}
 
 	static async getAllComments(): Promise<Comment[]> {
-		const { data, error } = await supabase.from('Comment').select('*');
+		const { data, error } = await supabase.from('comment').select('*');
 
 		if (error) throw new Error(error.message);
 		return data!;

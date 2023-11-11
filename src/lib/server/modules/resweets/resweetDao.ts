@@ -3,7 +3,7 @@ import type { ReSweet } from './resweetsType';
 
 export class ReSweetDAO {
 	static async createReSweet(reSweet: Omit<ReSweet, 'resweet_id'>): Promise<ReSweet> {
-		const { data, error } = await supabase.from('ReSweet').insert([reSweet]);
+		const { data, error } = await supabase.from('resweet').insert([reSweet]);
 
 		if (error) throw new Error(error.message);
 		return data![0];
@@ -11,7 +11,7 @@ export class ReSweetDAO {
 
 	static async getReSweetById(resweet_id: string): Promise<ReSweet | null> {
 		const { data, error } = await supabase
-			.from('ReSweet')
+			.from('resweet')
 			.select('*')
 			.eq('resweet_id', resweet_id)
 			.single();
@@ -25,7 +25,7 @@ export class ReSweetDAO {
 		reSweetUpdates: Partial<ReSweet>
 	): Promise<ReSweet> {
 		const { data, error } = await supabase
-			.from('ReSweet')
+			.from('resweet')
 			.update(reSweetUpdates)
 			.eq('resweet_id', resweet_id);
 
@@ -34,14 +34,14 @@ export class ReSweetDAO {
 	}
 
 	static async deleteReSweet(resweet_id: string): Promise<boolean> {
-		const { error } = await supabase.from('ReSweet').delete().eq('resweet_id', resweet_id);
+		const { error } = await supabase.from('resweet').delete().eq('resweet_id', resweet_id);
 
 		if (error) throw new Error(error.message);
 		return true;
 	}
 
 	static async getAllReSweets(): Promise<ReSweet[]> {
-		const { data, error } = await supabase.from('ReSweet').select('*');
+		const { data, error } = await supabase.from('resweet').select('*');
 
 		if (error) throw new Error(error.message);
 		return data!;
