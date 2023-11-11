@@ -1,7 +1,7 @@
 import { supabase } from '$lib/supabaseClient';
 import type { ReSweet } from './resweetsType';
 
-class ReSweetDAO {
+export class ReSweetDAO {
 	static async createReSweet(reSweet: Omit<ReSweet, 'resweet_id'>): Promise<ReSweet> {
 		const { data, error } = await supabase.from('ReSweet').insert([reSweet]);
 

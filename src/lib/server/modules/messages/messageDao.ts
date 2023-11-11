@@ -1,7 +1,7 @@
-import { supabase } from "$lib/supabaseClient";
-import type { Message } from "./messagesType";
+import { supabase } from '$lib/supabaseClient';
+import type { Message } from './messagesType';
 
-class MessageDAO {
+export class MessageDAO {
 	static async createMessage(message: Omit<Message, 'message_id'>): Promise<Message> {
 		const { data, error } = await supabase.from('Message').insert([message]);
 

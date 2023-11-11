@@ -1,4 +1,4 @@
-class ResponseUtils {
+export class ResponseUtils {
 	static success(body: any, status: number = 200): Response {
 		return new Response(JSON.stringify(body), {
 			status,

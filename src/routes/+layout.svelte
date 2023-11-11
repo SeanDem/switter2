@@ -32,7 +32,7 @@
 	});
 </script>
 
-<div class="app">
+<div export class="app">
 	<main>
 		{#if $userStore}
 			<Header />

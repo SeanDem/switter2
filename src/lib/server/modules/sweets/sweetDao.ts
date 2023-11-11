@@ -2,7 +2,7 @@ import { supabase } from '$lib/supabaseClient';
 import type { PostgrestResponse } from '@supabase/supabase-js';
 import type { Sweet } from './sweetType';
 
-class SweetDAO {
+export class SweetDAO {
 	static async createSweet(uid: string, text: string, mediaUrls?: string[]): Promise<Sweet> {
 		const { data, error } = await supabase
 			.from('sweet')
@@ -50,5 +50,3 @@ class SweetDAO {
 		return data;
 	}
 }
-
-export default SweetDAO;

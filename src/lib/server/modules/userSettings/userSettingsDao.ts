@@ -1,7 +1,7 @@
-import { supabase } from "$lib/supabaseClient";
-import type { UserSettings } from "./userSettingsType";
+import { supabase } from '$lib/supabaseClient';
+import type { UserSettings } from './userSettingsType';
 
-class UserSettingsDAO {
+export class UserSettingsDAO {
 	static async createUserSettings(
 		userSettings: Omit<UserSettings, 'settings_id'>
 	): Promise<UserSettings> {

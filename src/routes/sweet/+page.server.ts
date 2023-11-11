@@ -1,4 +1,4 @@
-import SweetService from '$lib/server/sweets/sweetService';
+import { SweetService } from '$lib/server/modules/sweets';
 import type { Actions } from './$types';
 
 export const actions: Actions = {

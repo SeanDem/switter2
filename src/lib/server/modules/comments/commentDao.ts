@@ -1,6 +1,6 @@
 import { supabase } from '$lib/supabaseClient';
 
-class CommentDAO {
+export class CommentDAO {
 	static async createComment(comment: Omit<Comment, 'comment_id'>): Promise<Comment> {
 		const { data, error } = await supabase.from('Comment').insert([comment]);
 

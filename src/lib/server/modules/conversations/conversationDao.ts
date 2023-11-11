@@ -1,7 +1,7 @@
 import { supabase } from '$lib/supabaseClient';
 import type { Conversation } from './conversationType';
 
-class ConversationDAO {
+export class ConversationDAO {
 	static async createConversation(
 		conversation: Omit<Conversation, 'conversation_id'>
 	): Promise<Conversation> {

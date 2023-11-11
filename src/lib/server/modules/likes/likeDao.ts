@@ -1,7 +1,7 @@
 import { supabase } from '$lib/supabaseClient';
 import type { SweetLike } from './likeType';
 
-class SweetLikesDAO {
+export class SweetLikesDAO {
 	static async createSweetLike(sweetLike: Omit<SweetLike, 'like_id'>): Promise<SweetLike> {
 		const { data, error } = await supabase.from('SweetLikes').insert([sweetLike]);
 

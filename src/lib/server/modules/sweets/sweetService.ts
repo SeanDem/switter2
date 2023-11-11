@@ -1,7 +1,7 @@
-import SweetDAO from './sweetDao';
+import { SweetDAO } from '.';
 import type { Sweet } from './sweetType';
 
-class SweetService {
+export class SweetService {
 	static async createSweet(uid: string, text: string, mediaUrls?: string[]): Promise<Sweet> {
 		return SweetDAO.createSweet(uid, text, mediaUrls);
 	}
@@ -26,5 +26,3 @@ class SweetService {
 		return SweetDAO.getAllSweets();
 	}
 }
-
-export default SweetService;

@@ -1,7 +1,7 @@
 import { supabase } from '$lib/supabaseClient';
 import type { UserProfile } from './userProfileType';
 
-class UserProfileDAO {
+export class UserProfileDAO {
 	static async createUserProfile(userProfile: Omit<UserProfile, 'uid'>): Promise<UserProfile> {
 		const { data, error } = await supabase.from('UserProfile').insert([userProfile]);
 
