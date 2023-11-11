@@ -1,13 +1,13 @@
-import { SweetDAO } from '.';
+import { SweetDao } from '.';
 import type { Sweet } from './sweetType';
 
 export class SweetService {
 	static async createSweet(uid: string, text: string, mediaUrls?: string[]): Promise<Sweet> {
-		return SweetDAO.createSweet(uid, text, mediaUrls);
+		return SweetDao.createSweet(uid, text, mediaUrls);
 	}
 
 	static async getSweetById(sweetId: string): Promise<Sweet | null> {
-		return SweetDAO.getSweetById(sweetId);
+		return SweetDao.getSweetById(sweetId);
 	}
 
 	static async updateSweet(
@@ -15,14 +15,14 @@ export class SweetService {
 		newText: string,
 		newMediaUrls: string[]
 	): Promise<Sweet> {
-		return SweetDAO.updateSweet(sweetId, newText, newMediaUrls);
+		return SweetDao.updateSweet(sweetId, newText, newMediaUrls);
 	}
 
 	static async deleteSweet(sweetId: string): Promise<void> {
-		await SweetDAO.deleteSweet(sweetId);
+		await SweetDao.deleteSweet(sweetId);
 	}
 
 	static async getAllSweets(): Promise<Sweet[]> {
-		return SweetDAO.getAllSweets();
+		return SweetDao.getAllSweets();
 	}
 }
