@@ -1,5 +1,5 @@
 import { SweetDao } from '.';
-import type { Sweet } from './sweetType';
+import type { Sweet, SweetDetail } from './sweetType';
 
 export class SweetService {
 	static async createSweet(uid: string, text: string, mediaUrls?: string[]): Promise<Sweet> {
@@ -29,11 +29,11 @@ export class SweetService {
 		return SweetDao.getAllSweets();
 	}
 
-	static async getSweetWithUserProfile(sweetId: string): Promise<any> {
-		return SweetDao.getSweetWithUserProfile(sweetId);
+	static async getAllSweetDetails(): Promise<SweetDetail[]> {
+		return SweetDao.getSweetDetails();
 	}
 
-	static async getAllSweetDetails(): Promise<any> {
-		return SweetDao.getSweetDetails();
+	static async getSweetDetailsById(sweetId: string): Promise<any> {
+		return SweetDao.getSweetDetailsById(sweetId);
 	}
 }

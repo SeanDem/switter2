@@ -18,4 +18,6 @@ export type SweetActionCount = {
 };
 export type SweetDetail = Sweet &
 	SweetActionCount &
-	Pick<UserProfile, 'handle' | 'bio' | 'name' | 'profile_url'>;
+	Pick<UserProfile, 'handle' | 'bio' | 'name' | 'profile_url'> & {
+		comments: SweetDetail[];
+	};

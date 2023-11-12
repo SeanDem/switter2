@@ -1,0 +1,37 @@
+DROP FUNCTION IF EXISTS GetAllCommentsBySweetId();
+
+CREATE OR REPLACE FUNCTION GetCommentsBySweetId(_sweetId UUID) 
+RETURNS TABLE (
+  commentId uuid,
+  uid uuid,
+  "timestamp" timestamp with time zone,
+  text text,
+  handle varchar,
+  name text,
+  profileUrl text,
+  bio text,
+  commentsCount bigint,
+  likesCount bigint,
+  resweetsCount bigint
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT
+        c.comment_id AS commentId,
+        c.uid,
+        c.timestamp,
+        c.text,
+        up.handle,
+        up.name,
+        up.profile_url AS profileUrl,
+        up.bio,
+        (SELECT COUNT(*) FROM Comment subC WHERE subC.parent_comment_id = c.comment_id) AS commentsCount,
+        (SELECT COUNT(*) FROM "Like" l WHERE l.sweet_id = c.sweet_id AND l.uid = c.uid) AS likesCount,
+        (SELECT COUNT(*) FROM ReSweet rs WHERE rs.sweet_id = c.sweet_id AND rs.uid = c.uid) AS resweetsCount
+    FROM
+        Comment c
+        JOIN UserProfile up ON c.uid = up.uid
+    WHERE
+        c.sweet_id = _sweetId;
+END;
+$$ LANGUAGE plpgsql;

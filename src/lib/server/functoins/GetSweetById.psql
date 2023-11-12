@@ -1,0 +1,41 @@
+DROP FUNCTION IF EXISTS GetSweetById();
+
+CREATE OR REPLACE FUNCTION GetSweetById(_sweet_id UUID) 
+RETURNS TABLE (
+  sweetId uuid,
+  uid uuid,
+  "timestamp" timestamp with time zone,
+  type varchar,
+  text text,
+  mediaUrls text[],
+  handle varchar,
+  name text,
+  profileUrl text,
+  bio text,
+  commentsCount bigint,
+  likesCount bigint,
+  resweetsCount bigint
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT
+        s.sweet_id as sweetId,
+        s.uid,
+        s.timestamp,
+        s.type,
+        s.text,
+        s.media_urls as mediaUrls,
+        up.handle,
+        up.name,
+        up.profile_url as profileUrl,
+        up.bio,
+        (SELECT COUNT(*) FROM Comment c WHERE c.sweet_id = s.sweet_id) AS commentsCount,
+        (SELECT COUNT(*) FROM "like" l WHERE l.sweet_id = s.sweet_id) AS likesCount,
+        (SELECT COUNT(*) FROM ReSweet rs WHERE rs.sweet_id = s.sweet_id) AS resweetsCount
+    FROM
+        Sweet s
+        JOIN UserProfile up ON s.uid = up.uid
+    WHERE
+        s.sweet_id = _sweet_id;
+END;
+$$ LANGUAGE plpgsql;

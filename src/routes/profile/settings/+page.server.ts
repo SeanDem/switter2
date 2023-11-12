@@ -24,8 +24,16 @@ export const actions: Actions = {
 		const birthdayStr = form.get('birthday') as string;
 		const birthday = birthdayStr ? new Date(birthdayStr) : null;
 		const profile_url = form.get('profile_url') as string;
-		const UserProfile: UserProfile = { uid, name, handle, bio, phone, email, birthday, profile_url };
-		console.log(UserProfile);
+		const UserProfile: UserProfile = {
+			uid,
+			name,
+			handle,
+			bio,
+			phone,
+			email,
+			birthday,
+			profile_url
+		};
 		UserProfileService.updateUserProfile(uid, UserProfile);
 
 		throw redirect(301, '/profile');

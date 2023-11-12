@@ -58,29 +58,16 @@ export class SweetDao {
 		return data;
 	}
 
-	static async getSweetWithUserProfile(sweetId: string): Promise<any> {
-		const { data, error } = await supabase
-			.from('Sweet')
-			.select(
-				`
-				sweet_id,
-				uid,
-				timestamp,
-				type,
-				text,
-				media_urls,
-				userProfile (handle, bio, profile_url)
-				`
-			)
-			.eq('sweet_id', sweetId)
-			.single();
-
+	static async getSweetDetails(): Promise<SweetDetail[]> {
+		const { data, error } = await supabase.rpc('getsweetdetails');
 		if (error) throw error;
 		return data;
 	}
 
-	static async getSweetDetails(): Promise<any> {
-		const { data, error } = await supabase.rpc('getsweetdetails');
+	static async getSweetDetailsById(sweetId: string): Promise<any> {
+		console.log(sweetId);
+		const { data, error } = await supabase.rpc('getsweetdetailsbyid', { _sweet_id: sweetId });
+		console.log(data);
 		if (error) throw error;
 		return data;
 	}
