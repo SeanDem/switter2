@@ -10,7 +10,9 @@ DROP TABLE IF EXISTS UserProfile CASCADE;
 CREATE TABLE UserProfile (
     uid UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     handle VARCHAR(255) UNIQUE NOT NULL,
+    name TEXT,
     profile_url TEXT,
+    bio TEXT,
     phone VARCHAR(20),
     email VARCHAR(255) UNIQUE,
     birthday DATE
@@ -53,7 +55,7 @@ CREATE TABLE ReSweet (
     text TEXT 
 );
 
-CREATE TABLE SweetLikes (
+CREATE TABLE Like (
     like_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     sweet_id UUID NOT NULL REFERENCES Sweet(sweet_id),
     uid UUID NOT NULL REFERENCES UserProfile(uid),

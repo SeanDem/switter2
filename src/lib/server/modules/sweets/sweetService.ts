@@ -9,6 +9,9 @@ export class SweetService {
 	static async getSweetById(sweetId: string): Promise<Sweet | null> {
 		return SweetDao.getSweetById(sweetId);
 	}
+	static async getSweetsByUid(uid: string): Promise<Sweet[] | null> {
+		return SweetDao.getSweetsByUid(uid);
+	}
 
 	static async updateSweet(
 		sweetId: string,
@@ -24,5 +27,13 @@ export class SweetService {
 
 	static async getAllSweets(): Promise<Sweet[]> {
 		return SweetDao.getAllSweets();
+	}
+
+	static async getSweetWithUserProfile(sweetId: string): Promise<any> {
+		return SweetDao.getSweetWithUserProfile(sweetId);
+	}
+
+	static async getAllSweetDetails(): Promise<any> {
+		return SweetDao.getSweetDetails();
 	}
 }

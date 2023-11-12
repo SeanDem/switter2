@@ -1,27 +1,17 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
+	import type { Sweet } from '$lib/server/modules/sweets';
 	import type { UserProfile } from '$lib/server/modules/userProfiles';
-	import { userStore } from '$lib/store/store';
-	import { supabase } from '$lib/supabaseClient';
-	export let data: { userProfile: UserProfile };
+	export let data: { userProfile: UserProfile, sweetList: Sweet[] };
 	$: userProfile = data.userProfile;
-	
-	const user = userStore;
-
-	async function logout() {
-		await supabase.auth.signOut();
-		userStore.set(null);
-		goto('/');
-	}
+	$: sweetList = data.sweetList;
 </script>
 
-{#if $user}
+{#if userProfile}
 	<div>
 		<h1>Profile</h1>
-		<p>Email: {$user.email}</p>
-
-		<button on:click={logout}>Logout</button>
 	</div>
-{:else}
-	<p>Loading profile...</p>
 {/if}
+
+{#each sweetList as sweet}
+	<div>{sweet.text}</div>
+{/each}

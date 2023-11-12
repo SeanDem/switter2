@@ -1,3 +1,4 @@
+import { SweetService, type Sweet } from '$lib/server/modules/sweets';
 import { type UserProfile, UserProfileService } from '$lib/server/modules/userProfiles';
 import { error, redirect } from '@sveltejs/kit';
 
@@ -9,5 +10,6 @@ export const load = async ({ params, cookies }) => {
 	const userProfile: UserProfile | null = await UserProfileService.getUserProfileById(uid);
 	if (!userProfile) throw error(404, 'Profile not found');
 
-	return { userProfile };
+	const sweetList: Sweet[] | null = await SweetService.getSweetsByUid(uid);
+	return { userProfile, sweetList };
 };

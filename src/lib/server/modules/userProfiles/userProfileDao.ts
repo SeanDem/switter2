@@ -3,10 +3,10 @@ import type { UserProfile } from './userProfileType';
 
 export class UserProfileDAO {
 	static async createUserProfile(userProfile: Omit<UserProfile, 'uid'>): Promise<UserProfile> {
-		const { data, error } = await supabase.from('userprofile').insert([userProfile]);
+		const { data, error } = await supabase.from('userprofile').insert([userProfile]).single();
 
 		if (error) throw new Error(error.message);
-		return data![0];
+		return data;
 	}
 
 	static async getUserProfileById(uid: string): Promise<UserProfile | null> {
@@ -21,12 +21,16 @@ export class UserProfileDAO {
 		userProfileUpdates: Partial<UserProfile>
 	): Promise<UserProfile> {
 		const { data, error } = await supabase
-			.from('userprofile')
+			.from('userProfile')
 			.update(userProfileUpdates)
-			.eq('uid', uid);
+			.eq('uid', uid)
+			.single();
 
-		if (error) throw new Error(error.message);
-		return data![0];
+		if (error) {
+			console.error(error);
+			throw new Error(error.message);
+		}
+		return data;
 	}
 
 	static async deleteUserProfile(uid: string): Promise<boolean> {

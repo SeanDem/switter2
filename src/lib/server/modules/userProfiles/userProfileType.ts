@@ -1,8 +1,10 @@
 export type UserProfile = {
 	uid: string;
 	handle: string;
-	profile_url: string | null;
-	phone: string | null;
 	email: string;
-	birthday: Date | null;
+	name?: string;
+	bio?: string | null;
+	phone?: string | null;
+	birthday?: Date | null;
+	profile_url?: string | null;
 };

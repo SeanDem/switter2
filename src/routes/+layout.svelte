@@ -5,10 +5,10 @@
 	import { supabase } from '$lib/supabaseClient';
 	import { webVitals } from '$lib/vitals';
 	import { onMount } from 'svelte';
-	import Header from './Header.svelte';
-	import SignIn from './SignIn.svelte';
-	import SignUp from './SignUp.svelte';
 	import './styles.css';
+	import SignUp from '$lib/components/SignUp.svelte';
+	import SignIn from '$lib/components/SignIn.svelte';
+	import Header from '$lib/components/Header.svelte';
 	export let data;
 
 	$: if (browser && data?.analyticsId) {
@@ -32,16 +32,20 @@
 	});
 </script>
 
-<div export class="app">
+<div class="app">
 	<main>
-		{#if $userStore}
-			<Header />
-			<slot />
-			<footer />
-		{:else}
-			<SignIn />
-			<SignUp />
-		{/if}
+		{#await $userStore}
+			<div>Loading...</div>
+		{:then userStore}
+			{#if userStore}
+				<Header />
+				<slot />
+				<footer />
+			{:else}
+				<SignIn />
+				<SignUp />
+			{/if}
+		{/await}
 	</main>
 </div>
 
