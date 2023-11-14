@@ -6,7 +6,9 @@ import type { UserProfile } from '../userProfiles';
 export type Interaction = Sweet & Comment & Resweet & InteractionDetails;
 
 export type InteractionDetails = SweetInteractionCount &
-	Pick<UserProfile, 'handle' | 'bio' | 'name' | 'profile_url'>;
+	Pick<UserProfile, 'handle' | 'bio' | 'name' | 'profile_url'> & {
+		actionId: string;
+	};
 
 export type SweetInteractionCount = {
 	commentsCount: number;
@@ -15,10 +17,9 @@ export type SweetInteractionCount = {
 };
 
 export type InteractionIdRequest = {
-	_sweet_id?: string | null;
-	_comment_id?: string | null;
-	_resweet_id?: string | null;
+	sweetId?: string | null;
+	commentId?: string | null;
+	resweetId?: string | null;
 };
 
 export type InteractionType = 'sweet' | 'comment' | 'resweet';
-

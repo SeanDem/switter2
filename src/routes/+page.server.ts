@@ -1,9 +1,9 @@
-import type { Interaction } from '$lib/server/modules/interactions';
-import { SweetService, type Sweet } from '$lib/server/modules/sweets';
-import { fail, type Actions, redirect } from '@sveltejs/kit';
+import { InteractionService, type Interaction } from '$lib/server/modules/interactions';
+import { fail, type Actions } from '@sveltejs/kit';
 
 export const load = async () => {
-	const sweetDetailList: Interaction[] = await SweetService.getAllSweetDetails();
+	const sweetDetailList: Interaction[] = await InteractionService.getInteractionListByType('sweet');
+	console.log(sweetDetailList);
 	return { sweetDetailList };
 };
 

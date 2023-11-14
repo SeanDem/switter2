@@ -2,10 +2,8 @@ import { InteractionService } from '$lib/server/modules/interactions/interaction
 
 export const load = async ({ params }) => {
 	const [sweetDetails, commentList] = await Promise.all([
-		InteractionService.getInteractionById({ sweetId: params.sweetId }),
-		InteractionService.getCommentsById({ sweetId: params.sweetId })
+		InteractionService.getInteractionById({ commentId: params.commentId }),
+		InteractionService.getCommentsById({ commentId: params.commentId })
 	]);
-	console.log('sweetDetails', sweetDetails);
-	console.log('commentList', commentList);
 	return { sweetDetails, commentList };
 };

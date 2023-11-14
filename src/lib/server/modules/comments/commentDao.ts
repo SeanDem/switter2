@@ -43,14 +43,14 @@ export class CommentDAO {
 	static async getAllComments(): Promise<Comment[]> {
 		const { data, error } = await supabase.from('comment').select('*');
 
-		if (error) throw new Error(error.message);
+		if (error) throw new Error(error.message + error.details + error.hint);
 		return data!;
 	}
 
 	static async getCommentsBySweetId({
-		_sweet_id = null,
-		_comment_id = null,
-		_resweet_id = null
+		sweetId: _sweet_id = null,
+		commentId: _comment_id = null,
+		resweetId: _resweet_id = null
 	}: InteractionIdRequest): Promise<Interaction[]> {
 		const { data, error } = await supabase.rpc('getcommentsbyid', {
 			_sweet_id,

@@ -1,7 +1,7 @@
 import type { InteractionDetails } from '../interactions';
 
 export type Sweet = {
-	sweet_id: string;
+	sweetId: string;
 	uid: string;
 	text: string;
 	media_urls: string;

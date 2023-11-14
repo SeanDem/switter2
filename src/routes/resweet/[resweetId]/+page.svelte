@@ -1,9 +1,8 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import type { CommentDetail } from '$lib/server/modules/comments';
-	import type { SweetDetails } from '$lib/server/modules/sweets';
+	import type { ResweetDetails } from '$lib/server/modules/resweets';
 
-	export let data: { sweetDetails: SweetDetails; commentList: CommentDetail[] };
+	export let data: { sweetDetails: ResweetDetails; commentList: CommentDetail[] };
 	$: sweetDetail = data.sweetDetails;
 	$: commentList = data.commentList;
 </script>
@@ -15,8 +14,6 @@
 	{#if commentList}
 		{#each commentList as comment}
 			<div>{comment.text}</div>
-			<div>{comment.commentId}</div>
-			<button on:click={() => goto(`/comment/${comment.commentId}`)}>GO To Comment</button>
 		{/each}
 	{/if}
 	<br />

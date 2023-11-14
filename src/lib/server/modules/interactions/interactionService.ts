@@ -1,8 +1,8 @@
-import type { Interaction, InteractionIdRequest } from './interactionType';
+import type { Interaction, InteractionIdRequest, InteractionType } from './interactionType';
 import { InteractionDao } from './interationDao';
 
 export class InteractionService {
-	static async getcommentsById(interactionRequest: InteractionIdRequest): Promise<Interaction[]> {
+	static async getCommentsById(interactionRequest: InteractionIdRequest): Promise<Interaction[]> {
 		return InteractionDao.getCommentsById(interactionRequest);
 	}
 
@@ -10,9 +10,7 @@ export class InteractionService {
 		return InteractionDao.GetInteractionById(interactionRequest);
 	}
 
-	static async getInteractionListById(
-		interactionRequest: InteractionIdRequest
-	): Promise<Interaction[]> {
-		return InteractionDao.GetInteractionListById(interactionRequest);
+	static async getInteractionListByType(interactionType: InteractionType): Promise<Interaction[]> {
+		return InteractionDao.GetInteractionListByType(interactionType);
 	}
 }

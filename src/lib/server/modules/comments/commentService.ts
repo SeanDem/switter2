@@ -3,6 +3,6 @@ import { CommentDAO } from './commentDao';
 
 export class CommentService {
 	static async getcommentsBySweetId(sweetId: string): Promise<Interaction[]> {
-		return CommentDAO.getCommentsBySweetId({ _sweet_id: sweetId });
+		return CommentDAO.getCommentsBySweetId({ sweetId: sweetId });
 	}
 }

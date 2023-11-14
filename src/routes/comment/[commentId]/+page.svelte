@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
+	import ActionButton from '$lib/components/ActionButton.svelte';
 	import type { CommentDetail } from '$lib/server/modules/comments';
 	import type { SweetDetails } from '$lib/server/modules/sweets';
 
@@ -15,8 +15,6 @@
 	{#if commentList}
 		{#each commentList as comment}
 			<div>{comment.text}</div>
-			<div>{comment.commentId}</div>
-			<button on:click={() => goto(`/comment/${comment.commentId}`)}>GO To Comment</button>
 		{/each}
 	{/if}
 	<br />

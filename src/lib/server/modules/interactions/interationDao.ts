@@ -1,11 +1,11 @@
 import { supabase } from '$lib/supabaseClient';
-import type { Interaction, InteractionIdRequest } from './interactionType';
+import type { Interaction, InteractionIdRequest, InteractionType } from './interactionType';
 
 export class InteractionDao {
 	static async getCommentsById({
-		_sweet_id = null,
-		_comment_id = null,
-		_resweet_id = null
+		sweetId: _sweet_id = null,
+		commentId: _comment_id = null,
+		resweetId: _resweet_id = null
 	}: InteractionIdRequest): Promise<Interaction[]> {
 		const { data, error } = await supabase.rpc('getcommentsbyid', {
 			_sweet_id,
@@ -17,9 +17,9 @@ export class InteractionDao {
 	}
 
 	static async GetInteractionById({
-		_sweet_id = null,
-		_comment_id = null,
-		_resweet_id = null
+		sweetId: _sweet_id = null,
+		commentId: _comment_id = null,
+		resweetId: _resweet_id = null
 	}: InteractionIdRequest): Promise<Interaction> {
 		const { data, error } = await supabase.rpc('getinteractionbyid', {
 			_sweet_id,
@@ -30,15 +30,9 @@ export class InteractionDao {
 		return data![0];
 	}
 
-	static async GetInteractionListById({
-		_sweet_id = null,
-		_comment_id = null,
-		_resweet_id = null
-	}: InteractionIdRequest): Promise<Interaction[]> {
-		const { data, error } = await supabase.rpc('getinteractionlistbyid', {
-			_sweet_id,
-			_comment_id,
-			_resweet_id
+	static async GetInteractionListByType(interactionType: InteractionType): Promise<Interaction[]> {
+		const { data, error } = await supabase.rpc('getinteractionlistbytype', {
+			_type: interactionType
 		});
 		if (error) throw new Error(error.details + error.message + error.hint);
 		return data!;

@@ -1,8 +1,6 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
 	import ActionBar from '$lib/components/ActionBar.svelte';
-	import ActionButton from '$lib/components/ActionButton.svelte';
 	import type { Interaction } from '$lib/server/modules/interactions';
 
 	export let data: { sweetDetailList: Interaction[] };
@@ -22,7 +20,7 @@
 		<ActionBar interaction={sweetDetail} />
 	</div>
 	<div>
-		<button on:click={() => goto(`/sweet/${sweetDetail.sweet_id}`)}>Go To Sweet Page</button>
+		<button on:click={() => goto(`/sweet/${sweetDetail.sweetId}`)}>Go To Sweet Page</button>
 	</div>
 	<br />
 {/each}

@@ -2,17 +2,17 @@ DROP FUNCTION GetCommentsById(uuid,uuid,uuid);
 
 CREATE OR REPLACE FUNCTION GetCommentsById(_sweet_id UUID, _comment_id UUID, _resweet_id UUID) 
 RETURNS TABLE (
-  commentId UUID,
+  "commentId" UUID,
   uid UUID,
   "timestamp" TIMESTAMP WITH TIME ZONE,
   text TEXT,
   handle VARCHAR,
   name TEXT,
-  profileUrl TEXT,
+  "profileUrl" TEXT,
   bio TEXT,
-  commentsCount BIGINT,
-  likesCount BIGINT,
-  resweetsCount BIGINT
+  "commentsCount" BIGINT,
+  "likesCount" BIGINT,
+  "resweetsCount" BIGINT
 ) AS $$
 BEGIN
     RETURN QUERY
@@ -32,8 +32,8 @@ BEGIN
         Comment c
         JOIN UserProfile up ON c.uid = up.uid
     WHERE
-        (_sweetId IS NOT NULL AND c.sweet_id = _sweet_id) OR
-        (_commentId IS NOT NULL AND c.parent_comment_id = _comment_id) OR
-        (_resweetId IS NOT NULL AND c.resweet_id = _resweet_id);
+        (_sweet_id IS NOT NULL AND c.sweet_id = _sweet_id) OR
+        (_comment_id IS NOT NULL AND c.parent_comment_id = _comment_id) OR
+        (_resweet_id IS NOT NULL AND c.resweet_id = _resweet_id);
 END;
 $$ LANGUAGE plpgsql;
