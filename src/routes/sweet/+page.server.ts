@@ -17,6 +17,6 @@ export const actions: Actions = {
 		}
 
 		await SweetService.createSweet(uid, text);
-		throw redirect(303, '/profile');
+		throw redirect(303, '/');
 	}
 };

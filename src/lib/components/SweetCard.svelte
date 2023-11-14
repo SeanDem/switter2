@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import type { SweetDetail } from '$lib/server/modules/sweets';
+	import type { Interaction } from '$lib/server/modules/sweets';
 
-	export let sweetDetail: SweetDetail;
+	export let sweetDetail: Interaction;
 </script>
 
 <!-- <div class="shadow-md w-96 bg-theme-bg rounded p-4">

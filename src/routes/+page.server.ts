@@ -1,6 +1,7 @@
-import { SweetService, type SweetDetail } from '$lib/server/modules/sweets';
+import type { Interaction } from '$lib/server/modules/interactions';
+import { SweetService } from '$lib/server/modules/sweets';
 
 export const load = async () => {
-	const sweetDetailList: SweetDetail[] = await SweetService.getAllSweetDetails();
+	const sweetDetailList: Interaction[] = await SweetService.getAllSweetDetails();
 	return { sweetDetailList };
 };

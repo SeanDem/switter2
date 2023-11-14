@@ -1,5 +1,5 @@
-import { SweetDao } from '.';
-import type { Sweet, SweetDetail } from './sweetType';
+import { SweetDao, type Sweet } from '.';
+import type { Interaction } from '../interactions';
 
 export class SweetService {
 	static async createSweet(uid: string, text: string, mediaUrls?: string[]): Promise<Sweet> {
@@ -29,11 +29,11 @@ export class SweetService {
 		return SweetDao.getAllSweets();
 	}
 
-	static async getAllSweetDetails(): Promise<SweetDetail[]> {
+	static async getAllSweetDetails(): Promise<Interaction[]> {
 		return SweetDao.getSweetDetails();
 	}
 
 	static async getSweetDetailsById(sweetId: string): Promise<any> {
-		return SweetDao.getSweetDetailsById(sweetId);
+		return SweetDao.getActionbyId({ _sweet_id: sweetId });
 	}
 }

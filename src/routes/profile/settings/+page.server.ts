@@ -11,7 +11,8 @@ export const actions: Actions = {
 		const uid = cookies.get('uid');
 		if (!uid) {
 			fail(401, { uid, message: 'Unauthorized' });
-			throw error(401, 'Unauthorized');
+			throw new Error(error.message);
+			401, 'Unauthorized';
 		}
 
 		const form = await request.formData();

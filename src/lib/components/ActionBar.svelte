@@ -1,7 +1,7 @@
 <!-- <script lang="ts">
-	import type { SweetDetail } from "$lib/server/modules/sweets";
+	import type { Interaction } from "$lib/server/modules/sweets";
 
-	export let sweetDetail: SweetDetail;
+	export let sweetDetail: Interaction;
 </script>
 
 <div class="h-px bg-gray-200" />

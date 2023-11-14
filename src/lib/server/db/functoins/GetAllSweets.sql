@@ -6,7 +6,7 @@ create or replace function GetAllSweets () returns table (
   "timestamp" timestamp with time zone,
   type varchar,
   text text,
-  media_urls text[],
+  media_urls text,
   handle varchar,
   name text,
   profile_url text,
@@ -29,7 +29,7 @@ BEGIN
         up.profile_url,
         up.bio,
         (SELECT COUNT(*) FROM comment c WHERE c.sweet_id = s.sweet_id) AS "commentsCount",
-        (SELECT COUNT(*) FROM "like" l WHERE l.sweet_id = s.sweet_id) AS "likesCount",
+        (SELECT COUNT(*) FROM sweetlike l WHERE l.sweet_id = s.sweet_id) AS "likesCount",
         (SELECT COUNT(*) FROM resweet rs WHERE rs.sweet_id = s.sweet_id) AS "resweetsCount"
     FROM
         Sweet s

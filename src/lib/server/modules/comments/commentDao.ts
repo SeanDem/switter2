@@ -1,4 +1,5 @@
 import { supabase } from '$lib/supabaseClient';
+import type { Interaction, InteractionIdRequest } from '../interactions';
 
 export class CommentDAO {
 	static async createComment(comment: Omit<Comment, 'comment_id'>): Promise<Comment> {
@@ -42,6 +43,20 @@ export class CommentDAO {
 	static async getAllComments(): Promise<Comment[]> {
 		const { data, error } = await supabase.from('comment').select('*');
 
+		if (error) throw new Error(error.message);
+		return data!;
+	}
+
+	static async getCommentsBySweetId({
+		_sweet_id = null,
+		_comment_id = null,
+		_resweet_id = null
+	}: InteractionIdRequest): Promise<Interaction[]> {
+		const { data, error } = await supabase.rpc('getcommentsbyid', {
+			_sweet_id,
+			_comment_id,
+			_resweet_id
+		});
 		if (error) throw new Error(error.message);
 		return data!;
 	}

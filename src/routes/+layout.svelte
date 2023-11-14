@@ -21,7 +21,7 @@
 
 	onMount(() => {
 		supabase.auth.onAuthStateChange((event, session) => {
-			console.log('AuthStateChange: ', event);
+			console.info('AuthStateChange: ', event);
 			if (session && session.user) {
 				userStore.set(session.user);
 				document.cookie = `uid=${session.user.id}; path=/;`;

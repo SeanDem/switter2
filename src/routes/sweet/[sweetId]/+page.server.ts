@@ -1,7 +1,9 @@
-import { SweetService } from '$lib/server/modules/sweets/sweetService';
+import { InteractionService } from '$lib/server/modules/interactions/interactionService.js';
 
 export const load = async ({ params }) => {
-	const sweetDetails = await SweetService.getSweetDetailsById(params.sweetId);
-	console.log(sweetDetails);
-	return { sweetDetails };
+	const [sweetDetails, commentList] = await Promise.all([
+		InteractionService.getInteractionById({ _sweet_id: params.sweetId }),
+		InteractionService.getcommentsById({ _sweet_id: params.sweetId })
+	]);
+	return { sweetDetails, commentList };
 };

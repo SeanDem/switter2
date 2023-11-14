@@ -13,8 +13,8 @@ CREATE TABLE UserProfile (
     name TEXT,
     profile_url TEXT,
     bio TEXT,
-    phone VARCHAR(20),
-    email VARCHAR(255) UNIQUE,
+    phone VARCHAR(25),
+    email VARCHAR(320) UNIQUE,
     birthday DATE
 );
 
@@ -33,6 +33,7 @@ CREATE TABLE Message (
     message_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     conversation_id UUID NOT NULL REFERENCES Conversation(conversation_id),
     uid UUID NOT NULL REFERENCES UserProfile(uid),
+    media_urls TEXT,
     text TEXT NOT NULL,
     timestamp TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
@@ -41,32 +42,38 @@ CREATE TABLE Sweet (
     sweet_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     uid UUID NOT NULL REFERENCES UserProfile(uid),
     timestamp TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    type VARCHAR(50),
     text TEXT,
-    media_urls TEXT[] 
+    media_urls TEXT
 );
 
 CREATE TABLE ReSweet (
     resweet_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     parent_resweet_id UUID NULL REFERENCES ReSweet(resweet_id),
-    sweet_id UUID NOT NULL REFERENCES Sweet(sweet_id),
+    sweet_id UUID NULL REFERENCES Sweet(sweet_id),
+    comment_id UUID NULL REFERENCES Comment(comment_id),
+    media_urls TEXT,
     uid UUID NOT NULL REFERENCES UserProfile(uid),
     timestamp TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     text TEXT 
 );
 
-CREATE TABLE Like (
-    like_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    sweet_id UUID NOT NULL REFERENCES Sweet(sweet_id),
-    uid UUID NOT NULL REFERENCES UserProfile(uid),
-    timestamp TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-);
-
 CREATE TABLE Comment (
     comment_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     parent_comment_id UUID NULL REFERENCES Comment(comment_id),
-    sweet_id UUID NOT NULL REFERENCES Sweet(sweet_id),
+    sweet_id UUID  NULL REFERENCES Sweet(sweet_id),
+    resweet_id UUID NULL REFERENCES ReSweet(resweet_id),
+    media_urls TEXT,
     uid UUID NOT NULL REFERENCES UserProfile(uid),
     timestamp TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     text TEXT NOT NULL
 );
+
+CREATE TABLE SweetLike (
+    like_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    sweet_id UUID NULL REFERENCES Sweet(sweet_id),
+    comment_id UUID NULL REFERENCES Comment(comment_id),
+    resweet_id UUID NULL REFERENCES ReSweet(resweet_id),
+    uid UUID NOT NULL REFERENCES UserProfile(uid),
+    timestamp TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+

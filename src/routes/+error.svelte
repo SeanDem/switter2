@@ -1,1 +1,5 @@
-<div>404 page not found</div>
+<script lang="ts">
+	import { page } from '$app/stores';
+</script>
+
+<div>{$page.status}: {$page.error?.message}</div>
