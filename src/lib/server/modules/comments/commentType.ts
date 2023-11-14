@@ -1,12 +1,13 @@
 import type { InteractionDetails } from '../interactions';
 
-export type Comment = {
-	commentId: string;
-	parentCommentId: string | null;
-	sweetId: string;
+export type SweetComment = {
 	uid: string;
-	timestamp: Date;
 	text: string;
+	commentId?: string | null;
+	parentCommentId?: string | null;
+	sweetId?: string | null;
+	resweetId?: string | null;
+	timestamp?: Date | null;
 };
 
-export type CommentDetail = Comment & InteractionDetails;
+export type CommentDetail = SweetComment & InteractionDetails;

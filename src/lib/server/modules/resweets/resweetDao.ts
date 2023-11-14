@@ -1,15 +1,16 @@
 import { supabase } from '$lib/supabaseClient';
-import type { ReSweet } from './resweetsType';
+import type { Resweet } from '.';
 
-export class ReSweetDAO {
-	static async createReSweet(reSweet: Omit<ReSweet, 'resweet_id'>): Promise<ReSweet> {
-		const { data, error } = await supabase.from('resweet').insert([reSweet]);
+export class ResweetDAO {
+	static async insertResweet(resweet: Omit<Resweet, 'resweet_id'>): Promise<Resweet> {
+		const resweetTable = this.mapResweetToSnakeCase(resweet);
+		const { data, error } = await supabase.from('resweet').insert([resweetTable]);
 
 		if (error) throw new Error(error.message);
-		return data![0];
+		return data!;
 	}
 
-	static async getReSweetById(resweet_id: string): Promise<ReSweet | null> {
+	static async getReSweetById(resweet_id: string): Promise<Resweet | null> {
 		const { data, error } = await supabase
 			.from('resweet')
 			.select('*')
@@ -22,8 +23,8 @@ export class ReSweetDAO {
 
 	static async updateReSweet(
 		resweet_id: string,
-		reSweetUpdates: Partial<ReSweet>
-	): Promise<ReSweet> {
+		reSweetUpdates: Partial<Resweet>
+	): Promise<Resweet> {
 		const { data, error } = await supabase
 			.from('resweet')
 			.update(reSweetUpdates)
@@ -40,10 +41,29 @@ export class ReSweetDAO {
 		return true;
 	}
 
-	static async getAllReSweets(): Promise<ReSweet[]> {
+	static async getAllReSweets(): Promise<Resweet[]> {
 		const { data, error } = await supabase.from('resweet').select('*');
 
 		if (error) throw new Error(error.message);
 		return data!;
 	}
+	static mapResweetToSnakeCase(resweet: Resweet): ResweetTable {
+		return {
+			uid: resweet.uid,
+			text: resweet.text,
+			parent_resweet_id: resweet.parentResweetId,
+			sweet_id: resweet.sweetId,
+			comment_id: resweet.resweetId
+		};
+	}
 }
+
+type ResweetTable = {
+	uid: string;
+	timestamp?: Date;
+	text?: string | null;
+	resweet_id?: string;
+	parent_resweet_id?: string | null;
+	sweet_id?: string | null;
+	comment_id?: string | null;
+};

@@ -6,6 +6,8 @@ RETURNS TABLE (
     "sweetId" UUID,
     "commentId" UUID,
     "resweetId" UUID,
+    "parentCommentId" UUID,
+    "parentResweetId" UUID,
     uid UUID,
     "timestamp" TIMESTAMP WITH TIME ZONE,
     type TEXT,
@@ -27,6 +29,8 @@ BEGIN
             s.sweet_id as sweetId,
             NULL::UUID as commentId,
             NULL::UUID as resweetId,
+            NULL::UUID as parentCommentId,
+            NULL::UUID as parentResweetId,
             s.uid,
             s.timestamp,
             'sweet' as type,
@@ -47,9 +51,11 @@ BEGIN
         RETURN QUERY
         SELECT
             c.comment_id as actionId,
-            NULL::UUID as sweetId,
+            c.sweet_id as sweetId,
             c.comment_id commentId,
-            NULL::UUID as resweetId,
+            c.resweet_id as resweetId,
+            c.parent_comment_id as parentCommentId,
+            NULL::UUID as parentResweetId,
             c.uid,
             c.timestamp,
             'comment' as type, 
@@ -69,10 +75,12 @@ BEGIN
     ELSIF _type = 'resweet' THEN
         RETURN QUERY
         SELECT
-            rs.resweet_id as actionId,
-            NULL::UUID as sweetId,
-            NULL::UUID as commentId,
+            rs.comment_id as actionId,
+            rs.sweet_id as sweetId,
+            rs.comment_id commentId,
             rs.resweet_id as resweetId,
+            NULL::UUID as parentCommentId,
+            rs.parent_resweet_id as parentResweetId,
             rs.uid,
             rs.timestamp, 
             'resweet' as type, 

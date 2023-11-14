@@ -1,8 +1,12 @@
 <script lang="ts">
-	export let data;
-	$: sweetList = data.sweetList;
+	import ActionBar from '$lib/components/ActionBar.svelte';
+	import type { SweetDetails } from '$lib/server/modules/sweets';
+
+	export let data: { sweetDetailsList: SweetDetails[] };
+	$: sweetDetailsList = data.sweetDetailsList;
 </script>
 
-{#each sweetList as sweet}
-	<div>{sweet.text}</div>
+{#each sweetDetailsList as sweetDetail}
+	<div>{sweetDetail.text}</div>
+	<div><ActionBar interaction={sweetDetail} /></div>
 {/each}

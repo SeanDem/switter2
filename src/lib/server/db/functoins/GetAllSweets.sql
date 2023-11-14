@@ -1,15 +1,15 @@
 DROP FUNCTION IF EXISTS GetAllSweets();
 
 create or replace function GetAllSweets () returns table (
-  sweet_id uuid,
+  "sweetId" uuid,
   uid uuid,
   "timestamp" timestamp with time zone,
   type varchar,
   text text,
-  media_urls text,
+  "mediaUrls" text,
   handle varchar,
   name text,
-  profile_url text,
+  "profileUrl" text,
   bio text,
   "commentsCount" bigint,
   "likesCount" bigint,
@@ -18,19 +18,19 @@ create or replace function GetAllSweets () returns table (
 BEGIN
     RETURN QUERY
     SELECT
-        s.sweet_id,
+        s.sweet_id as sweetId,
         s.uid,
         s.timestamp,
         s.type,
         s.text,
-        s.media_urls,
+        s.media_urls as mediaUrls,
         up.handle,
         up.name,
-        up.profile_url,
+        up.profile_url as profileUrl,
         up.bio,
-        (SELECT COUNT(*) FROM comment c WHERE c.sweet_id = s.sweet_id) AS "commentsCount",
-        (SELECT COUNT(*) FROM sweetlike l WHERE l.sweet_id = s.sweet_id) AS "likesCount",
-        (SELECT COUNT(*) FROM resweet rs WHERE rs.sweet_id = s.sweet_id) AS "resweetsCount"
+        (SELECT COUNT(*) FROM comment c WHERE c.sweet_id = s.sweet_id) AS commentsCount,
+        (SELECT COUNT(*) FROM sweetlike l WHERE l.sweet_id = s.sweet_id) AS likesCount,
+        (SELECT COUNT(*) FROM resweet rs WHERE rs.sweet_id = s.sweet_id) AS resweetsCount
     FROM
         Sweet s
     JOIN UserProfile up ON s.uid = up.uid;

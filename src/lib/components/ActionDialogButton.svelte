@@ -4,11 +4,11 @@
 
 	export let type: 'like' | 'comment' | 'resweet';
 	export let parentType: InteractionType;
-	export let interactionId: string;
+	export let id: string;
 	export let count: number;
 
 	let showDialog = false;
-	let commentText = '';
+	let text = '';
 </script>
 
 <button on:click={() => (showDialog = true)}>
@@ -20,11 +20,11 @@
 		<div class="dialog">
 			<h2>Write a comment</h2>
 			<form use:enhance method="post" action={`/?/${type}`}>
-				<textarea name="commentText" bind:value={commentText} />
+				<textarea name="text" bind:value={text} />
 				<input type="hidden" name="type" value={type} />
-				<input type="hidden" name="id" value={interactionId} />
+				<input type="hidden" name="id" value={id} />
 				<input type="hidden" name="parentType" value={parentType} />
-				<button type="submit">Submit Comment</button>
+				<button type="submit">Submit</button>
 			</form>
 			<button on:click={() => (showDialog = false)}>Cancel</button>
 		</div>

@@ -2,23 +2,33 @@ DROP FUNCTION IF EXISTS getInteractionsByText(TEXT, VARCHAR);
 
 CREATE OR REPLACE FUNCTION getInteractionsByText(_search_text TEXT, _type VARCHAR) 
 RETURNS TABLE (
-  sweetId UUID,
+    "actionId" UUID,
+    "sweetId" UUID,
+    "commentId" UUID,
+    "resweetId" UUID,
+    "parentCommentId" UUID,
+    "parentResweetId" UUID,
   uid UUID,
   "timestamp" TIMESTAMP WITH TIME ZONE,
   text TEXT,
   handle VARCHAR,
   name TEXT,
-  profileUrl TEXT,
+  "profileUrl" TEXT,
   bio TEXT,
-  commentsCount BIGINT,
-  likesCount BIGINT,
-  resweetsCount BIGINT
+  "commentsCount" BIGINT,
+  "likesCount" BIGINT,
+  "resweetsCount" BIGINT
 ) AS $$
 BEGIN
     IF _type = 'sweet' THEN
         RETURN QUERY
         SELECT
-            s.sweet_id,
+            s.sweet_id as actionId,
+            s.sweet_id as sweetId,
+            NULL::UUID as commentId,
+            NULL::UUID as resweetId,
+            NULL::UUID as parentCommentId,
+            NULL::UUID as parentResweetId,
             s.uid,
             s.timestamp,
             s.text,
@@ -38,7 +48,12 @@ BEGIN
     ELSIF _type = 'comment' THEN
         RETURN QUERY
         SELECT
-            c.sweet_id,
+            c.comment_id as actionId,
+            c.sweet_id as sweetId,
+            c.comment_id commentId,
+            c.resweet_id as resweetId,
+            c.parent_comment_id as parentCommentId,
+            NULL::UUID as parentResweetId,
             c.uid,
             c.timestamp,
             c.text,
@@ -58,10 +73,15 @@ BEGIN
     ELSIF _type = 'resweet' THEN
         RETURN QUERY
         SELECT
-            rs.sweet_id,
+            rs.comment_id as actionId,
+            rs.sweet_id as sweetId,
+            rs.comment_id commentId,
+            rs.resweet_id as resweetId,
+            NULL::UUID as parentCommentId,
+            rs.parent_resweet_id as parentResweetId,
             rs.uid,
             rs.timestamp,
-            s.text,
+            rs.text,
             up.handle,
             up.name,
             up.profile_url,
@@ -71,10 +91,11 @@ BEGIN
             (SELECT COUNT(*) FROM ReSweet subRS WHERE subRS.parent_resweet_id = rs.resweet_id OR subRS.resweet_id = rs.resweet_id) AS resweetsCount
         FROM
             ReSweet rs
-            JOIN Sweet s ON rs.sweet_id = s.sweet_id
             JOIN UserProfile up ON rs.uid = up.uid
         WHERE
-            s.text ILIKE _search_text;
+            rs.text ILIKE _search_text;
+        ELSE
+            RAISE EXCEPTION 'Invalid id. Must be _sweet_id, _comment_id, or resweet_id.';
     END IF;
 END;
 $$ LANGUAGE plpgsql;

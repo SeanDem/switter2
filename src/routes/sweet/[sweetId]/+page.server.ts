@@ -5,7 +5,5 @@ export const load = async ({ params }) => {
 		InteractionService.getInteractionById({ sweetId: params.sweetId }),
 		InteractionService.getCommentsById({ sweetId: params.sweetId })
 	]);
-	console.log('sweetDetails', sweetDetails);
-	console.log('commentList', commentList);
 	return { sweetDetails, commentList };
 };

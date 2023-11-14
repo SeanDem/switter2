@@ -1,8 +1,12 @@
+import type { InteractionDetails } from "../interactions";
+
 export type SweetLike = {
-	like_id: string;
-	timestamp: Date;
-	uid: string; //need to pass
-	sweet_id?: string; //need to pass
-	comment_id?: string; //need to pass
-	resweet_id?: string; //need to pass
+	uid: string;
+	likeId?: string | null;
+	timestamp?: Date | null;
+	sweetId?: string | null;
+	commentId?: string | null;
+	resweetId?: string | null;
 };
+
+export type LikeDetail = SweetLike & InteractionDetails;

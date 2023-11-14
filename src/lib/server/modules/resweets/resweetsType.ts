@@ -1,12 +1,13 @@
 import type { InteractionDetails } from '../interactions';
 
 export type Resweet = {
-	resweetId: string;
-	parenResweetId: string | null;
-	sweetId: string;
 	uid: string;
-	timestamp: Date;
-	text: string | null;
+	timestamp?: Date | null;
+	text?: string | null;
+	resweetId?: string;
+	parentResweetId?: string | null;
+	sweetId?: string | null;
+	commentId?: string | null;
 };
 
 export type ResweetDetails = Resweet & InteractionDetails;

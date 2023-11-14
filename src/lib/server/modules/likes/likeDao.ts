@@ -2,50 +2,37 @@ import { supabase } from '$lib/supabaseClient';
 import type { SweetLike } from './likeType';
 
 export class SweetLikesDAO {
-	static async createSweetLike(
+	static async insertSweetLike(
 		sweetLike: Omit<SweetLike, 'like_id' | 'timestamp'>
 	): Promise<SweetLike> {
-		const { data, error } = await supabase.from('sweetlikes').insert([sweetLike]);
+		const sweetLikeTable = this.mapResweetToSnakeCase(sweetLike);
+		const { data, error } = await supabase.from('sweetlikes').insert([sweetLikeTable]);
 
 		if (error) throw new Error(error.message);
-		return data![0];
+		return data!;
 	}
-
-	static async getSweetLikeById(like_id: string): Promise<SweetLike | null> {
-		const { data, error } = await supabase
-			.from('sweetlikes')
-			.select('*')
-			.eq('like_id', like_id)
-			.single();
-
-		if (error) throw new Error(error.message);
-		return data;
-	}
-
-	static async updateSweetLike(
-		like_id: string,
-		sweetLikeUpdates: Partial<SweetLike>
-	): Promise<SweetLike> {
-		const { data, error } = await supabase
-			.from('sweetlikes')
-			.update(sweetLikeUpdates)
-			.eq('like_id', like_id);
-
-		if (error) throw new Error(error.message);
-		return data![0];
-	}
-
-	static async deleteSweetLike(like_id: string): Promise<boolean> {
+	static async deleteSweetLike(likeId: string): Promise<boolean> {
+		const like_id = likeId;
 		const { error } = await supabase.from('sweetlikes').delete().eq('like_id', like_id);
 
 		if (error) throw new Error(error.message);
 		return true;
 	}
-
-	static async getAllSweetLikes(): Promise<SweetLike[]> {
-		const { data, error } = await supabase.from('sweetlikes').select('*');
-
-		if (error) throw new Error(error.message);
-		return data!;
+	static mapResweetToSnakeCase(like: SweetLike): SweetLikeTable {
+		return {
+			uid: like.uid,
+			resweet_id: like.resweetId,
+			sweet_id: like.sweetId,
+			comment_id: like.resweetId
+		};
 	}
 }
+
+type SweetLikeTable = {
+	uid: string;
+	like_id?: string | null;
+	timestamp?: Date | null;
+	sweet_id?: string | null;
+	comment_id?: string | null;
+	resweet_id?: string | null;
+};

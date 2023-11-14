@@ -1,15 +1,17 @@
 import { supabase } from '$lib/supabaseClient';
+import type { SweetComment } from '.';
 import type { Interaction, InteractionIdRequest } from '../interactions';
 
 export class CommentDAO {
-	static async createComment(comment: Omit<Comment, 'comment_id'>): Promise<Comment> {
-		const { data, error } = await supabase.from('comment').insert([comment]);
+	static async createComment(comment: SweetComment): Promise<SweetComment> {
+		const sweetCommentTable = this.mapCommentToSnakeCase(comment);
+		const { data, error } = await supabase.from('comment').insert([sweetCommentTable]);
 
 		if (error) throw new Error(error.message);
-		return data![0];
+		return data!;
 	}
 
-	static async getCommentById(comment_id: string): Promise<Comment | null> {
+	static async getCommentById(comment_id: string): Promise<SweetComment | null> {
 		const { data, error } = await supabase
 			.from('comment')
 			.select('*')
@@ -20,34 +22,14 @@ export class CommentDAO {
 		return data;
 	}
 
-	static async updateComment(
-		comment_id: string,
-		commentUpdates: Partial<Comment>
-	): Promise<Comment> {
-		const { data, error } = await supabase
-			.from('comment')
-			.update(commentUpdates)
-			.eq('comment_id', comment_id);
-
-		if (error) throw new Error(error.message);
-		return data![0];
-	}
-
-	static async deleteComment(comment_id: string): Promise<boolean> {
-		const { error } = await supabase.from('comment').delete().eq('comment_id', comment_id);
-
-		if (error) throw new Error(error.message);
-		return true;
-	}
-
-	static async getAllComments(): Promise<Comment[]> {
+	static async getAllComments(): Promise<SweetComment[]> {
 		const { data, error } = await supabase.from('comment').select('*');
 
 		if (error) throw new Error(error.message + error.details + error.hint);
 		return data!;
 	}
 
-	static async getCommentsBySweetId({
+	static async getCommentsByInteractionId({
 		sweetId: _sweet_id = null,
 		commentId: _comment_id = null,
 		resweetId: _resweet_id = null
@@ -60,4 +42,23 @@ export class CommentDAO {
 		if (error) throw new Error(error.message);
 		return data!;
 	}
+	static mapCommentToSnakeCase(comment: SweetComment): SweetCommentTable {
+		return {
+			uid: comment.uid,
+			text: comment.text,
+			parent_comment_id: comment.parentCommentId,
+			sweet_id: comment.sweetId,
+			resweet_id: comment.resweetId
+		};
+	}
 }
+
+type SweetCommentTable = {
+	text: string;
+	uid: string;
+	comment_id?: string | null;
+	parent_comment_id?: string | null;
+	sweet_id?: string | null;
+	resweet_id?: string | null;
+	timestamp?: Date;
+};

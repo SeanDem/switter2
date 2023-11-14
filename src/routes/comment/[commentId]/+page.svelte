@@ -1,19 +1,24 @@
 <script lang="ts">
-	import ActionButton from '$lib/components/ActionButton.svelte';
 	import type { CommentDetail } from '$lib/server/modules/comments';
-	import type { SweetDetails } from '$lib/server/modules/sweets';
+	import type { Interaction } from '$lib/server/modules/interactions';
 
-	export let data: { sweetDetails: SweetDetails; commentList: CommentDetail[] };
-	$: sweetDetail = data.sweetDetails;
-	$: commentList = data.commentList;
+	export let data: {
+		commentDetail: CommentDetail;
+		parentInteraction: Interaction;
+		commentList: CommentDetail[];
+	};
+	$: commentDetail = data.commentDetail;
+	$: parentInteraction = data.parentInteraction;
+	$: commentDetailList = data.commentList;
 </script>
 
 <div>
-	<div>{sweetDetail.text}</div>
+	<div>{commentDetail.text}</div>
+	<div>{parentInteraction.text}</div>
 
 	<br />
-	{#if commentList}
-		{#each commentList as comment}
+	{#if commentDetailList}
+		{#each commentDetailList as comment}
 			<div>{comment.text}</div>
 		{/each}
 	{/if}
