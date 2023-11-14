@@ -77,8 +77,8 @@ CREATE TABLE SweetLike (
     timestamp TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
-\i "./functions/GetCommentsById.sql"
-\i 'path/to/GetCommentsById.sql'
-\i 'path/to/GetInteractionById.sql'
-\i 'path/to/GetInteractionListById.sql'
-\i 'path/to/GetInteractionsByText.sql'
+\i 'functions/GetAllSweets.sql'
+\i 'functions/GetCommentsById.sql'
+\i 'functions/GetInteractionById.sql'
+\i 'functions/GetInteractionListById.sql'
+\i 'functions/GetInteractionsByText.sql'
