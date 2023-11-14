@@ -2,7 +2,9 @@ import { supabase } from '$lib/supabaseClient';
 import type { SweetLike } from './likeType';
 
 export class SweetLikesDAO {
-	static async createSweetLike(sweetLike: Omit<SweetLike, 'like_id'>): Promise<SweetLike> {
+	static async createSweetLike(
+		sweetLike: Omit<SweetLike, 'like_id' | 'timestamp'>
+	): Promise<SweetLike> {
 		const { data, error } = await supabase.from('sweetlikes').insert([sweetLike]);
 
 		if (error) throw new Error(error.message);
