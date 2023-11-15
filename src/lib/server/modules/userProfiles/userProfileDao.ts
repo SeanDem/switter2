@@ -5,14 +5,14 @@ export class UserProfileDAO {
 	static async createUserProfile(userProfile: Omit<UserProfile, 'uid'>): Promise<UserProfile> {
 		const { data, error } = await supabase.from('userprofile').insert([userProfile]).single();
 
-		if (error) throw new Error(error.message);
+		if (error) throw new Error(error.details + error.message + error.hint);
 		return data;
 	}
 
 	static async getUserProfileById(uid: string): Promise<UserProfile | null> {
 		const { data, error } = await supabase.from('userprofile').select('*').eq('uid', uid).single();
 
-		if (error) throw new Error(error.message);
+		if (error) throw new Error(error.details + error.message + error.hint);
 		return data;
 	}
 
@@ -21,15 +21,12 @@ export class UserProfileDAO {
 		userProfileUpdates: Partial<UserProfile>
 	): Promise<UserProfile> {
 		const { data, error } = await supabase
-			.from('userProfile')
+			.from('userprofile')
 			.update(userProfileUpdates)
 			.eq('uid', uid)
 			.single();
 
-		if (error) {
-			console.error(error);
-			throw new Error(error.message);
-		}
+		if (error) throw new Error(error.details + error.message + error.hint);
 		return data;
 	}
 

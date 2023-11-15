@@ -1,17 +1,15 @@
 <script lang="ts">
-	import type { Sweet } from '$lib/server/modules/sweets';
-	import type { UserProfile } from '$lib/server/modules/userProfiles';
-	export let data: { userProfile: UserProfile, sweetList: Sweet[] };
-	$: userProfile = data.userProfile;
-	$: sweetList = data.sweetList;
+	import { goto } from '$app/navigation';
+	import ActionBar from '$lib/components/ActionBar.svelte';
+	import type { SweetDetails } from '$lib/server/modules/sweets';
+
+	export let data: { sweetDetailsList: SweetDetails[] };
+	$: sweetDetailsList = data.sweetDetailsList;
 </script>
 
-{#if userProfile}
-	<div>
-		<h1>Profile</h1>
-	</div>
+{#if sweetDetailsList}
+	{#each sweetDetailsList as sweetDetail}
+		<div>{sweetDetail.text}</div>
+		<div><ActionBar interaction={sweetDetail} /></div>
+	{/each}
 {/if}
-
-{#each sweetList as sweet}
-	<div>{sweet.text}</div>
-{/each}

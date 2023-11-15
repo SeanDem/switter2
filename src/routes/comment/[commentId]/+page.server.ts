@@ -1,11 +1,11 @@
 import { InteractionService } from '$lib/server/modules/interactions/interactionService.js';
+import { redirect } from '@sveltejs/kit';
 
-export const load = async ({ params }) => {
+export const load = async ({ params, cookies }) => {
 	const [commentDetail, commentList] = await Promise.all([
 		InteractionService.getInteractionById({ commentId: params.commentId }),
 		InteractionService.getCommentsById({ commentId: params.commentId })
 	]);
-	console.log('commentDetail: ', commentDetail);
 	const parentInteraction = await InteractionService.getInteractionById({
 		commentId: commentDetail.parentCommentId,
 		sweetId: commentDetail.sweetId,

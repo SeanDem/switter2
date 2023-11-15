@@ -10,11 +10,11 @@ DROP TABLE IF EXISTS UserProfile CASCADE;
 CREATE TABLE UserProfile (
     uid UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     handle VARCHAR(255) UNIQUE NOT NULL,
-    name TEXT,
+    name TEXT NOT NULL,
     profile_url TEXT,
     bio TEXT,
     phone VARCHAR(25),
-    email VARCHAR(320) UNIQUE,
+    email VARCHAR(320) UNIQUE NOT NULL,
     birthday DATE
 );
 
@@ -74,6 +74,13 @@ CREATE TABLE SweetLike (
     comment_id UUID NULL REFERENCES Comment(comment_id),
     resweet_id UUID NULL REFERENCES ReSweet(resweet_id),
     uid UUID NOT NULL REFERENCES UserProfile(uid),
+    timestamp TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE UserFollowers (
+    follower_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    follower_uid UUID NOT NULL REFERENCES UserProfile(uid),
+    followee_uid UUID NOT NULL REFERENCES UserProfile(uid),
     timestamp TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 

@@ -1,15 +1,13 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
-	import { userStore } from '$lib/store/store';
+	import Header from '$lib/components/Header.svelte';
 	import { supabase } from '$lib/supabaseClient';
 	import { webVitals } from '$lib/vitals';
 	import { onMount } from 'svelte';
 	import './styles.css';
-	import SignUp from '$lib/components/SignUp.svelte';
-	import SignIn from '$lib/components/SignIn.svelte';
-	import Header from '$lib/components/Header.svelte';
 	export let data;
+	let isAuth = data.isAuth;
 
 	$: if (browser && data?.analyticsId) {
 		webVitals({
@@ -22,10 +20,11 @@
 	onMount(() => {
 		supabase.auth.onAuthStateChange((event, session) => {
 			console.info('AuthStateChange: ', event);
-			if (session && session.user) {
-				userStore.set(session.user);
+			if (session && session.user && session.user.aud === 'authenticated') {
+				isAuth = true;
 				document.cookie = `uid=${session.user.id}; path=/;`;
 			} else {
+				isAuth = false;
 				document.cookie = 'uid=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
 			}
 		});
@@ -34,18 +33,13 @@
 
 <div class="app">
 	<main>
-		{#await $userStore}
-			<div>Loading...</div>
-		{:then userStore}
-			{#if userStore}
-				<Header />
-				<slot />
-				<footer />
-			{:else}
-				<SignIn />
-				<SignUp />
-			{/if}
-		{/await}
+		{#if isAuth}
+			<Header />
+			<slot />
+			<footer />
+		{:else}
+			<slot />
+		{/if}
 	</main>
 </div>
 

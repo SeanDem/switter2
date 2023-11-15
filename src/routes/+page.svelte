@@ -2,7 +2,6 @@
 	import { goto } from '$app/navigation';
 	import ActionBar from '$lib/components/ActionBar.svelte';
 	import type { Interaction } from '$lib/server/modules/interactions';
-
 	export let data: { sweetDetailList: Interaction[] };
 	$: sweetDetailList = data.sweetDetailList;
 </script>
@@ -28,7 +27,7 @@
 <style>
 	.button-container {
 		display: flex;
-		align-items: center; /* To align the buttons vertically in case they wrap */
-		gap: 10px; /* Adjust the gap to your liking */
+		align-items: center;
+		gap: 10px;
 	}
 </style>

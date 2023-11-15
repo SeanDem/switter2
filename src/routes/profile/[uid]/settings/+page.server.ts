@@ -1,18 +1,16 @@
 import { UserProfileService, type UserProfile } from '$lib/server/modules/userProfiles';
-import { redirect, type Actions, fail, error } from '@sveltejs/kit';
+import { fail, redirect, type Actions } from '@sveltejs/kit';
 
 export const load = async ({ parent }) => {
-	const data: { userProfile: UserProfile } = await parent();
-	return { data };
+	return parent();
 };
 
 export const actions: Actions = {
 	default: async ({ request, cookies }) => {
 		const uid = cookies.get('uid');
+
 		if (!uid) {
-			fail(401, { uid, message: 'Unauthorized' });
-			throw new Error(error.message);
-			401, 'Unauthorized';
+			throw fail(401, { uid, message: 'Unauthorized' });
 		}
 
 		const form = await request.formData();

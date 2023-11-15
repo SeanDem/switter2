@@ -1,7 +1,7 @@
 import { UserProfileDAO, type UserProfile } from '.';
 
 export class UserProfileService {
-	static async createUserProfile(userProfile: Omit<UserProfile, 'uid'>): Promise<UserProfile> {
+	static async createUserProfile(userProfile: UserProfile): Promise<UserProfile> {
 		return UserProfileDAO.createUserProfile(userProfile);
 	}
 

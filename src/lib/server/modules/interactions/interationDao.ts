@@ -21,7 +21,6 @@ export class InteractionDao {
 		commentId: _comment_id = null,
 		resweetId: _resweet_id = null
 	}: InteractionIdRequest): Promise<Interaction> {
-		console.log('GetInteractionById: ', _sweet_id, _comment_id, _resweet_id);
 		const { data, error } = await supabase.rpc('getinteractionbyid', {
 			_sweet_id,
 			_comment_id,

@@ -8,8 +8,9 @@
 	$: userProfile = data.userProfile;
 	let { handle, name, bio, phone, email, birthday } = data.userProfile;
 
-	async function logout() {
-		await supabase.auth.signOut();
+	function logout() {
+		supabase.auth.signOut();
+		document.cookie = 'uid=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
 		userStore.set(null);
 		goto('/');
 	}

@@ -1,26 +1,26 @@
-DROP FUNCTION IF EXISTS GetInteractionListByType(text);
+drop function if exists GetInteractionListByTypeAndUID (text, uuid);
 
-CREATE OR REPLACE FUNCTION GetInteractionListByType(_type text) 
-RETURNS TABLE (
-    "actionId" UUID,
-    "sweetId" UUID,
-    "commentId" UUID,
-    "resweetId" UUID,
-    "parentCommentId" UUID,
-    "parentResweetId" UUID,
-    uid UUID,
-    "timestamp" TIMESTAMP WITH TIME ZONE,
-    type TEXT,
-    text TEXT,
-    "mediaUrls" TEXT,
-    handle VARCHAR(255),
-    name TEXT,
-    "profileUrl" TEXT,
-    bio TEXT,
-    "commentsCount" BIGINT,
-    "likesCount" BIGINT,
-    "resweetsCount" BIGINT
-) AS $$
+create
+or replace function GetInteractionListByTypeAndUID (_type text, _uid uuid) returns table (
+  "actionId" uuid,
+  "sweetId" uuid,
+  "commentId" uuid,
+  "resweetId" uuid,
+  "parentCommentId" uuid,
+  "parentResweetId" uuid,
+  uid uuid,
+  "timestamp" timestamp with time zone,
+  type text,
+  text text,
+  "mediaUrls" text,
+  handle varchar(255),
+  name text,
+  "profileUrl" text,
+  bio text,
+  "commentsCount" bigint,
+  "likesCount" bigint,
+  "resweetsCount" bigint
+) as $$
 BEGIN
     IF _type = 'sweet' THEN
         RETURN QUERY
@@ -45,22 +45,24 @@ BEGIN
             (SELECT COUNT(*) FROM ReSweet WHERE sweet_id = s.sweet_id) AS resweetsCount
         FROM
             Sweet s
-            JOIN UserProfile up ON s.uid = up.uid;
+            JOIN UserProfile up ON s.uid = up.uid
+        WHERE
+            s.uid = _uid;
 
     ELSIF _type = 'comment' THEN
         RETURN QUERY
         SELECT
             c.comment_id as actionId,
             c.sweet_id as sweetId,
-            c.comment_id commentId,
-            c.resweet_id as resweetId,
+            c.comment_id as commentId,
+            NULL::UUID as resweetId,
             c.parent_comment_id as parentCommentId,
             NULL::UUID as parentResweetId,
             c.uid,
             c.timestamp,
             'comment' as type, 
             c.text,
-            NULL as mediaUrls, 
+            NULL::TEXT as mediaUrls, 
             up.handle,
             up.name,
             up.profile_url as profileUrl,
@@ -70,14 +72,16 @@ BEGIN
             (SELECT COUNT(*) FROM ReSweet WHERE comment_id = c.comment_id) AS resweetsCount 
         FROM
             Comment c
-            JOIN UserProfile up ON c.uid = up.uid;
+            JOIN UserProfile up ON c.uid = up.uid
+        WHERE
+            c.uid = _uid;
 
     ELSIF _type = 'resweet' THEN
         RETURN QUERY
         SELECT
-            rs.comment_id as actionId,
+            rs.resweet_id as actionId,
             rs.sweet_id as sweetId,
-            rs.comment_id commentId,
+            NULL::UUID as commentId,
             rs.resweet_id as resweetId,
             NULL::UUID as parentCommentId,
             rs.parent_resweet_id as parentResweetId,
@@ -85,7 +89,7 @@ BEGIN
             rs.timestamp, 
             'resweet' as type, 
             rs.text,
-            NULL as mediaUrls,
+            NULL::TEXT as mediaUrls,
             up.handle,
             up.name,
             up.profile_url as profileUrl,
@@ -95,9 +99,12 @@ BEGIN
             (SELECT COUNT(*) FROM ReSweet WHERE parent_resweet_id = rs.resweet_id OR resweet_id = rs.resweet_id) AS resweetsCount
         FROM
             ReSweet rs
-            JOIN UserProfile up ON rs.uid = up.uid;
+            JOIN UserProfile up ON rs.uid = up.uid
+        WHERE
+            rs.uid = _uid;
+
     ELSE
         RAISE EXCEPTION 'Invalid type specified. Must be sweet, comment, or resweet.';
     END IF;
 END;
-$$ LANGUAGE plpgsql;
+$$ language plpgsql;

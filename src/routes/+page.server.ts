@@ -2,10 +2,11 @@ import { CommentService, type SweetComment } from '$lib/server/modules/comments'
 import { InteractionService, type Interaction } from '$lib/server/modules/interactions';
 import { LikeService, type SweetLike } from '$lib/server/modules/likes';
 import { ResweetService, type Resweet } from '$lib/server/modules/resweets';
-import { assignParentType } from '$lib/utils/formUtils';
-import { fail, type Actions } from '@sveltejs/kit';
+import { fail, type Actions, redirect } from '@sveltejs/kit';
 
-export const load = async () => {
+export const load = async ({ cookies }) => {
+	const uid = cookies.get('uid');
+	if (!uid) throw redirect(301, '/auth');
 	const sweetDetailList: Interaction[] = await InteractionService.getInteractionListByType('sweet');
 	return { sweetDetailList };
 };
@@ -13,7 +14,7 @@ export const load = async () => {
 export const actions: Actions = {
 	like: async ({ request, cookies }) => {
 		const uid = cookies.get('uid');
-		if (!uid) return fail(401, { uid, missing: true });
+		if (!uid) throw redirect(301, '/auth');
 
 		const form = await request.formData();
 		const parentType = form.get('parentType');
@@ -51,7 +52,7 @@ export const actions: Actions = {
 	},
 	comment: async ({ request, cookies }) => {
 		const uid = cookies.get('uid');
-		if (!uid) return fail(401, { uid, missing: true });
+		if (!uid) throw redirect(301, '/auth');
 
 		const form = await request.formData();
 
@@ -91,7 +92,7 @@ export const actions: Actions = {
 	},
 	resweet: async ({ request, cookies }) => {
 		const uid = cookies.get('uid');
-		if (!uid) return fail(401, { uid, missing: true });
+		if (!uid) throw redirect(301, '/auth');
 
 		const form = await request.formData();
 		const id = form.get('id');
