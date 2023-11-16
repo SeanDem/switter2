@@ -19,7 +19,7 @@
 		{#each commentList as comment}
 			<div>{comment.text}</div>
 			<div>{comment.commentId}</div>
-			<button on:click={() => goto(`/comment/${comment.commentId}`)}>GO To Comment</button>
+			<a href="/comment/{comment.commentId}">goto comment</a>
 		{/each}
 	{/if}
 	<br />
