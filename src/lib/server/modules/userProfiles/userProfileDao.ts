@@ -20,7 +20,6 @@ export class UserProfileDAO {
 		return data;
 	}
 
-
 	static async updateUserProfile(
 		uid: string,
 		userProfileUpdates: Partial<UserProfile>

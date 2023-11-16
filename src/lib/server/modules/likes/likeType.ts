@@ -1,4 +1,4 @@
-import type { InteractionDetails } from "../interactions";
+import type { InteractionDetails } from '../interactions';
 
 export type SweetLike = {
 	uid: string;

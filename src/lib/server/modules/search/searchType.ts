@@ -1,4 +1,4 @@
-import type { InteractionType } from "../interactions";
+import type { InteractionType } from '../interactions';
 
 export type InteractionSearchRequest = {
 	searchText: string;

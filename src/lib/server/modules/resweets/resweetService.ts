@@ -1,8 +1,13 @@
+import { badWordFilter } from '$lib/server/utils/badWords';
 import { ResweetDAO } from './resweetDao';
 import type { Resweet } from './resweetsType';
 
 export class ResweetService {
 	static async createResweet(resweet: Resweet): Promise<Resweet> {
+		if (resweet.text) {
+			resweet.text = badWordFilter.clean(resweet.text.trim());
+		}
+
 		const keys: (keyof Omit<Resweet, 'resweetId'>)[] = [
 			'parentResweetId',
 			'sweetId',

@@ -1,3 +1,4 @@
+import { badWordFilter } from '$lib/server/utils/badWords';
 import type { Interaction } from '../interactions';
 import { CommentDAO } from './commentDao';
 import type { SweetComment as SweetComment } from './commentType';
@@ -8,6 +9,7 @@ export class CommentService {
 	}
 
 	static async createComment(comment: Omit<SweetComment, 'commentId'>): Promise<SweetComment> {
+		comment.text = badWordFilter.clean(comment.text.trim());
 		const keys: (keyof Omit<SweetComment, 'commentId'>)[] = [
 			'parentCommentId',
 			'sweetId',

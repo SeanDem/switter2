@@ -1,8 +1,13 @@
+import { badWordFilter, cleanInput } from '$lib/server/utils/badWords';
 import { UserProfileDAO, type UserProfile, type UserProfilePartial } from '.';
 import { FollowDao } from '../followers/followerDao';
 
 export class UserProfileService {
 	static async createUserProfile(userProfile: UserProfile): Promise<UserProfile> {
+		userProfile.bio = cleanInput(userProfile.bio);
+		userProfile.name = cleanInput(userProfile.name) ?? userProfile.name;
+		userProfile.handle = cleanInput(userProfile.handle) ?? userProfile.handle;
+
 		return UserProfileDAO.createUserProfile(userProfile);
 	}
 
