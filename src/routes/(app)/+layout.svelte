@@ -6,7 +6,6 @@
 	import { webVitals } from '$lib/vitals';
 	import { onMount } from 'svelte';
 	export let data;
-	let isAuth = data.isAuth;
 
 	$: if (browser && data?.analyticsId) {
 		webVitals({
@@ -20,10 +19,8 @@
 		supabase.auth.onAuthStateChange((event, session) => {
 			console.info('AuthStateChange: ', event);
 			if (session && session.user && session.user.aud === 'authenticated') {
-				isAuth = true;
 				document.cookie = `uid=${session.user.id}; path=/;`;
 			} else {
-				isAuth = false;
 				document.cookie = 'uid=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
 			}
 		});
@@ -32,12 +29,8 @@
 
 <div class="app">
 	<main>
-		{#if isAuth}
-			<Header />
-			<slot />
-			<footer />
-		{:else}
-			<slot />
-		{/if}
+		<Header />
+		<slot />
+		<footer />
 	</main>
 </div>
