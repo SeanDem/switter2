@@ -4,8 +4,6 @@
 
 	$: userProfile = data.userProfile;
 	$: isUserProfile = data.isUserProfile;
-
-	let isFollowDisabled = false;
 </script>
 
 {#if isUserProfile}
