@@ -3,6 +3,7 @@ body {
 	color: #333;
 	background-color: #fff;
 	line-height: 1.6;
+	text-align: center; /* Centers text for all elements that don't override this */
 }
 
 h1,
@@ -15,83 +16,89 @@ h6 {
 	margin-bottom: 20px;
 }
 
-button {
+button,
+input {
 	padding: 8px 16px;
 	font-size: 14px;
-	color: #ffffff;
-	background-color: #000000;
-	border: none;
+	color: #333;
+	background-color: #fff;
+	border: 1px solid #ddd;
 	border-radius: 5px;
 	cursor: pointer;
-	text-align: center;
-	text-decoration: none;
-	outline: none;
-	transition: background-color 0.3s ease;
+	transition: background-color 0.2s;
 }
 
-button:hover,
-button:focus {
+button {
+	color: #fff;
+	background-color: #000;
+}
+
+button:hover {
 	background-color: #333;
 }
 
-button:active {
-	background-color: #1a1a1a;
-}
-
-input {
-	width: 100%;
-	padding: 10px;
-	margin-bottom: 20px;
-	border-radius: 5px;
+.box,
+.card,
+.content,
+.navbar a {
 	border: 1px solid #ddd;
-	box-shadow: inset 0 1px 3px #eee;
+	border-radius: 2px;
+	padding: 1rem;
+	margin-bottom: 20px;
+	background-color: #fff;
 }
 
-.box {
-	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+.container,
+header,
+footer {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 15px;
+	border-bottom: 1px solid #ddd;
 }
 
-@media (max-width: 700px) {
-	.container {
-		width: 95%;
-	}
+footer {
+	border-top: 1px solid #ddd;
+	background-color: #f5f5f5;
 }
 
-header {
-	display: flex;
-	justify-content: space-between;
-}
-
-nav {
+nav ul {
+	list-style-type: none;
 	display: flex;
 	justify-content: center;
-	background: rgba(255, 255, 255, 0.7);
-}
-
-ul {
 	padding: 0;
-	margin: 0;
-	height: 3em;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	list-style: none;
-	background-size: contain;
+}
+
+nav li {
+	margin: 0 10px;
 }
 
 nav a {
-	height: 100%;
-	align-items: center;
-	padding: 0 0.5rem;
-	color: inherit;
+	text-decoration: none;
+	color: #333;
 	font-weight: 700;
 	font-size: 0.8rem;
 	text-transform: uppercase;
-	letter-spacing: 0.1em;
-	text-decoration: none;
-	transition: color 0.2s linear;
+	letter-spacing: 0.05rem;
 }
 
-a:hover {
-	color: #0056b3; /* Adjust this color to fit your theme */
+nav li[aria-current='page'] a,
+nav a:hover {
+	color: #007bff;
+	font-weight: bold;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+	display: block; /* Ensures images are centered in their container */
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+	.navbar,
+	.content,
+	.card {
+		padding: 1rem;
+	}
 }

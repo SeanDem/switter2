@@ -15,7 +15,7 @@
 	<br />
 	<div>{sweetDetail.text}</div>
 	<br />
-	<div class="button-container">
+	<div>
 		<ActionBar interaction={sweetDetail} />
 	</div>
 	<div>
@@ -24,10 +24,3 @@
 	<br />
 {/each}
 
-<style>
-	.button-container {
-		display: flex;
-		align-items: center;
-		gap: 10px;
-	}
-</style>

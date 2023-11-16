@@ -30,11 +30,3 @@
 	</nav>
 </div>
 <slot />
-
-<style>
-	nav {
-		display: flex;
-		justify-content: flex-start;
-		background: rgba(255, 255, 255, 0.7);
-	}
-</style>
