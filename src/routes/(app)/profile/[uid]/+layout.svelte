@@ -4,6 +4,8 @@
 
 	$: userProfile = data.userProfile;
 	$: isUserProfile = data.isUserProfile;
+
+	let isFollowDisabled = false;
 </script>
 
 {#if isUserProfile}
@@ -11,21 +13,22 @@
 	<div>
 		<a href="/profile/{userProfile.uid}/settings">Settings</a>
 	</div>
+{:else}
+	<div>
+		<div>{userProfile.name} Profile Page</div>
+		<p>Handle: {userProfile.handle}</p>
+		<p>UID: {userProfile.uid}</p>
+		<form use:enhance method="post">
+			<input type="hidden" name="otherUid" value={userProfile.uid} />
+			{#if userProfile.isFollowing}
+				<button formaction="/profile/?/unfollow">unfollow</button>
+			{:else}
+				<button formaction="/profile/?/follow">follow</button>
+			{/if}
+		</form>
+	</div>
 {/if}
-<div>
-	<div>{userProfile.name} Profile Page</div>
-	<p>Handle: {userProfile.handle}</p>
-	<p>UID: {userProfile.uid}</p>
-	<form use:enhance method="post">
-		<div>{userProfile.isFollowing}</div>
-		<input type="hidden" name="otherUid" value={userProfile.uid} />
-		{#if userProfile.isFollowing}
-			<button formaction="/profile/?/unfollow">unfollow</button>
-		{:else}
-			<button formaction="/profile/?/follow">follow</button>
-		{/if}
-	</form>
-</div>
+
 <div>
 	<nav>
 		<a href="/profile/{userProfile.uid}/sweets">Sweets</a>

@@ -3,7 +3,7 @@
 	$: followingList = data.followingList;
 </script>
 
-<h1>Followers</h1>
+<h1>Following</h1>
 
 {#if followingList}
 	{#each followingList as follower}
