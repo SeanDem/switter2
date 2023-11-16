@@ -1,10 +1,10 @@
-import { FollowerDao } from './followerDao';
+import { FollowDao } from './followerDao';
 
 export class FollowerService {
 	static async getFollowers(uid: string) {
-		return FollowerDao.getFollowers(uid);
+		return FollowDao.getFollowers(uid);
 	}
 	static async getFollowing(uid: string) {
-		return FollowerDao.getFollowing(uid);
+		return FollowDao.getFollowing(uid);
 	}
 }

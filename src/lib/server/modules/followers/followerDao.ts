@@ -1,49 +1,18 @@
 import { supabase } from '$lib/supabaseClient';
-
-export class FollowerDao {
+export class FollowDao {
 	static async getFollowers(uid: string) {
-		let { data, error } = await supabase
-			.from('userfollowers')
-			.select(
-				`
-        follower_id (followerId),
-        timestamp,
-        follower:UserProfile!follower_uid (
-          uid, 
-          handle, 
-          name, 
-          profile_url (profileUrl), 
-          bio
-        )
-      `
-			)
-			.eq('followee_uid', uid);
+		const _uid = uid;
+		let { data, error } = await supabase.rpc('getuserprofiles', { _uid, type: '_followers' });
+		if (error) throw new Error(error.details + error.message + error.hint);
 
-		if (error) throw error;
-
-		return data;
+		return data!;
 	}
 
 	static async getFollowing(uid: string) {
-		let { data, error } = await supabase
-			.from('userfollowers')
-			.select(
-				`
-        follower_id (followerId),
-        timestamp,
-        followee:UserProfile!followee_uid (
-          uid, 
-          handle, 
-          name, 
-          profile_url (profileUrl), 
-          bio
-        )
-      `
-			)
-			.eq('follower_uid', uid);
+		const _uid = uid;
+		let { data, error } = await supabase.rpc('getuserprofiles', { _uid, type: '_following' });
+		if (error) throw new Error(error.details + error.message + error.hint);
 
-		if (error) throw error;
-
-		return data;
+		return data!;
 	}
 }

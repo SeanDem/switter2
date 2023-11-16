@@ -24,8 +24,8 @@
 			signupError = 'No user ID returned';
 			return;
 		}
-
 		try {
+			userProfile.uid = uid;
 			const { data, error } = await supabase.from('userprofile').insert([userProfile]).single();
 			if (error) {
 				signupError = error.message;

@@ -1,9 +1,7 @@
 <script lang="ts">
 	import SignIn from '$lib/components/SignIn.svelte';
 	import SignUp from '$lib/components/SignUp.svelte';
-	import type { User } from '@supabase/supabase-js';
 	export let form;
-
 	$: label = signIn ? 'Sign Up' : 'Sign In';
 	$: prefix = signIn ? 'Need an account?' : 'Already have an account?';
 	let signIn = true;
@@ -26,3 +24,4 @@
 		}}>{label}</button
 	>
 </div>
+<slot />

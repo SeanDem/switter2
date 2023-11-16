@@ -6,7 +6,7 @@ import type { UserProfile } from '../userProfiles';
 export type Interaction = Sweet & SweetComment & Resweet & InteractionDetails;
 
 export type InteractionDetails = SweetInteractionCount &
-	Pick<UserProfile, 'handle' | 'bio' | 'name' | 'profile_url'> & {
+	Pick<UserProfile, 'handle' | 'bio' | 'name' | 'profileUrl'> & {
 		actionId: string;
 	};
 

@@ -6,5 +6,7 @@ export type UserProfile = {
 	bio?: string | null;
 	phone?: string | null;
 	birthday?: Date | null;
-	profile_url?: string | null;
+	profileUrl?: string | null;
 };
+
+export type UserProfilePartial = Pick<UserProfile, 'handle' | 'bio' | 'name' | 'profileUrl'>;
