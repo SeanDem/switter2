@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import ActionBar from '$lib/components/ActionBar.svelte';
 	import type { SweetDetails } from '$lib/server/modules/sweets';
 

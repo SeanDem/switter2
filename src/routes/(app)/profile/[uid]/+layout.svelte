@@ -21,10 +21,20 @@
 	<p>UID: {userProfile.uid}</p>
 </div>
 <div>
-	<button on:click={() => goto(`/profile/${userProfile.uid}/followers`)}>Followers</button>
-	<button on:click={() => goto(`/profile/${userProfile.uid}/following`)}>Following</button>
-	<button on:click={() => goto(`/profile/${userProfile.uid}/sweets`)}>Sweets</button>
-	<button on:click={() => goto(`/profile/${userProfile.uid}/comments`)}>Comments</button>
-	<button on:click={() => goto(`/profile/${userProfile.uid}/resweets`)}>resweets</button>
+	<nav>
+		<a href="/profile/{userProfile.uid}/sweets">Sweets</a>
+		<a href="/profile/{userProfile.uid}/comments">Comments</a>
+		<a href="/profile/{userProfile.uid}/resweets">resweets</a>
+		<a href="/profile/{userProfile.uid}/followers">Followers</a>
+		<a href="/profile/{userProfile.uid}/following">Following</a>
+	</nav>
 </div>
 <slot />
+
+<style>
+	nav {
+		display: flex;
+		justify-content: flex-start;
+		background: rgba(255, 255, 255, 0.7);
+	}
+</style>
