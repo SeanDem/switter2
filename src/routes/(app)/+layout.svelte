@@ -27,10 +27,8 @@
 	});
 </script>
 
-<div class="app">
-	<main>
-		<Header />
-		<slot />
-		<footer />
-	</main>
-</div>
+<main>
+	<Header />
+	<slot />
+	<footer />
+</main>

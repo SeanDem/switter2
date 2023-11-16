@@ -33,4 +33,17 @@ export class FollowDao {
 
 		return data!;
 	}
+
+	static async isUserFollowing(uid: string, profileUid: string): Promise<boolean> {
+		const { data, error } = await supabase
+			.from('userfollowers')
+			.select('follower_id')
+			.eq('follower_uid', uid)
+			.eq('followee_uid', profileUid)
+			.maybeSingle();
+
+		if (error) throw new Error(error.details + error.message + error.hint);
+
+		return !!data;
+	}
 }

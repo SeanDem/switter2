@@ -1,12 +1,26 @@
-import { UserProfileDAO, type UserProfile } from '.';
+import { UserProfileDAO, type UserProfile, type UserProfilePartial } from '.';
+import { FollowDao } from '../followers/followerDao';
 
 export class UserProfileService {
 	static async createUserProfile(userProfile: UserProfile): Promise<UserProfile> {
 		return UserProfileDAO.createUserProfile(userProfile);
 	}
 
-	static async getUserProfileById(uid: string): Promise<UserProfile | null> {
-		return UserProfileDAO.getUserProfileById(uid);
+	static async getUserProfileById(
+		uid: string,
+		profileUid: string
+	): Promise<UserProfilePartial | null> {
+		const [isFollowing, userProfile] = await Promise.all([
+			FollowDao.isUserFollowing(uid, profileUid),
+			UserProfileDAO.getUserProfileById(profileUid)
+		]);
+
+		if (!userProfile) return null;
+
+		return {
+			...userProfile,
+			isFollowing: isFollowing
+		};
 	}
 
 	static async updateUserProfile(

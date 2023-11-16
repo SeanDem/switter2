@@ -1,5 +1,5 @@
 import { supabase } from '$lib/supabaseClient';
-import type { UserProfile } from './userProfileType';
+import type { UserProfile, UserProfilePartial } from './userProfileType';
 
 export class UserProfileDAO {
 	static async createUserProfile(userProfile: Omit<UserProfile, 'uid'>): Promise<UserProfile> {
@@ -9,12 +9,17 @@ export class UserProfileDAO {
 		return data;
 	}
 
-	static async getUserProfileById(uid: string): Promise<UserProfile | null> {
-		const { data, error } = await supabase.from('userprofile').select('*').eq('uid', uid).single();
+	static async getUserProfileById(uid: string): Promise<UserProfilePartial | null> {
+		const { data, error } = await supabase
+			.from('userprofile')
+			.select('uid, handle, bio, name, profileUrl:profile_url')
+			.eq('uid', uid)
+			.single();
 
 		if (error) throw new Error(error.details + error.message + error.hint);
 		return data;
 	}
+
 
 	static async updateUserProfile(
 		uid: string,

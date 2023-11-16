@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { goto } from '$app/navigation';
 	export let data;
+
 	$: userProfile = data.userProfile;
 	$: isUserProfile = data.isUserProfile;
 </script>
@@ -17,9 +17,13 @@
 	<p>Handle: {userProfile.handle}</p>
 	<p>UID: {userProfile.uid}</p>
 	<form use:enhance method="post">
+		<div>{userProfile.isFollowing}</div>
 		<input type="hidden" name="otherUid" value={userProfile.uid} />
-		<button formaction="?/follow">follow</button>
-		<button formaction="?/unfollow">unfollow</button>
+		{#if userProfile.isFollowing}
+			<button formaction="/profile/?/unfollow">unfollow</button>
+		{:else}
+			<button formaction="/profile/?/follow">follow</button>
+		{/if}
 	</form>
 </div>
 <div>
