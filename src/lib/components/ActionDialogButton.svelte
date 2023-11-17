@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import type { InteractionType } from '$lib/server/modules/interactions';
+	import type { Interaction } from '$lib/server/modules/interactions';
 
 	export let type: 'like' | 'comment' | 'resweet';
-	export let parentType: InteractionType;
+	export let interaction: Interaction;
 	export let id: string;
 	export let count: number;
 
@@ -19,12 +19,12 @@
 	<div class="dialog-overlay">
 		<div class="dialog">
 			<h2>Write a comment</h2>
-			<form use:enhance method="post" action={`/?/${type}`}>
+			<form use:enhance method="post">
 				<textarea name="text" bind:value={text} />
 				<input type="hidden" name="type" value={type} />
 				<input type="hidden" name="id" value={id} />
-				<input type="hidden" name="parentType" value={parentType} />
-				<button type="submit">Submit</button>
+				<input type="hidden" name="interaction" value={interaction} />
+				<button formaction="/?/{type}">Submit</button>
 			</form>
 			<button on:click={() => (showDialog = false)}>Cancel</button>
 		</div>

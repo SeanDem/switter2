@@ -1,21 +1,20 @@
 <script lang="ts">
 	import type { Interaction } from '$lib/server/modules/interactions';
-	import ActionButton from './ActionButton.svelte';
+	import ActionButton from './LikeButton.svelte';
 	import ActionDialogButton from './ActionDialogButton.svelte';
 	export let interaction: Interaction;
-	const parentType = 'sweet';
 </script>
 
 <div class="button-container" />
-<ActionButton {parentType} type="like" id={interaction.actionId} count={interaction.likesCount} />
+<ActionButton {interaction} count={interaction.likesCount}/>
 <ActionDialogButton
-	{parentType}
+	{interaction}
 	type="comment"
 	id={interaction.actionId}
 	count={interaction.commentsCount}
 />
 <ActionDialogButton
-	{parentType}
+	{interaction}
 	type="resweet"
 	id={interaction.actionId}
 	count={interaction.resweetsCount}

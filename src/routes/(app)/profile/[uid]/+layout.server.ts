@@ -9,10 +9,9 @@ export const load = async ({ params, cookies }) => {
 	let isUserProfile = false;
 	if (params.uid === uid) isUserProfile = true;
 
-	const pageUid = params.uid;
 	const [userProfile, sweetDetailList] = await Promise.all([
-		UserProfileService.getUserProfileById(uid, pageUid),
-		InteractionService.getInteractionListByTypeAndUid('sweet', pageUid)
+		UserProfileService.getUserProfileById(uid, params.uid),
+		InteractionService.getInteractionListByTypeAndUid(uid, 'sweet', params.uid)
 	]);
 	if (!userProfile) throw error(404, 'Profile not found');
 	return { userProfile, sweetDetailList, isUserProfile };

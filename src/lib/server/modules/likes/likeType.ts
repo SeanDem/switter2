@@ -6,7 +6,9 @@ export type SweetLike = {
 	timestamp?: Date | null;
 	sweetId?: string | null;
 	commentId?: string | null;
+	parentCommentId?: string | null;
 	resweetId?: string | null;
+	parentResweetId?: string | null;
 };
 
 export type LikeDetail = SweetLike & InteractionDetails;

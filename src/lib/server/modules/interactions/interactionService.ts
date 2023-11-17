@@ -2,21 +2,31 @@ import type { Interaction, InteractionIdRequest, InteractionType } from './inter
 import { InteractionDao } from './interationDao';
 
 export class InteractionService {
-	static async getCommentsById(interactionRequest: InteractionIdRequest): Promise<Interaction[]> {
-		return InteractionDao.getCommentsById(interactionRequest);
+	static async getCommentsById(
+		uid: string,
+		interactionRequest: InteractionIdRequest
+	): Promise<Interaction[]> {
+		return InteractionDao.getCommentsById(uid, interactionRequest);
 	}
 
-	static async getInteractionById(interactionRequest: InteractionIdRequest): Promise<Interaction> {
-		return InteractionDao.GetInteractionById(interactionRequest);
+	static async getInteractionById(
+		uid: string,
+		interactionRequest: InteractionIdRequest
+	): Promise<Interaction> {
+		return InteractionDao.GetInteractionById(uid, interactionRequest);
 	}
 
-	static async getInteractionListByType(interactionType: InteractionType): Promise<Interaction[]> {
-		return InteractionDao.GetInteractionListByType(interactionType);
+	static async getInteractionListByType(
+		uid: string,
+		interactionType: InteractionType
+	): Promise<Interaction[]> {
+		return InteractionDao.GetInteractionListByType(uid, interactionType);
 	}
 	static async getInteractionListByTypeAndUid(
+		uid: string,
 		interaction: InteractionType,
-		uid: string
+		searchUid: string
 	): Promise<Interaction[]> {
-		return InteractionDao.getInteractionListByTypeAndUid(interaction, uid);
+		return InteractionDao.getInteractionListByTypeAndUid(uid, interaction, searchUid);
 	}
 }

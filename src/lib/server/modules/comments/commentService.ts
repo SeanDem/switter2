@@ -1,11 +1,14 @@
 import { badWordFilter } from '$lib/server/utils/badWords';
-import type { Interaction } from '../interactions';
+import type { Interaction, InteractionIdRequest } from '../interactions';
 import { CommentDAO } from './commentDao';
 import type { SweetComment as SweetComment } from './commentType';
 
 export class CommentService {
-	static async getcommentsByInteractionId(sweetId: string): Promise<Interaction[]> {
-		return CommentDAO.getCommentsByInteractionId({ sweetId: sweetId });
+	static async getcommentsByInteractionId(
+		uid: string,
+		interactionRequest: InteractionIdRequest
+	): Promise<Interaction[]> {
+		return CommentDAO.getCommentsByInteractionId(uid, interactionRequest);
 	}
 
 	static async createComment(comment: Omit<SweetComment, 'commentId'>): Promise<SweetComment> {

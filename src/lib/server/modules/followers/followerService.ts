@@ -9,10 +9,10 @@ export class FollowerService {
 		return FollowDao.getFollowing(uid);
 	}
 
-	static async follow(uid: string, followerUid: string): Promise<any> {
+	static async follow(uid: string, followerUid: string): Promise<void> {
+		if (uid === followerUid) throw new Error('User cannot follow themselves.');
 		const isFollowing = await FollowDao.isUserFollowing(uid, followerUid);
-
-		if (isFollowing) return { message: 'User is already following.' };
+		if (isFollowing) return Promise.resolve();
 
 		return FollowDao.follow(uid, followerUid);
 	}

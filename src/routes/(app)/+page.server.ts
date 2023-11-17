@@ -1,5 +1,9 @@
 import { CommentService, type SweetComment } from '$lib/server/modules/comments';
-import { InteractionService, type Interaction } from '$lib/server/modules/interactions';
+import {
+	InteractionService,
+	type Interaction,
+	type InteractionIdRequest
+} from '$lib/server/modules/interactions';
 import { LikeService, type SweetLike } from '$lib/server/modules/likes';
 import { ResweetService, type Resweet } from '$lib/server/modules/resweets';
 import { fail, type Actions, redirect } from '@sveltejs/kit';
@@ -7,7 +11,10 @@ import { fail, type Actions, redirect } from '@sveltejs/kit';
 export const load = async ({ cookies }) => {
 	const uid = cookies.get('uid');
 	if (!uid) throw redirect(301, '/auth');
-	const sweetDetailList: Interaction[] = await InteractionService.getInteractionListByType('sweet');
+	const sweetDetailList: Interaction[] = await InteractionService.getInteractionListByType(
+		uid,
+		'sweet'
+	);
 	return { sweetDetailList };
 };
 
@@ -17,38 +24,24 @@ export const actions: Actions = {
 		if (!uid) throw redirect(301, '/auth');
 
 		const form = await request.formData();
-		const parentType = form.get('parentType');
-		const id = form.get('id');
-
-		if (!parentType || !id) {
+		const interactionReq = form.get('interaction');
+		if (!interactionReq) {
 			return fail(400, { missing: true });
 		}
+		const interaction: InteractionIdRequest = JSON.parse(interactionReq?.toString());
+		LikeService.createSweetLike(uid, interaction);
+	},
+	unlike: async ({ request, cookies }) => {
+		const uid = cookies.get('uid');
+		if (!uid) throw redirect(301, '/auth');
 
-		if (typeof id !== 'string' || typeof parentType !== 'string') {
-			return fail(400, { invalid: true });
+		const form = await request.formData();
+		const interactionReq = form.get('interaction');
+		if (!interactionReq) {
+			return fail(400, { missing: true });
 		}
-
-		const sweetLike: SweetLike = {
-			uid,
-			sweetId: null,
-			resweetId: null,
-			commentId: null
-		};
-
-		switch (parentType) {
-			case 'sweet':
-				sweetLike.sweetId = id;
-				break;
-			case 'comment':
-				sweetLike.commentId = id;
-				break;
-			case 'resweet':
-				sweetLike.resweetId = id;
-				break;
-			default:
-				fail(400, { invalid: true });
-		}
-		LikeService.createSweetLike(sweetLike);
+		const interaction: InteractionIdRequest = JSON.parse(interactionReq?.toString());
+		LikeService.deleteSweetLike(uid, interaction);
 	},
 	comment: async ({ request, cookies }) => {
 		const uid = cookies.get('uid');

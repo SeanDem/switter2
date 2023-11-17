@@ -29,11 +29,14 @@ export class CommentDAO {
 		return data!;
 	}
 
-	static async getCommentsByInteractionId({
-		sweetId: _sweet_id = null,
-		commentId: _comment_id = null,
-		resweetId: _resweet_id = null
-	}: InteractionIdRequest): Promise<Interaction[]> {
+	static async getCommentsByInteractionId(
+		uid: string,
+		{
+			sweetId: _sweet_id = null,
+			commentId: _comment_id = null,
+			resweetId: _resweet_id = null
+		}: InteractionIdRequest
+	): Promise<Interaction[]> {
 		const { data, error } = await supabase.rpc('getcommentsbyid', {
 			_sweet_id,
 			_comment_id,

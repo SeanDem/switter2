@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-	purge: {
+	content: {
 		content: ['./src/**/*.svelte'],
 		options: {
 			whitelistPatterns: [/svelte-/]

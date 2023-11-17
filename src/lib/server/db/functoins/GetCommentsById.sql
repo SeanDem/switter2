@@ -1,6 +1,6 @@
-DROP FUNCTION GetCommentsById(uuid,uuid,uuid);
+DROP FUNCTION GetCommentsById(uuid,uuid,uuid,uuid);
 
-CREATE OR REPLACE FUNCTION GetCommentsById(_sweet_id UUID, _comment_id UUID, _resweet_id UUID) 
+CREATE OR REPLACE FUNCTION GetCommentsById(_uid UUID, _sweet_id UUID, _comment_id UUID, _resweet_id UUID) 
 RETURNS TABLE (
   "commentId" UUID,
   uid UUID,
@@ -12,7 +12,10 @@ RETURNS TABLE (
   bio TEXT,
   "commentsCount" BIGINT,
   "likesCount" BIGINT,
-  "resweetsCount" BIGINT
+  "resweetsCount" BIGINT,
+  "isLiked" BOOLEAN, 
+  "isResweeted" BOOLEAN, 
+  "isCommented" BOOLEAN 
 ) AS $$
 BEGIN
     RETURN QUERY
@@ -27,7 +30,10 @@ BEGIN
         up.bio,
         (SELECT COUNT(*) FROM Comment subC WHERE subC.parent_comment_id = c.comment_id) AS commentsCount,
         (SELECT COUNT(*) FROM SweetLike l WHERE l.comment_id = c.comment_id) AS likesCount,
-        (SELECT COUNT(*) FROM ReSweet rs WHERE rs.resweet_id = c.resweet_id) AS resweetsCount
+        (SELECT COUNT(*) FROM ReSweet rs WHERE rs.resweet_id = c.resweet_id) AS resweetsCount,
+        (SELECT EXISTS(SELECT 1 FROM SweetLike WHERE comment_id = c.comment_id AND SweetLike.uid = _uid)) AS isLiked,
+        (SELECT EXISTS(SELECT 1 FROM ReSweet WHERE comment_id = c.comment_id AND ReSweet.uid = _uid)) AS isResweeted,
+        (SELECT EXISTS(SELECT 1 FROM Comment WHERE parent_comment_id = c.comment_id AND Comment.uid = _uid)) AS isCommented
     FROM
         Comment c
         JOIN UserProfile up ON c.uid = up.uid

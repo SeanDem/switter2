@@ -83,9 +83,3 @@ CREATE TABLE UserFollowers (
     followee_uid UUID NOT NULL REFERENCES UserProfile(uid),
     timestamp TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
-
-\i 'functions/GetAllSweets.sql'
-\i 'functions/GetCommentsById.sql'
-\i 'functions/GetInteractionById.sql'
-\i 'functions/GetInteractionListById.sql'
-\i 'functions/GetInteractionsByText.sql'

@@ -1,6 +1,5 @@
-DROP FUNCTION IF EXISTS GetInteractionById(uuid,uuid,uuid);
-
-CREATE OR REPLACE FUNCTION GetInteractionById(
+DROP FUNCTION IF EXISTS GetInteractionById(uuid, uuid,uuid,uuid);
+CREATE OR REPLACE FUNCTION GetInteractionById(_uid uuid,
     _sweet_id UUID,
     _comment_id UUID,
     _resweet_id UUID
@@ -24,7 +23,10 @@ RETURNS TABLE (
     bio TEXT,
     "commentsCount" BIGINT,
     "likesCount" BIGINT,
-    "resweetsCount" BIGINT
+    "resweetsCount" BIGINT,
+    "isLiked" BOOLEAN, 
+    "isResweeted" BOOLEAN, 
+    "isCommented" BOOLEAN 
 ) as $$
 BEGIN
     IF _sweet_id IS NOT NULL THEN
@@ -47,7 +49,10 @@ BEGIN
             up.bio,
             (SELECT COUNT(*) FROM Comment WHERE sweet_id = _sweet_id) AS commentsCount,
             (SELECT COUNT(*) FROM SweetLike WHERE sweet_id = _sweet_id) AS likesCount,
-            (SELECT COUNT(*) FROM ReSweet WHERE sweet_id = _sweet_id) AS resweetsCount
+            (SELECT COUNT(*) FROM ReSweet WHERE sweet_id = _sweet_id) AS resweetsCount,
+            (SELECT EXISTS(SELECT 1 FROM SweetLike WHERE sweet_id = s.sweet_id AND SweetLike.uid = _uid)) AS isLiked,
+            (SELECT EXISTS(SELECT 1 FROM ReSweet WHERE sweet_id = s.sweet_id AND ReSweet.uid = _uid)) AS isResweeted,
+            (SELECT EXISTS(SELECT 1 FROM Comment WHERE sweet_id = s.sweet_id AND Comment.uid = _uid)) AS isCommented
         FROM
             Sweet s
             JOIN UserProfile up ON s.uid = up.uid
@@ -74,7 +79,10 @@ BEGIN
             up.bio,
             (SELECT COUNT(*) FROM Comment WHERE parent_comment_id = _comment_id) AS commentsCount,
             (SELECT COUNT(*) FROM SweetLike WHERE comment_id = _comment_id) AS likesCount,
-            (SELECT COUNT(*) FROM ReSweet WHERE comment_id = c.comment_id) AS resweetsCount 
+            (SELECT COUNT(*) FROM ReSweet WHERE comment_id = c.comment_id) AS resweetsCount,
+            (SELECT EXISTS(SELECT 1 FROM SweetLike WHERE comment_id = c.comment_id AND SweetLike.uid = _uid)) AS isLiked,
+            (SELECT EXISTS(SELECT 1 FROM ReSweet WHERE comment_id = c.comment_id AND ReSweet.uid = _uid)) AS isResweeted,
+            (SELECT EXISTS(SELECT 1 FROM Comment WHERE parent_comment_id = c.comment_id AND Comment.uid = _uid)) AS isCommented 
         FROM
             Comment c
             JOIN UserProfile up ON c.uid = up.uid
@@ -101,7 +109,10 @@ BEGIN
             up.bio,
             (SELECT COUNT(*) FROM Comment WHERE resweet_id = _resweet_id) AS commentsCount,
             (SELECT COUNT(*) FROM SweetLike WHERE resweet_id = _resweet_id) AS likesCount,
-            (SELECT COUNT(*) FROM ReSweet WHERE parent_resweet_id = _resweet_id OR resweet_id = _resweet_id) AS resweetsCount
+            (SELECT COUNT(*) FROM ReSweet WHERE parent_resweet_id = _resweet_id OR resweet_id = _resweet_id) AS resweetsCount,
+            (SELECT EXISTS(SELECT 1 FROM SweetLike WHERE resweet_id = rs.resweet_id AND SweetLike.uid = _uid)) AS isLiked,
+            (SELECT EXISTS(SELECT 1 FROM ReSweet WHERE resweet_id = rs.resweet_id AND ReSweet.uid = _uid)) AS isResweeted,
+            (SELECT EXISTS(SELECT 1 FROM Comment WHERE resweet_id = rs.resweet_id AND Comment.uid = _uid)) AS isCommented
         FROM
             ReSweet rs
             JOIN UserProfile up ON rs.uid = up.uid
