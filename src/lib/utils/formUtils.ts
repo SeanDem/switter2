@@ -1,4 +1,4 @@
-import type { Interaction, InteractionIdRequest } from "$lib/server/modules/interactions";
+import type { Interaction, InteractionIdRequest } from '$lib/server/modules/interactions';
 
 export function createInteractionIdRequest(
 	interactionIdRequest: Interaction

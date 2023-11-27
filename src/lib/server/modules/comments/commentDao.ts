@@ -38,6 +38,7 @@ export class CommentDAO {
 		}: InteractionIdRequest
 	): Promise<Interaction[]> {
 		const { data, error } = await supabase.rpc('getcommentsbyid', {
+			_uid: uid,
 			_sweet_id,
 			_comment_id,
 			_resweet_id

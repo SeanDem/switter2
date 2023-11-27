@@ -1,30 +1,36 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import type { Interaction } from '$lib/server/modules/interactions';
-
-	export let type: 'like' | 'comment' | 'resweet';
+	import { createInteractionIdRequest } from '$lib/utils/formUtils';
+	
 	export let interaction: Interaction;
-	export let id: string;
-	export let count: number;
-
+	$: interactionIdRequest = createInteractionIdRequest(interaction);
 	let showDialog = false;
 	let text = '';
+
+	function toggleComment() {
+		interaction = {
+			...interaction,
+			isLiked: !interaction.commentId,
+			likesCount: interaction.isCommented
+				? interaction.commentsCount - 1
+				: interaction.commentsCount + 1
+		};
+	}
 </script>
 
 <button on:click={() => (showDialog = true)}>
-	{type.charAt(0).toUpperCase() + type.slice(1)}s: {count}
+	Comments: {interaction.commentsCount}
 </button>
 
 {#if showDialog}
 	<div class="dialog-overlay">
 		<div class="dialog">
-			<h2>Write a comment</h2>
+			<h2>Write a Comment</h2>
 			<form use:enhance method="post">
 				<textarea name="text" bind:value={text} />
-				<input type="hidden" name="type" value={type} />
-				<input type="hidden" name="id" value={id} />
-				<input type="hidden" name="interaction" value={interaction} />
-				<button formaction="/?/{type}">Submit</button>
+				<input type="hidden" name="interaction" value={JSON.stringify(interactionIdRequest)} />
+				<button on:click={toggleComment} formaction="/?/comment">Submit</button>
 			</form>
 			<button on:click={() => (showDialog = false)}>Cancel</button>
 		</div>

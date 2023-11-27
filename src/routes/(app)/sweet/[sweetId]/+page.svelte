@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import ActionBar from '$lib/components/ActionBar.svelte';
+	import ActionBar from '$lib/components/actions/ActionBar.svelte';
 	import type { CommentDetail } from '$lib/server/modules/comments';
 	import type { Interaction } from '$lib/server/modules/interactions';
 	import type { SweetDetails } from '$lib/server/modules/sweets';

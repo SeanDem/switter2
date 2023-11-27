@@ -11,7 +11,6 @@ export class SweetLikesDAO {
 			uid,
 			...this.mapInteractionRequestToSnakeCase(interactionIdRequest)
 		};
-		console.log(sweetLike);
 		const { data, error } = await supabase.from('sweetlike').insert([sweetLike]);
 
 		if (error) throw new Error(error.message);
@@ -37,11 +36,20 @@ export class SweetLikesDAO {
 			.or(queryCondition);
 
 		if (error) throw new Error(error.details + error.message + error.hint);
-
 		return data.length > 0;
 	}
 
-	static async deleteSweetLike(uid: string, idTypeRequest: InteractionIdRequest): Promise<null> {
+	static async deleteSweetLikeById(likeId: string): Promise<boolean> {
+		const { data, error } = await supabase.from('sweetlike').delete().match({ like_id: likeId }); // Use match() to specify the row to delete
+
+		if (error) throw new Error(error?.details + error?.message + error?.hint);
+		return true;
+	}
+
+	static async getSweetLikeByUidAndIdTypeRequest(
+		uid: string,
+		idTypeRequest: InteractionIdRequest
+	): Promise<string | null> {
 		let conditions = [];
 		if (idTypeRequest.commentId) conditions.push(`comment_id.eq.${idTypeRequest.commentId}`);
 		if (idTypeRequest.sweetId) conditions.push(`sweet_id.eq.${idTypeRequest.sweetId}`);
@@ -52,25 +60,17 @@ export class SweetLikesDAO {
 		}
 
 		const queryCondition = conditions.join(',');
-
 		const { data, error } = await supabase
 			.from('sweetlike')
-			.delete()
+			.select('sweet_id')
 			.eq('uid', uid)
 			.or(queryCondition);
 
-		if (error) throw new Error(error?.details + error?.message + error?.hint);
-
-		return data;
+		if (error) throw new Error(error.details + error.message + error.hint);
+		if (data && data.length > 0) return data[0].sweet_id;
+		return null;
 	}
 
-	static async deleteSweetLikeById(likeId: string): Promise<boolean> {
-		const like_id = likeId;
-		const { error } = await supabase.from('sweetlike').delete().eq('like_id', like_id);
-
-		if (error) throw new Error(error.message);
-		return true;
-	}
 	static mapInteractionRequestToSnakeCase(interactionRequest: InteractionIdRequest) {
 		return {
 			resweet_id: interactionRequest.resweetId,

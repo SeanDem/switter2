@@ -1,26 +1,45 @@
-import { badWordFilter } from '$lib/server/utils/badWords';
-import { ResweetDAO } from './resweetDao';
-import type { Resweet } from './resweetsType';
+import { ResweetDAO, type Resweet } from '.';
+import type { InteractionIdRequest } from '../interactions';
 
 export class ResweetService {
 	static async createResweet(resweet: Resweet): Promise<Resweet> {
-		if (resweet.text) {
-			resweet.text = badWordFilter.clean(resweet.text.trim());
-		}
+		ResweetService.validateInteractionIdRequest(resweet);
 
-		const keys: (keyof Omit<Resweet, 'resweetId'>)[] = [
-			'parentResweetId',
-			'sweetId',
-			'parentResweetId'
-		];
-		const count = keys.reduce((acc, key) => {
-			return acc + (resweet[key] ? 1 : 0);
-		}, 0);
+		const resweetId = await ResweetDAO.getResweetByIdRequestAndUid(resweet.uid, resweet);
+
+		if (resweetId) Promise.resolve(resweetId);
+		return await ResweetDAO.insertResweet(resweet);
+	}
+
+	static async deleteResweet(
+		uid: string,
+		interactionIdRequest: InteractionIdRequest
+	): Promise<void> {
+		ResweetService.validateInteractionIdRequest(interactionIdRequest);
+
+		const resweetId = await ResweetDAO.getResweetByIdRequestAndUid(uid, interactionIdRequest);
+
+		if (!resweetId) return Promise.resolve();
+		await ResweetDAO.deleteResweet(resweetId);
+	}
+
+	static createInteractionIdRequest(resweet: Resweet): InteractionIdRequest {
+		return {
+			commentId: resweet.commentId,
+			sweetId: resweet.sweetId,
+			resweetId: resweet.resweetId
+		};
+	}
+	private static validateInteractionIdRequest(interactionIdRequest: InteractionIdRequest): void {
+		let count = 0;
+		if (interactionIdRequest.sweetId) count++;
+		if (interactionIdRequest.resweetId) count++;
+		if (interactionIdRequest.commentId) count++;
 
 		if (count > 1) {
 			throw new Error('Only one of parentCommentId, sweetId, or resweetId should be provided.');
+		} else if (count === 0) {
+			throw new Error('One of parentCommentId, sweetId, or resweetId should be provided.');
 		}
-
-		return await ResweetDAO.insertResweet(resweet);
 	}
 }

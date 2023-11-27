@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+
 export default {
 	content: {
 		content: ['./src/**/*.svelte'],
@@ -6,5 +7,8 @@ export default {
 			whitelistPatterns: [/svelte-/]
 		}
 	},
-	variants: {}
+	daisyui: {
+		themes: ['light', 'dark', 'cupcake', 'lofi']
+	},
+	plugins: [require('daisyui')]
 };

@@ -4,17 +4,27 @@
 	import { createInteractionIdRequest } from '$lib/utils/formUtils';
 
 	export let interaction: Interaction;
-	export let count: number;
 	$: interactionIdRequest = createInteractionIdRequest(interaction);
+
+	function toggleLike() {
+		interaction = {
+			...interaction,
+			isLiked: !interaction.isLiked,
+			likesCount: interaction.isLiked ? interaction.likesCount - 1 : interaction.likesCount + 1
+		};
+	}
 </script>
 
 <form use:enhance method="post">
 	<input type="hidden" name="interaction" value={JSON.stringify(interactionIdRequest)} />
 	<input type="hidden" name="id" value={interaction.actionId} />
-	<div>{interaction.isLiked}</div>
 	{#if interaction.isLiked}
-		<button class="bg-green-100" formaction="/?/unlike" name="unlike">unLike: {count}</button>
+		<button class="bg-green-100" on:click={toggleLike} formaction="/?/unlike" name="unlike"
+			>unLike: {interaction.likesCount}</button
+		>
 	{:else}
-		<button formaction="/?/like" name="like">Likes: {count}</button>
+		<button on:click={toggleLike} formaction="/?/like" name="like"
+			>Likes: {interaction.likesCount}</button
+		>
 	{/if}
 </form>
