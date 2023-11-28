@@ -1,18 +1,14 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { Heart, Icon } from 'svelte-hero-icons';
 	import type { Interaction } from '$lib/server/modules/interactions';
 	import { createInteractionIdRequest } from '$lib/utils/formUtils';
-	import { afterUpdate } from 'svelte';
+	import { Heart, Icon } from 'svelte-hero-icons';
 
 	export let interaction: Interaction;
 	$: interactionIdRequest = createInteractionIdRequest(interaction);
 	function handleLike() {
-		interaction = {
-			...interaction,
-			isLiked: !interaction.isLiked,
-			likesCount: interaction.isLiked ? interaction.likesCount - 1 : interaction.likesCount + 1
-		};
+		// interaction.isLiked = !interaction.isLiked;
+		// interaction.likesCount += interaction.isLiked ? 1 : -1;
 	}
 </script>
 
