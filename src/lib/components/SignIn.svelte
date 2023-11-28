@@ -19,26 +19,29 @@
 
 <div class="flex flex-col items-center my-8">
 	<form on:submit|preventDefault={submit} class="flex flex-col gap-4 w-96">
-		<span class="label-text text-base-content">Email</span>
-		<input
-			required
-			type="email"
-			name="email"
-			placeholder="Email"
-			bind:value={email}
-			class="input input-bordered"
-		/>
-		<span class="label-text text-base-content">Password</span>
-		<input
-			required
-			type="password"
-			name="password"
-			placeholder="Password"
-			bind:value={password}
-			class="input input-bordered"
-		/>
-
-		<button type="submit" class="btn btn-primary mt-4 rounded">Submit</button>
+		<div>
+			<span class="label-text text-base-content">Email</span>
+			<input
+				required
+				type="email"
+				name="email"
+				placeholder="Email"
+				bind:value={email}
+				class="input input-bordered w-full"
+			/>
+		</div>
+		<div>
+			<span class="label-text text-base-content">Password</span>
+			<input
+				required
+				type="password"
+				name="password"
+				placeholder="Password"
+				bind:value={password}
+				class="input input-bordered w-full"
+			/>
+		</div>
+		<button type="submit" class="btn btn-primary rounded">Submit</button>
 	</form>
 
 	{#if loginError}
@@ -46,5 +49,5 @@
 	{/if}
 </div>
 
-<span class="text-base-content"> Need an account? </span>
+<span class="text-base-content pr-2"> Need an account? </span>
 <a class="btn rounded" href="/auth/signup"> SignUp </a>
