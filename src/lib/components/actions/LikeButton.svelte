@@ -1,30 +1,39 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { Heart, Icon } from 'svelte-hero-icons';
 	import type { Interaction } from '$lib/server/modules/interactions';
 	import { createInteractionIdRequest } from '$lib/utils/formUtils';
+	import { afterUpdate } from 'svelte';
 
 	export let interaction: Interaction;
 	$: interactionIdRequest = createInteractionIdRequest(interaction);
-
-	function toggleLike() {
+	function handleLike() {
+		console.log(interaction);
 		interaction = {
 			...interaction,
 			isLiked: !interaction.isLiked,
 			likesCount: interaction.isLiked ? interaction.likesCount - 1 : interaction.likesCount + 1
 		};
+		console.log(interaction);
 	}
+
+	afterUpdate(() => {
+		console.log(interaction);
+	});
 </script>
 
-<form use:enhance method="post">
+<form use:enhance method="post" on:submit={handleLike}>
 	<input type="hidden" name="interaction" value={JSON.stringify(interactionIdRequest)} />
 	<input type="hidden" name="id" value={interaction.actionId} />
-	{#if interaction.isLiked}
-		<button class="bg-green-100" on:click={toggleLike} formaction="/?/unlike" name="unlike"
-			>unLike: {interaction.likesCount}</button
+
+	<button
+		class="flex items-center space-x-1 border-none"
+		aria-label="Like"
+		formaction={interaction.isLiked ? '/?/unlike' : '/?/like'}
+	>
+		<Icon src={Heart} class={`h-6 w-6 ${interaction.isLiked ? 'text-pink-500' : 'text-black'}`} />
+		<span class={`text-xs ${interaction.isLiked ? 'text-pink-500' : 'text-black'}`}
+			>{interaction.likesCount}</span
 		>
-	{:else}
-		<button on:click={toggleLike} formaction="/?/like" name="like"
-			>Likes: {interaction.likesCount}</button
-		>
-	{/if}
+	</button>
 </form>

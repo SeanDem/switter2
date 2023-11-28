@@ -38,8 +38,6 @@ BEGIN
         Comment c
         JOIN UserProfile up ON c.uid = up.uid
     WHERE
-        (_sweet_id IS NOT NULL AND c.sweet_id = _sweet_id) OR
-        (_comment_id IS NOT NULL AND c.parent_comment_id = _comment_id) OR
-        (_resweet_id IS NOT NULL AND c.resweet_id = _resweet_id);
+        (_sweet_id IS NOT NULL AND c.sweet_id = _sweet_id)
 END;
 $$ LANGUAGE plpgsql;

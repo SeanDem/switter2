@@ -59,6 +59,9 @@ devDependencies:
   svelte-check:
     specifier: ^3.6.0
     version: 3.6.0(postcss@8.4.31)(svelte@3.59.2)
+  svelte-hero-icons:
+    specifier: ^5.0.0
+    version: 5.0.0
   tailwindcss:
     specifier: ^3.3.5
     version: 3.3.5
@@ -442,6 +445,10 @@ packages:
     dependencies:
       estree-walker: 2.0.2
       picomatch: 2.3.1
+    dev: true
+
+  /@steeze-ui/heroicons@2.2.3:
+    resolution: {integrity: sha512-bv4YK375U9TDS50SmJ5VdFy2UmMhgKbJCCbo6IUU3qs2luEj2VX6sQoDy96j8AIKttxMd62ih1j0lZj7CTjIfA==}
     dev: true
 
   /@supabase/functions-js@2.1.5:
@@ -2309,6 +2316,13 @@ packages:
       postcss: 8.4.31
       postcss-scss: 4.0.9(postcss@8.4.31)
       svelte: 3.59.2
+    dev: true
+
+  /svelte-hero-icons@5.0.0:
+    resolution: {integrity: sha512-xKMI/Z0f/6831I0R1YKJjVbAw9VBD6XKysvng6LtomlS4n3ZD1lZNAfLrrCmnc1pmiLr/8sVeQA8kgHLQwYlRg==}
+    engines: {node: '>=14.0.0'}
+    dependencies:
+      '@steeze-ui/heroicons': 2.2.3
     dev: true
 
   /svelte-hmr@0.15.3(svelte@3.59.2):

@@ -2,23 +2,20 @@
 	import { page } from '$app/stores';
 </script>
 
-<header>
+<header class="bg-base-100">
 	<nav>
-		<ul>
-			<li aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
+		<ul class="menu menu-horizontal p-0">
+			<li class:active={$page.url.pathname === '/'}>
 				<a href="/">Home</a>
 			</li>
-			<!-- <li aria-current={$page.url.pathname.startsWith('/conversations') ? 'page' : undefined}>
-				<a href="/conversations">Conversations</a>
-			</li> -->
-			<li aria-current={$page.url.pathname.startsWith('/profile') ? 'page' : undefined}>
-				<a href="/profile">Profile</a>
+			<li class:active={$page.url.pathname.includes('/search')}>
+				<a href="/search">Search</a>
 			</li>
-			<li aria-current={$page.url.pathname.startsWith('/sweet') ? 'page' : undefined}>
+			<li class:active={$page.url.pathname.includes('/sweet')}>
 				<a href="/sweet">Sweet</a>
 			</li>
-			<li aria-current={$page.url.pathname.startsWith('/search') ? 'page' : undefined}>
-				<a href="/search">Search</a>
+			<li class:active={$page.url.pathname.includes('/profile')}>
+				<a href="/profile">Profile</a>
 			</li>
 		</ul>
 	</nav>

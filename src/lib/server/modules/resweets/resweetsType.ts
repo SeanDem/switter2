@@ -2,7 +2,7 @@ import type { InteractionDetails } from '../interactions';
 
 export type Resweet = {
 	uid: string;
-	timestamp?: Date | null;
+	timestamp?: string | null;
 	text?: string | null;
 	resweetId?: string;
 	parentResweetId?: string | null;

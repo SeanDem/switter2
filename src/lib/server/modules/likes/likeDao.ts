@@ -40,8 +40,7 @@ export class SweetLikesDAO {
 	}
 
 	static async deleteSweetLikeById(likeId: string): Promise<boolean> {
-		const { data, error } = await supabase.from('sweetlike').delete().match({ like_id: likeId }); // Use match() to specify the row to delete
-
+		const { data, error } = await supabase.from('sweetlike').delete().match({ like_id: likeId });
 		if (error) throw new Error(error?.details + error?.message + error?.hint);
 		return true;
 	}
@@ -62,12 +61,12 @@ export class SweetLikesDAO {
 		const queryCondition = conditions.join(',');
 		const { data, error } = await supabase
 			.from('sweetlike')
-			.select('sweet_id')
+			.select('like_id')
 			.eq('uid', uid)
 			.or(queryCondition);
 
 		if (error) throw new Error(error.details + error.message + error.hint);
-		if (data && data.length > 0) return data[0].sweet_id;
+		if (data && data.length > 0) return data[0].like_id;
 		return null;
 	}
 

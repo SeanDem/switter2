@@ -1,27 +1,12 @@
 <script lang="ts">
-	import ActionBar from '$lib/components/actions/ActionBar.svelte';
 	import SweetCard from '$lib/components/SweetCard.svelte';
 	import type { Interaction } from '$lib/server/modules/interactions';
 	export let data: { sweetDetailList: Interaction[] };
 	$: sweetDetailList = data.sweetDetailList;
 </script>
 
-<SweetCard />
-{#each sweetDetailList as sweetDetail}
-	<br />
-	<div>
-		<a href="/profile/{sweetDetail.uid}">Name: {sweetDetail.name}</a>
-		<span>Name: {sweetDetail.name}</span>
-		<span>Handle: {sweetDetail.handle}</span>
-	</div>
-	<br />
-	<div>{sweetDetail.text}</div>
-	<br />
-	<div>
-		<ActionBar interaction={sweetDetail} />
-	</div>
-	<div>
-		<a href="/sweet/{sweetDetail.sweetId}">Go To Sweet Page</a>
-	</div>
-	<br />
-{/each}
+<div class="flex flex-col items-center justify-center min-h-screen">
+	{#each sweetDetailList as interaction (interaction.actionId)}
+		<SweetCard {interaction} />
+	{/each}
+</div>

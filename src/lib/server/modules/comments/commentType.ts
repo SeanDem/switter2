@@ -7,7 +7,7 @@ export type SweetComment = {
 	parentCommentId?: string | null;
 	sweetId?: string | null;
 	resweetId?: string | null;
-	timestamp?: Date | null;
+	timestamp?: string | null;
 };
 
 export type CommentDetail = SweetComment & InteractionDetails;

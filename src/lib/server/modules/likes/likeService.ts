@@ -21,7 +21,7 @@ export class LikeService {
 		LikeService.validateInteractionIdRequest(interactionIdRequest);
 
 		const likeId = await SweetLikesDAO.getSweetLikeByUidAndIdTypeRequest(uid, interactionIdRequest);
-		
+
 		if (!likeId) return Promise.resolve();
 		await SweetLikesDAO.deleteSweetLikeById(likeId);
 	}

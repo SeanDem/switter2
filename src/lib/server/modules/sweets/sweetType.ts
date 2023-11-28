@@ -4,8 +4,8 @@ export type Sweet = {
 	sweetId: string;
 	uid: string;
 	text: string;
-	mediaUrls: string;
-	timestamp?: Date | null;
+	mediaUrls?: string;
+	timestamp?: string | null;
 	type?: string | null;
 };
 
