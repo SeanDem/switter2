@@ -8,18 +8,12 @@
 	export let interaction: Interaction;
 	$: interactionIdRequest = createInteractionIdRequest(interaction);
 	function handleLike() {
-		console.log(interaction);
 		interaction = {
 			...interaction,
 			isLiked: !interaction.isLiked,
 			likesCount: interaction.isLiked ? interaction.likesCount - 1 : interaction.likesCount + 1
 		};
-		console.log(interaction);
 	}
-
-	afterUpdate(() => {
-		console.log(interaction);
-	});
 </script>
 
 <form use:enhance method="post" on:submit={handleLike}>

@@ -25,7 +25,6 @@ export const actions: Actions = {
 
 		const form = await request.formData();
 		const interactionReq = form.get('interaction');
-
 		if (!interactionReq) {
 			return fail(400, { missing: true });
 		}
@@ -84,6 +83,7 @@ export const actions: Actions = {
 
 		const form = await request.formData();
 		const interactionReq = form.get('interaction');
+
 		if (!interactionReq) {
 			return fail(400, { missing: true });
 		}
@@ -111,7 +111,9 @@ export const actions: Actions = {
 		if (!uid) throw redirect(301, '/auth');
 
 		const form = await request.formData();
+
 		const interactionReq = form.get('interaction');
+
 		if (!interactionReq) {
 			return fail(400, { missing: true });
 		}
