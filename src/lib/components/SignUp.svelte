@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 	import type { UserProfile } from '$lib/server/modules/userProfiles';
 	import { supabase } from '$lib/supabaseClient';
+
 	let userProfile: UserProfile = {
 		name: '',
 		handle: '',
@@ -24,8 +25,8 @@
 			signupError = 'No user ID returned';
 			return;
 		}
+		userProfile.uid = uid;
 		try {
-			userProfile.uid = uid;
 			const { data, error } = await supabase.from('userprofile').insert([userProfile]).single();
 			if (error) {
 				signupError = error.message;
@@ -39,17 +40,68 @@
 	}
 </script>
 
-<div>
-	<form on:submit|preventDefault={submit}>
-		<input required type="email" bind:value={userProfile.email} placeholder="Email" />
-		<input required type="password" bind:value={password} placeholder="Password" />
-		<input required type="text" bind:value={userProfile.name} placeholder="Name" />
-		<input required type="text" bind:value={userProfile.handle} placeholder="Handle" />
-		<input type="text" bind:value={userProfile.bio} placeholder="Bio" />
-		<button type="submit">Submit</button>
+<div class="flex flex-col items-center my-8">
+	<form on:submit|preventDefault={submit} class="flex flex-col gap-4 w-96">
+		<div>
+			<span class="label-text text-base-content">Email</span>
+			<input
+				required
+				type="email"
+				bind:value={userProfile.email}
+				placeholder="Email"
+				class="input input-bordered w-full"
+			/>
+		</div>
+
+		<div>
+			<span class="label-text text-base-content">Password</span>
+			<input
+				required
+				type="password"
+				bind:value={password}
+				placeholder="Password"
+				class="input input-bordered w-full"
+			/>
+		</div>
+
+		<div>
+			<span class="label-text text-base-content">Name</span>
+			<input
+				required
+				type="text"
+				bind:value={userProfile.name}
+				placeholder="Name"
+				class="input input-bordered w-full"
+			/>
+		</div>
+
+		<div>
+			<span class="label-text text-base-content">Handle</span>
+			<input
+				required
+				type="text"
+				bind:value={userProfile.handle}
+				placeholder="Handle"
+				class="input input-bordered w-full"
+			/>
+		</div>
+
+		<div>
+			<span class="label-text text-base-content">Bio</span>
+			<input
+				type="text"
+				bind:value={userProfile.bio}
+				placeholder="Bio"
+				class="input input-bordered w-full"
+			/>
+		</div>
+
+		<button type="submit" class="btn btn-primary">Submit</button>
 	</form>
 
 	{#if signupError}
-		<p style="color: red;">{signupError}</p>
+		<p class="text-error mt-2">{signupError}</p>
 	{/if}
 </div>
+<span class="text-base-content"> Already have an account? </span>
+<a class="btn rounded" href="/auth/signin"> SignIn </a>
