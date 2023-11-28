@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Interaction } from '$lib/server/modules/interactions';
 	import { formatDateSmall } from '$lib/utils/utils';
-	import Actionbar from './actions/ActionBar.svelte';
+	import ActionBar from './actions/ActionBar.svelte';
 	export let interaction: Interaction;
 </script>
 
@@ -32,5 +32,5 @@
 			</div>
 		</div>
 	</a>
-	<Actionbar {interaction} />
+	<ActionBar {interaction} />
 </div>
