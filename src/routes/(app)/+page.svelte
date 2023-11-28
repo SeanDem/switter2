@@ -7,6 +7,8 @@
 
 <div class="flex flex-col items-center justify-center min-h-screen">
 	{#each sweetDetailList as interaction (interaction.actionId)}
-		<SweetCard {interaction} />
+		<div class="my-2">
+			<SweetCard {interaction} />
+		</div>
 	{/each}
 </div>
