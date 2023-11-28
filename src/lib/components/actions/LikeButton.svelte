@@ -7,8 +7,11 @@
 	export let interaction: Interaction;
 	$: interactionIdRequest = createInteractionIdRequest(interaction);
 	function handleLike() {
-		// interaction.isLiked = !interaction.isLiked;
-		// interaction.likesCount += interaction.isLiked ? 1 : -1;
+		interaction = {
+			...interaction,
+			isLiked: !interaction.isLiked,
+			likesCount: interaction.isLiked ? interaction.likesCount - 1 : interaction.likesCount + 1
+		};
 	}
 </script>
 

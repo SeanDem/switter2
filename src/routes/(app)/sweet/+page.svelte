@@ -4,15 +4,15 @@
 
 <div class="min-h-screen flex justify-center bg-white mt-3">
 	<div class="bg-white p-2 w-96">
-		<h2 class="text-2xl font-bold mb-2">Create a Tweet</h2>
+		<h2 class="text-2xl font-bold mb-2">Create a Sweet</h2>
 		<form use:enhance method="post" action="?/create">
 			<div class="mb-1">
 				<textarea
-					id="tweet"
+					id="sweet"
 					maxlength="150"
-					name="tweet"
+					name="sweet"
 					class="w-full p-2 rounded border border-gray-300 resize-none mb-2 outline-none h-28 focus:outline-none"
-					placeholder="Compose your tweet"
+					placeholder="Compose your sweet"
 					required
 				/>
 			</div>

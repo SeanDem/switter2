@@ -9,8 +9,9 @@ export const actions: Actions = {
 		const uid = cookies.get('uid');
 		if (!uid) throw redirect(301, '/auth');
 
-		const text = form.get('text');
+		const text = form.get('sweet');
 		if (!text || typeof text !== 'string') {
+			console.log('createSweet: no text');
 			return fail(401, { text, incorrect: true });
 		}
 
