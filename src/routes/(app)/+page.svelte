@@ -5,9 +5,9 @@
 	$: sweetDetailList = data.sweetDetailList;
 </script>
 
-<div class="flex flex-col items-center justify-center min-h-screen">
+<div class="flex flex-col items-center min-h-screen">
 	{#each sweetDetailList as interaction (interaction.actionId)}
-		<div class="my-2">
+		<div class="mt-1">
 			<SweetCard {interaction} />
 		</div>
 	{/each}

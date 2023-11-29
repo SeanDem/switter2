@@ -11,6 +11,7 @@
 		email: ''
 	};
 	let password: string = '';
+	let confirmPassword: string = '';
 	let signupError: string = '';
 
 	async function submit(event: SubmitEvent) {
@@ -61,6 +62,24 @@
 				bind:value={password}
 				placeholder="Password"
 				class="input input-bordered w-full"
+			/>
+		</div>
+
+		<div>
+			<span class="label-text text-base-content">Confirm Password</span>
+			<input
+				required
+				type="password"
+				bind:value={confirmPassword}
+				placeholder="Password"
+				class="input input-bordered w-full"
+				on:change={() => {
+					if (password !== confirmPassword) {
+						signupError = 'Passwords do not match';
+					} else {
+						signupError = '';
+					}
+				}}
 			/>
 		</div>
 

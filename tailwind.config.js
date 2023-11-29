@@ -10,5 +10,12 @@ export default {
 	daisyui: {
 		themes: ['light', 'dark', 'cupcake', 'lofi']
 	},
+	theme: {
+		extend: {
+			width: {
+				128: '32rem'
+			}
+		}
+	},
 	plugins: [require('daisyui')]
 };

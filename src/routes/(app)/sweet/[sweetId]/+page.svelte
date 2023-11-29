@@ -1,26 +1,19 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import ActionBar from '$lib/components/actions/ActionBar.svelte';
-	import type { CommentDetail } from '$lib/server/modules/comments';
+	import SweetCard from '$lib/components/SweetCard.svelte';
 	import type { Interaction } from '$lib/server/modules/interactions';
-	import type { SweetDetails } from '$lib/server/modules/sweets';
 
-	export let data: { sweetDetails: Interaction; commentList: CommentDetail[] };
+	export let data: { sweetDetails: Interaction; commentList: Interaction[] };
 	$: sweetDetail = data.sweetDetails;
 	$: commentList = data.commentList;
 </script>
 
-<div>
-	<div>{sweetDetail.text}</div>
-	<ActionBar interaction={sweetDetail} />
-
-	<br />
+<div class="flex flex-col items-center min-h-screen">
+	<SweetCard interaction={sweetDetail} isMain={true} />
 	{#if commentList}
-		{#each commentList as comment}
-			<div>{comment.text}</div>
-			<div>{comment.commentId}</div>
-			<a href="/comment/{comment.commentId}">goto comment</a>
+		{#each commentList as comment (comment.commentId)}
+			<div class="pt-1 border-l border-gray-300 ml-3 pl-2">
+				<SweetCard interaction={comment} type="comment" />
+			</div>
 		{/each}
 	{/if}
-	<br />
 </div>

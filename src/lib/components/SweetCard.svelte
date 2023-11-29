@@ -1,12 +1,14 @@
 <script lang="ts">
-	import type { Interaction } from '$lib/server/modules/interactions';
+	import type { Interaction, InteractionType } from '$lib/server/modules/interactions';
 	import { formatDateSmall } from '$lib/utils/utils';
 	import ActionBar from './actions/ActionBar.svelte';
 	export let interaction: Interaction;
+	export let type: InteractionType = 'sweet';
+	export let isMain = false;
 </script>
 
-<div class="card card-bordered w-96 bg-base-100 shadow-s p-1 m-0">
-	<a href="/sweet/{interaction.sweetId}" class="py-3 pb-3">
+<div class="card card-bordered bg-base-100 shadow-s py-1 m-0 {isMain ? 'w-128 py-3 my-3' : 'w-96'}">
+	<a href="/{type}/{interaction.sweetId}">
 		<div class="flex">
 			<div class="flex-shrink-0">
 				<a href="/profile/{interaction.uid}">
