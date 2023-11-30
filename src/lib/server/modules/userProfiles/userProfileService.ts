@@ -1,4 +1,4 @@
-import { badWordFilter, cleanInput } from '$lib/server/utils/badWords';
+import { badWordFilter, cleanInput } from '$lib/server/ServerUtils/badWords';
 import { UserProfileDAO, type UserProfile, type UserProfilePartial } from '.';
 import { FollowDao } from '../followers/followerDao';
 

@@ -2,7 +2,7 @@ import type { InteractionDetails } from '../interactions';
 
 export type SweetComment = {
 	uid: string;
-	text: string;
+	text?: string | null;
 	commentId?: string | null;
 	parentCommentId?: string | null;
 	sweetId?: string | null;

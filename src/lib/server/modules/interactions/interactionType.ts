@@ -7,6 +7,7 @@ export type Interaction = Sweet & SweetComment & Resweet & InteractionDetails;
 
 export type InteractionDetails = SweetInteractionCount &
 	Pick<UserProfile, 'handle' | 'bio' | 'name' | 'profileUrl'> & {
+		type: InteractionType;
 		actionId: string;
 		isLiked: boolean;
 		isCommented: boolean;

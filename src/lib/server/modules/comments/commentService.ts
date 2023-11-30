@@ -1,4 +1,4 @@
-import { badWordFilter } from '$lib/server/utils/badWords';
+import { badWordFilter } from '$lib/server/ServerUtils/badWords';
 import type { Interaction, InteractionIdRequest } from '../interactions';
 import { CommentDAO } from './commentDao';
 import type { SweetComment as SweetComment } from './commentType';

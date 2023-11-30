@@ -4,8 +4,9 @@ import type { InteractionSearchRequest } from './searchType';
 
 export class SearchService {
 	static async searchInteractionText(
+		uid: string,
 		interactionSearchRequest: InteractionSearchRequest
 	): Promise<Interaction[]> {
-		return await SearchDao.searchInteractionText(interactionSearchRequest);
+		return await SearchDao.searchInteractionText(uid, interactionSearchRequest);
 	}
 }
