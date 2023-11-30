@@ -4,7 +4,7 @@ export type Resweet = {
 	uid: string;
 	timestamp?: string | null;
 	text?: string | null;
-	resweetId?: string;
+	resweetId?: string | null;
 	parentResweetId?: string | null;
 	sweetId?: string | null;
 	commentId?: string | null;

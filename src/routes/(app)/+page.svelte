@@ -1,5 +1,5 @@
 <script lang="ts">
-	import SweetCard from '$lib/components/SweetCard.svelte';
+	import SweetCard from '$lib/components/InteractionCard.svelte';
 	import type { Interaction } from '$lib/server/modules/interactions';
 	export let data: { sweetDetailList: Interaction[] };
 	$: sweetDetailList = data.sweetDetailList;

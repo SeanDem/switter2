@@ -5,10 +5,27 @@
 	export let interaction: Interaction;
 	export let type: InteractionType = 'sweet';
 	export let isMain = false;
+
+	let url = '';
+	$: {
+		if (type === 'sweet') {
+			url = `/sweet/${interaction.sweetId}`;
+		} else if (type === 'resweet') {
+			url = `/resweet/${interaction.resweetId}`;
+		} else if (type === 'comment') {
+			url = `/comment/${interaction.commentId}`;
+		} else {
+			url = '/';
+		}
+	}
 </script>
 
-<div class="card card-bordered bg-base-100 shadow-s py-1 m-0 {isMain ? 'w-128 py-3 my-3' : 'w-96'}">
-	<a href="/{type}/{interaction.sweetId}">
+<div
+	class="card card-bordered shadow-s py-1 m-0 {isMain
+		? 'w-110 py-2 my-1 border-slate-400	'
+		: 'w-96'}"
+>
+	<a href={url}>
 		<div class="flex">
 			<div class="flex-shrink-0">
 				<a href="/profile/{interaction.uid}">

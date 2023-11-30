@@ -11,7 +11,6 @@ export const actions: Actions = {
 
 		const text = form.get('sweet');
 		if (!text || typeof text !== 'string') {
-			console.log('createSweet: no text');
 			return fail(401, { text, incorrect: true });
 		}
 
