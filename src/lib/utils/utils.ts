@@ -23,3 +23,25 @@ export function formatDateSmall(
 		return new Intl.DateTimeFormat(language, { month: 'short', day: '2-digit' }).format(postDate);
 	}
 }
+export function formatDateDetailed(
+	dateString: string | null | undefined,
+	language: string = 'en-US'
+): string {
+	if (!dateString) return '';
+
+	const date = new Date(dateString);
+	if (isNaN(date.getTime())) {
+		return '';
+	}
+
+	const options: Intl.DateTimeFormatOptions = {
+		hour: '2-digit',
+		minute: '2-digit',
+		hour12: true,
+		month: 'short',
+		day: '2-digit',
+		year: 'numeric'
+	};
+
+	return new Intl.DateTimeFormat(language, options).format(date);
+}

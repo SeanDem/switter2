@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Interaction, InteractionType } from '$lib/server/modules/interactions';
-	import { formatDateSmall } from '$lib/utils/utils';
+	import { formatDateDetailed, formatDateSmall } from '$lib/utils/utils';
 	import ActionBar from './actions/ActionBar.svelte';
 	export let interaction: Interaction;
 	export let type: InteractionType = 'sweet';
@@ -42,7 +42,11 @@
 				<a href="/profile/{interaction.uid}">
 					<span class="text-lg font-semibold hover:underline mr-2">{interaction?.name}</span>
 				</a>
+				{#if isMain}
+				<span class="text-sm text-gray-500">{formatDateDetailed(interaction?.timestamp)}</span>
+				{:else}
 				<span class="text-sm text-gray-500">{formatDateSmall(interaction?.timestamp)}</span>
+				{/if}
 				<div class="mt-2">
 					<p>{interaction?.text}</p>
 				</div>
