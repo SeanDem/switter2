@@ -1,26 +1,13 @@
 <script lang="ts">
 	import type { Interaction, InteractionType } from '$lib/server/modules/interactions';
-	import ActionBar from '../actions/ActionBar.svelte';
+	import ActionBar from '../actionBar/ActionBar.svelte';
 	import InteractionCardBody from './InteractionCardBody.svelte';
 
 	export let parentInteraction: Interaction | null = null;
 	export let parentInteractionType: InteractionType | null = null;
 	export let interaction: Interaction;
-	export let interactionType: InteractionType = 'sweet';
+	export let interactionType: InteractionType;
 	export let isMain = false;
-
-	let url = '';
-	$: {
-		if (interactionType === 'sweet') {
-			url = `/sweet/${interaction.sweetId}`;
-		} else if (interactionType === 'resweet') {
-			url = `/resweet/${interaction.resweetId}`;
-		} else if (interactionType === 'comment') {
-			url = `/comment/${interaction.commentId}`;
-		} else {
-			url = '/';
-		}
-	}
 </script>
 
 <div

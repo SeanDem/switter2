@@ -49,7 +49,8 @@ BEGIN
             Sweet s
             JOIN UserProfile up ON s.uid = up.uid
         WHERE
-            s.text ILIKE _search_text;
+            s.text ILIKE _search_text
+        ORDER BY s.timestamp DESC;
 
     ELSIF _type = 'comment' THEN
         RETURN QUERY
@@ -77,7 +78,8 @@ BEGIN
             Comment c
             JOIN UserProfile up ON c.uid = up.uid
         WHERE
-            c.text ILIKE _search_text;
+            c.text ILIKE _search_text
+        ORDER BY c.timestamp DESC;
 
     ELSIF _type = 'resweet' THEN
         RETURN QUERY
@@ -105,7 +107,8 @@ BEGIN
             ReSweet rs
             JOIN UserProfile up ON rs.uid = up.uid
         WHERE
-            rs.text ILIKE _search_text;
+            rs.text ILIKE _search_text
+        ORDER BY rs.timestamp DESC;
         ELSE
             RAISE EXCEPTION 'Invalid id. Must be _sweet_id, _comment_id, or resweet_id.';
     END IF;

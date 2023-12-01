@@ -51,7 +51,8 @@ BEGIN
             (SELECT EXISTS(SELECT 1 FROM Comment WHERE sweet_id = s.sweet_id AND Comment.uid = _uid)) AS isCommented
         FROM
             Sweet s
-            JOIN UserProfile up ON s.uid = up.uid;
+            JOIN UserProfile up ON s.uid = up.uid
+        ORDER BY s.timestamp DESC;
 
     ELSIF _type = 'comment' THEN
         RETURN QUERY
@@ -79,7 +80,8 @@ BEGIN
             (SELECT EXISTS(SELECT 1 FROM Comment WHERE parent_comment_id = c.comment_id AND SweetLike.uid = _uid)) AS isCommented
         FROM
             Comment c
-            JOIN UserProfile up ON c.uid = up.uid;
+            JOIN UserProfile up ON c.uid = up.uid
+        ORDER BY c.timestamp DESC;
 
     ELSIF _type = 'resweet' THEN
         RETURN QUERY
@@ -107,7 +109,8 @@ BEGIN
             (SELECT EXISTS(SELECT 1 FROM Comment WHERE sweet_id = s.sweet_id AND Comment.uid = _uid)) AS isCommented
         FROM
             ReSweet rs
-            JOIN UserProfile up ON rs.uid = up.uid;
+            JOIN UserProfile up ON rs.uid = up.uid
+        ORDER BY rs.timestamp DESC;
     ELSE
         RAISE EXCEPTION 'Invalid type specified. Must be sweet, comment, or resweet.';
     END IF;

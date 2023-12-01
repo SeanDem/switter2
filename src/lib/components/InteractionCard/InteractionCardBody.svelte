@@ -2,7 +2,7 @@
 	import type { Interaction, InteractionType } from '$lib/server/modules/interactions';
 	import { formatDateDetailed, formatDateSmall } from '$lib/utils/utils';
 	export let interaction: Interaction;
-	export let interactionType: InteractionType = 'sweet';
+	export let interactionType: InteractionType;
 	export let isMain = false;
 
 	let url = '';

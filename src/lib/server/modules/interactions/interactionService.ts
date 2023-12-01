@@ -20,13 +20,15 @@ export class InteractionService {
 		uid: string,
 		interactionType: InteractionType
 	): Promise<Interaction[]> {
-		return InteractionDao.GetInteractionListByType(uid, interactionType);
+		const res = InteractionDao.GetInteractionListByType(uid, interactionType);
+		return res;
 	}
 	static async getInteractionListByTypeAndUid(
 		uid: string,
 		interaction: InteractionType,
 		searchUid: string
 	): Promise<Interaction[]> {
-		return InteractionDao.getInteractionListByTypeAndUid(uid, interaction, searchUid);
+		const res = InteractionDao.getInteractionListByTypeAndUid(uid, interaction, searchUid);
+		return res;
 	}
 }

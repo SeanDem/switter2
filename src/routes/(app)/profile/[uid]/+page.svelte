@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ActionBar from '$lib/components/actions/ActionBar.svelte';
+	import ActionBar from '$lib/components/actionBar/ActionBar.svelte';
 	import type { SweetDetails } from '$lib/server/modules/sweets';
 
 	export let data: { sweetDetailsList: SweetDetails[] };

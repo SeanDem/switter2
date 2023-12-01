@@ -6,15 +6,6 @@
 
 	type getId = (interaction: Interaction) => string | null | undefined;
 	let getId: getId;
-	$: {
-		if (interactionType === 'sweet') {
-			getId = (interaction: Interaction) => interaction.sweetId;
-		} else if (interactionType === 'resweet') {
-			getId = (interaction: Interaction) => interaction.resweetId;
-		} else {
-			getId = (interaction: Interaction) => interaction.commentId;
-		}
-	}
 </script>
 
 {#if interactionList.length === 0}
@@ -25,7 +16,7 @@
 	</div>
 {:else}
 	<div class="flex flex-col items-center min-h-screen">
-		{#each interactionList as interaction (getId(interaction))}
+		{#each interactionList as interaction}
 			<div class="mt-1">
 				<InteractionCard {interaction} {interactionType} />
 			</div>

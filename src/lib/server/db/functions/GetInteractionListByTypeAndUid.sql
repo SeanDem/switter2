@@ -54,12 +54,13 @@ BEGIN
             JOIN UserProfile up ON s.uid = up.uid
         WHERE
             s.uid = _search_uid;
+        ORDER BY s.timestamp DESC;
 
     ELSIF _type = 'comment' THEN
         RETURN QUERY
         SELECT
             c.comment_id as actionId,
-            c.sweet_id as sweetId,
+            NULL::UUID as sweetId,
             c.comment_id as commentId,
             NULL::UUID as resweetId,
             c.parent_comment_id as parentCommentId,
@@ -84,12 +85,13 @@ BEGIN
             JOIN UserProfile up ON c.uid = up.uid
         WHERE
             c.uid = _search_uid;
+        ORDER BY c.timestamp DESC;
 
     ELSIF _type = 'resweet' THEN
         RETURN QUERY
         SELECT
             rs.resweet_id as actionId,
-            rs.sweet_id as sweetId,
+            NULL::UUID as sweetId,
             NULL::UUID as commentId,
             rs.resweet_id as resweetId,
             NULL::UUID as parentCommentId,
@@ -114,6 +116,7 @@ BEGIN
             JOIN UserProfile up ON rs.uid = up.uid
         WHERE
             rs.uid = _search_uid;
+        ORDER BY rs.timestamp DESC;
 
     ELSE
         RAISE EXCEPTION 'Invalid type specified. Must be sweet, comment, or resweet.';

@@ -55,7 +55,7 @@ export class ResweetDAO {
 			text: resweet.text,
 			parent_resweet_id: resweet.parentResweetId,
 			sweet_id: resweet.sweetId,
-			comment_id: resweet.resweetId
+			comment_id: resweet.commentId
 		};
 	}
 }

@@ -6,6 +6,8 @@ export class LikeService {
 		uid: string,
 		interactionIdRequest: InteractionIdRequest
 	): Promise<void> {
+		console.log('uid: ' + uid);
+		console.log('int: ' + JSON.stringify(interactionIdRequest));
 		LikeService.validateInteractionIdRequest(interactionIdRequest);
 
 		const likeId = await SweetLikesDAO.getSweetLikeByUidAndIdTypeRequest(uid, interactionIdRequest);
@@ -34,6 +36,7 @@ export class LikeService {
 		};
 	}
 	private static validateInteractionIdRequest(interactionIdRequest: InteractionIdRequest): void {
+		console.log(interactionIdRequest);
 		let count = 0;
 		if (interactionIdRequest.sweetId) count++;
 		if (interactionIdRequest.resweetId) count++;
@@ -42,7 +45,7 @@ export class LikeService {
 		if (count > 1) {
 			throw new Error('Only one of parentCommentId, sweetId, or resweetId should be provided.');
 		} else if (count === 0) {
-			throw new Error('One of parentCommentId, sweetId, or resweetId should be provided.');
+			throw new Error('No parentCommentId, sweetId, or resweetId provided.');
 		}
 	}
 }

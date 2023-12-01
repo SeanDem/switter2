@@ -58,7 +58,7 @@ export class CommentDAO {
 }
 
 type SweetCommentTable = {
-	text: string;
+	text?: string | null;
 	uid: string;
 	comment_id?: string | null;
 	parent_comment_id?: string | null;

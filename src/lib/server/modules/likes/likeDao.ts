@@ -7,12 +7,13 @@ export class SweetLikesDAO {
 		uid: string,
 		interactionIdRequest: InteractionIdRequest
 	): Promise<SweetLike> {
+		console.log(interactionIdRequest);
 		const sweetLike: SweetLike = {
 			uid,
 			...this.mapInteractionRequestToSnakeCase(interactionIdRequest)
 		};
+		console.log(sweetLike);
 		const { data, error } = await supabase.from('sweetlike').insert([sweetLike]);
-
 		if (error) throw new Error(error.message);
 		return data!;
 	}
@@ -74,16 +75,7 @@ export class SweetLikesDAO {
 		return {
 			resweet_id: interactionRequest.resweetId,
 			sweet_id: interactionRequest.sweetId,
-			comment_id: interactionRequest.resweetId
+			comment_id: interactionRequest.commentId
 		};
 	}
 }
-
-type SweetLikeTable = {
-	uid: string;
-	like_id?: string | null;
-	timestamp?: Date | null;
-	sweet_id?: string | null;
-	comment_id?: string | null;
-	resweet_id?: string | null;
-};

@@ -1,11 +1,13 @@
 <script lang="ts">
+	import InteractionCardList from '$lib/components/InteractionCard/InteractionCardList.svelte';
+	import { onMount } from 'svelte';
+
 	export let data;
-	$: commentDetailList = data?.commentDetailList;
+	$: interactionList = data?.commentDetailList;
+
+	onMount(() => {
+		console.log(interactionList);
+	});
 </script>
 
-<h1>Comments</h1>
-{#if commentDetailList}
-	{#each commentDetailList as commentDetail}
-		<div>{commentDetail.text}</div>
-	{/each}
-{/if}
+<InteractionCardList {interactionList} interactionType="comment" />

@@ -57,7 +57,8 @@ BEGIN
             Sweet s
             JOIN UserProfile up ON s.uid = up.uid
         WHERE
-            s.sweet_id = _sweet_id;
+            s.sweet_id = _sweet_id
+        ORDER BY s.timestamp DESC;
 
     ELSIF _comment_id IS NOT NULL THEN
         RETURN QUERY
@@ -87,7 +88,8 @@ BEGIN
             Comment c
             JOIN UserProfile up ON c.uid = up.uid
         WHERE
-            c.comment_id = _comment_id;
+            c.comment_id = _comment_id
+        ORDER BY c.timestamp DESC;
 
     ELSIF _resweet_id IS NOT NULL THEN
         RETURN QUERY
@@ -117,7 +119,8 @@ BEGIN
             ReSweet rs
             JOIN UserProfile up ON rs.uid = up.uid
         WHERE
-            rs.resweet_id = _resweet_id;
+            rs.resweet_id = _resweet_id
+        ORDER BY rs.timestamp DESC;
     ELSE
         RAISE EXCEPTION 'Invalid id. Must be _sweet_id, _comment_id, or resweet_id.';
     END IF;

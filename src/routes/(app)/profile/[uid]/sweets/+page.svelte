@@ -1,11 +1,8 @@
 <script lang="ts">
+	import InteractionCardList from '$lib/components/InteractionCard/InteractionCardList.svelte';
+
 	export let data;
-	$: sweetDetailList = data?.sweetDetailList;
+	$: interactionList = data?.sweetDetailList;
 </script>
 
-<h1>Sweets</h1>
-{#if sweetDetailList}
-	{#each sweetDetailList as sweetDetail}
-		<div>{sweetDetail.text}</div>
-	{/each}
-{/if}
+<InteractionCardList {interactionList} interactionType="sweet" />
