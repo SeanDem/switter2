@@ -24,7 +24,7 @@
 </script>
 
 <a href={url}>
-	<div class="card my-1 rounded-lg {isMain ? 'w-110 my-2 border-slate-300' : 'w-96'}">
+	<div class="card rounded-lg {isMain ? 'w-115 my-2 border-slate-300 mb-2' : 'w-96 mt-2 mb-0'}">
 		{#if parentInteraction && parentInteractionType}
 			<div class="pt-1 border-l border-gray-300 ml-2 pl-2 pb-6 mt-2">
 				<InteractionCardBody

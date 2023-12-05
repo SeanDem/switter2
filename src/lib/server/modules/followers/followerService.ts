@@ -1,6 +1,6 @@
+import { safeExecuteList } from '$lib/server/ServerUtils/utils';
 import type { UserProfilePartial } from '../userProfiles';
 import { FollowDao } from './followerDao';
-import { safeExecute } from '$lib/server/ServerUtils/utils';
 export class FollowerService {
 	static async getFollowers(uid: string): Promise<UserProfilePartial[]> {
 		return FollowDao.getFollowers(uid);
@@ -15,10 +15,10 @@ export class FollowerService {
 		const isFollowing = await FollowDao.isUserFollowing(uid, followerUid);
 		if (isFollowing) return Promise.resolve();
 
-		return safeExecute(() => FollowDao.follow(uid, followerUid));
+		return safeExecuteList(() => FollowDao.follow(uid, followerUid));
 	}
 
 	static async unfollow(uid: string, followerUid: string) {
-		return safeExecute(() => FollowDao.unfollow(uid, followerUid));
+		return safeExecuteList(() => FollowDao.unfollow(uid, followerUid));
 	}
 }

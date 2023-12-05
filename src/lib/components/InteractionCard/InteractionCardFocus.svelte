@@ -21,7 +21,7 @@
 	/>
 	{#if commentDetailList}
 		{#each commentDetailList as interaction}
-			<div class="pt-1 border-l border-gray-300 ml-2 pl-2">
+			<div class="border-l border-gray-300 pt-1 ml-5 pl-7">
 				<InteractionCard {interaction} interactionType="comment" />
 			</div>
 		{/each}

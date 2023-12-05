@@ -2,9 +2,8 @@
 	import { enhance } from '$app/forms';
 </script>
 
-<div class="min-h-screen flex justify-center bg-white mt-3">
+<div class="min-h-screen flex justify-center bg-white mt-2">
 	<div class="bg-white p-2 w-96">
-		<h2 class="text-2xl font-bold mb-2">Create a Sweet</h2>
 		<form use:enhance method="post" action="?/create">
 			<div class="mb-1">
 				<textarea

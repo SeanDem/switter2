@@ -1,4 +1,4 @@
-import { safeExecute } from '$lib/server/ServerUtils/utils';
+import { safeExecuteList } from '$lib/server/ServerUtils/utils';
 import type { Interaction } from '../interactions';
 import { SearchDao } from './searchDao';
 import type { InteractionSearchRequest } from './searchType';
@@ -8,6 +8,8 @@ export class SearchService {
 		uid: string,
 		interactionSearchRequest: InteractionSearchRequest
 	): Promise<Interaction[]> {
-		return await safeExecute(() => SearchDao.searchInteractionText(uid, interactionSearchRequest));
+		return await safeExecuteList(() =>
+			SearchDao.searchInteractionText(uid, interactionSearchRequest)
+		);
 	}
 }
