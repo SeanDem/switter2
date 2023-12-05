@@ -4,7 +4,6 @@ export class FollowDao {
 		const _uid = uid;
 		const { data, error } = await supabase.rpc('getuserprofiles', { _uid, type: '_followers' });
 		if (error) new Error(error.details + error.message + error.hint);
-
 		return data!;
 	}
 

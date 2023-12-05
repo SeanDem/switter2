@@ -1,14 +1,14 @@
 <script lang="ts">
+	import ProfileCard from '$lib/components/ProfileCard.svelte';
+
 	export let data;
 	$: followingList = data.followingList;
 </script>
 
-<h1>Following</h1>
-
 {#if followingList}
-	{#each followingList as follower}
-		<div>
-			<a href="/profile/{follower.uid}">{follower.name}</a>
+	{#each followingList as userProfile}
+		<div class="flex justify-center">
+			<ProfileCard {userProfile} />
 		</div>
 	{/each}
 {:else}

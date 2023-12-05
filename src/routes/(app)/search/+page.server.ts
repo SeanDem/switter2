@@ -17,7 +17,6 @@ export const actions: Actions = {
 
 		const interactionType = form.get('interactionType') as InteractionType;
 		if (!interactionType) {
-			console.log('interactionType', interactionType);
 			return fail(401, { interactionType, missing: true });
 		}
 

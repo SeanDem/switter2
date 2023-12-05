@@ -10,6 +10,7 @@
 	let text = '';
 
 	function handleComment(event: Event) {
+		event.stopPropagation();
 		showDialog = false;
 		interaction = {
 			...interaction,
@@ -19,22 +20,29 @@
 				: interaction.commentsCount + 1
 		};
 	}
+
+	function openCommentDialog(event: MouseEvent) {
+		event.stopPropagation();
+		showDialog = true;
+	}
 </script>
 
-<button
-	class="flex items-center space-x-1 border-none"
-	aria-label="Comment"
-	on:click={() => (showDialog = true)}
->
-	<Icon
-		src={ChatBubbleLeft}
-		class={`h-6 w-6 ${interaction.isCommented ? 'text-blue-500' : 'text-black'}`}
-	/>
-	<span class={`text-xs ${interaction.isCommented ? 'text-blue-500' : 'text-black'}`}
-		>{interaction.commentsCount}</span
+<span>
+	<button
+		class="flex items-center space-x-1 border-none pr-3"
+		aria-label="Comment"
+		type="button"
+		on:click|stopPropagation={openCommentDialog}
 	>
-</button>
-
+		<Icon
+			src={ChatBubbleLeft}
+			class={`h-6 w-10 ${interaction.isCommented ? 'text-blue-500' : 'text-black'}`}
+		/>
+		<span class={`text-xs ${interaction.isCommented ? 'text-blue-500' : 'text-black'}`}
+			>{interaction.commentsCount}</span
+		>
+	</button>
+</span>
 {#if showDialog}
 	<div class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
 		<div class="bg-white p-4 rounded shadow-lg w-96">
@@ -49,8 +57,12 @@
 				/>
 				<input type="hidden" name="interaction" value={JSON.stringify(interactionIdRequest)} />
 				<div class="flex justify-around">
-					<button class="btn rounded" on:click={() => (showDialog = false)}>Cancel</button>
-					<button class="btn btn-primary rounded" formaction="/?/comment">Submit</button>
+					<button class="btn rounded" on:click|stopPropagation={() => (showDialog = false)}
+						>Cancel</button
+					>
+					<button class="btn btn-primary rounded" on:click|stopPropagation formaction="/?/comment"
+						>Submit</button
+					>
 				</div>
 			</form>
 		</div>

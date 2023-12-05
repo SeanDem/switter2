@@ -22,7 +22,7 @@ export const actions: Actions = {
 		const email = form.get('email') as string;
 		const birthdayStr = form.get('birthday') as string;
 		const birthday = birthdayStr ? new Date(birthdayStr) : null;
-		const profile_url = form.get('profile_url') as string;
+		const profileUrl = form.get('profileUrl') as string;
 		const UserProfile: UserProfile = {
 			uid,
 			name,
@@ -30,8 +30,7 @@ export const actions: Actions = {
 			bio,
 			phone,
 			email,
-			birthday,
-			profile_url
+			birthday
 		};
 		UserProfileService.updateUserProfile(uid, UserProfile);
 

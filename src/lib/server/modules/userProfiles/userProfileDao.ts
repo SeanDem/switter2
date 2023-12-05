@@ -9,7 +9,18 @@ export class UserProfileDAO {
 		return data;
 	}
 
-	static async getUserProfileById(uid: string): Promise<UserProfilePartial | null> {
+	static async getUserProfileById(uid: string): Promise<UserProfile | null> {
+		const { data, error } = await supabase
+			.from('userprofile')
+			.select('uid, handle, bio, name, profileUrl:profile_url, birthday, phone, email')
+			.eq('uid', uid)
+			.single();
+
+		if (error) throw new Error(error.details + error.message + error.hint);
+		return data;
+	}
+
+	static async getUserProfileParrtialById(uid: string): Promise<UserProfilePartial | null> {
 		const { data, error } = await supabase
 			.from('userprofile')
 			.select('uid, handle, bio, name, profileUrl:profile_url')
@@ -19,7 +30,6 @@ export class UserProfileDAO {
 		if (error) throw new Error(error.details + error.message + error.hint);
 		return data;
 	}
-
 	static async updateUserProfile(
 		uid: string,
 		userProfileUpdates: Partial<UserProfile>

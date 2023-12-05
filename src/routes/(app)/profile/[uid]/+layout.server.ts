@@ -1,4 +1,3 @@
-import { InteractionService } from '$lib/server/modules/interactions/interactionService.js';
 import { UserProfileService } from '$lib/server/modules/userProfiles';
 import { error, redirect } from '@sveltejs/kit';
 
@@ -9,10 +8,8 @@ export const load = async ({ params, cookies }) => {
 	let isUserProfile = false;
 	if (params.uid === uid) isUserProfile = true;
 
-	const [userProfile, sweetDetailList] = await Promise.all([
-		UserProfileService.getUserProfileById(uid, params.uid),
-		InteractionService.getInteractionListByTypeAndUid(uid, 'sweet', params.uid)
-	]);
+	const [userProfile] = await Promise.all([UserProfileService.getUserProfileById(uid, params.uid)]);
+
 	if (!userProfile) throw error(404, 'Profile not found');
-	return { userProfile, sweetDetailList, isUserProfile };
+	return { userProfile, isUserProfile };
 };

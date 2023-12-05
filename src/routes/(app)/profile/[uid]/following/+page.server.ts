@@ -4,4 +4,3 @@ export const load = async ({ params }) => {
 	const followingList = await FollowerService.getFollowing(params.uid);
 	return { followingList };
 };
-0;

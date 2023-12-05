@@ -9,14 +9,10 @@
 	$: showDialog = false;
 	let text = '';
 
-	function handleResweet(event: Event) {
-		if (interaction.isResweeted) {
-			event.preventDefault();
-			toggle();
-		} else {
-			showDialog = true;
-		}
+	function handleResweet() {
+		interaction.isResweeted ? toggle() : (showDialog = true);
 	}
+
 	function toggle() {
 		showDialog = false;
 		interaction = {
@@ -29,16 +25,17 @@
 	}
 </script>
 
-<form use:enhance method="post" on:submit={handleResweet}>
+<form use:enhance method="post" on:submit|preventDefault={handleResweet}>
 	<input type="hidden" name="interaction" value={JSON.stringify(interactionIdRequest)} />
 	<button
-		class="flex items-center space-x-1 border-none"
-		aria-label="Comment"
+		on:click|stopPropagation
+		class="flex items-center space-x-1 border-none pr-3"
+		aria-label="Resweet"
 		formaction="/?/unresweet"
 	>
 		<Icon
 			src={ArrowPathRoundedSquare}
-			class={`h-6 w-6 ${interaction.isResweeted ? 'text-green-500' : 'text-black'}`}
+			class={`h-6 w-10 ${interaction.isResweeted ? 'text-green-500' : 'text-black'}`}
 		/>
 		<span class={`text-xs ${interaction.isResweeted ? 'text-green-500' : 'text-black'}`}
 			>{interaction.resweetsCount}</span
@@ -60,8 +57,12 @@
 				/>
 				<input type="hidden" name="interaction" value={JSON.stringify(interactionIdRequest)} />
 				<div class="flex justify-around">
-					<button class="btn rounded rounded" on:click={() => (showDialog = false)}>Cancel</button>
-					<button type="submit" class="btn btn-primary rounded">Submit</button>
+					<button class="btn rounded rounded" on:click|stopPropagation={() => (showDialog = false)}
+						>Cancel</button
+					>
+					<button type="submit" class="btn btn-primary rounded" on:click|stopPropagation
+						>Submit</button
+					>
 				</div>
 			</form>
 		</div>

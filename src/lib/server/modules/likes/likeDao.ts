@@ -7,12 +7,10 @@ export class SweetLikesDAO {
 		uid: string,
 		interactionIdRequest: InteractionIdRequest
 	): Promise<SweetLike> {
-		console.log(interactionIdRequest);
 		const sweetLike: SweetLike = {
 			uid,
 			...this.mapInteractionRequestToSnakeCase(interactionIdRequest)
 		};
-		console.log(sweetLike);
 		const { data, error } = await supabase.from('sweetlike').insert([sweetLike]);
 		if (error) throw new Error(error.message);
 		return data!;

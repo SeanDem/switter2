@@ -6,7 +6,6 @@ export type Sweet = {
 	text?: string | null;
 	mediaUrls?: string;
 	timestamp?: string | null;
-	type?: string | null;
 };
 
 export type SweetDetails = Sweet & InteractionDetails;

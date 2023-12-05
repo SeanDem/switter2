@@ -14,7 +14,9 @@ export default {
 		extend: {
 			width: {
 				110: '25rem',
-				120: '30rem'
+				120: '30rem',
+				130: '35rem',
+				140: '40rem'
 			}
 		}
 	},

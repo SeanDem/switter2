@@ -4,48 +4,33 @@
 	export let interaction: Interaction;
 	export let interactionType: InteractionType;
 	export let isMain = false;
-
-	let url = '';
-	$: {
-		if (interactionType === 'sweet') {
-			url = `/sweet/${interaction.sweetId}`;
-		} else if (interactionType === 'resweet') {
-			url = `/resweet/${interaction.resweetId}`;
-		} else if (interactionType === 'comment') {
-			url = `/comment/${interaction.commentId}`;
-		} else {
-			url = '/';
-		}
-	}
 </script>
 
-<a href={url}>
-	<div class="flex">
-		<div class="flex-shrink-0">
-			<a href="/profile/{interaction.uid}">
-				<img
-					class="{isMain ? 'w-14 h-14' : 'w-12 h-12'} rounded-full"
-					src={interaction?.profileUrl ??
-						'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxroUOuhHpV9KBpOuiYJSvok9YOgMoxGfFnw&s'}
-					alt="Profile image"
-					aria-hidden="true"
-				/>
-			</a>
-		</div>
-		<div class="flex-grow ml-4 text-left">
-			<a href="/profile/{interaction.uid}">
-				<span class="font-semibold hover:underline mr-2 {isMain ? 'text-xl' : 'text-lg'}"
-					>{interaction?.name}</span
-				>
-			</a>
-			{#if isMain}
-				<div class="text-sm text-gray-500">{formatDateDetailed(interaction?.timestamp)}</div>
-			{:else}
-				<span class="text-sm text-gray-500">{formatDateSmall(interaction?.timestamp)}</span>
-			{/if}
-			<div class="mt-2">
-				<p class={isMain ? 'text-lg mb-2' : 'text-base'}>{interaction?.text}</p>
-			</div>
+<div class="flex">
+	<div class="flex-shrink-0">
+		<a href="/profile/{interaction.uid}">
+			<img
+				class="{isMain ? 'w-14 h-14' : 'w-12 h-12'} rounded-full"
+				src={interaction?.profileUrl ??
+					'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxroUOuhHpV9KBpOuiYJSvok9YOgMoxGfFnw&s'}
+				alt="Profile image"
+				aria-hidden="true"
+			/>
+		</a>
+	</div>
+	<div class="flex-grow ml-4 text-left">
+		<a href="/profile/{interaction.uid}">
+			<span class="font-semibold hover:underline mr-2 {isMain ? 'text-xl' : 'text-lg'}"
+				>{interaction?.name}</span
+			>
+		</a>
+		{#if isMain}
+			<div class="text-sm text-gray-500">{formatDateDetailed(interaction?.timestamp)}</div>
+		{:else}
+			<span class="text-sm text-gray-500">{formatDateSmall(interaction?.timestamp)}</span>
+		{/if}
+		<div class="mt-2">
+			<p class={isMain ? 'text-lg mb-2' : 'text-base'}>{interaction?.text}</p>
 		</div>
 	</div>
-</a>
+</div>

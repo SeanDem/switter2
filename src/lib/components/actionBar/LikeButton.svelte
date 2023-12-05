@@ -20,11 +20,12 @@
 	<input type="hidden" name="id" value={interaction.actionId} />
 
 	<button
-		class="flex items-center space-x-1 border-none"
+		on:click|stopPropagation
+		class="flex items-center space-x-1 border-none pr-3"
 		aria-label="Like"
 		formaction={interaction.isLiked ? '/?/unlike' : '/?/like'}
 	>
-		<Icon src={Heart} class={`h-6 w-6 ${interaction.isLiked ? 'text-pink-500' : 'text-black'}`} />
+		<Icon src={Heart} class={`h-6 w-10 ${interaction.isLiked ? 'text-pink-500' : 'text-black'}`} />
 		<span class={`text-xs ${interaction.isLiked ? 'text-pink-500' : 'text-black'}`}
 			>{interaction.likesCount}</span
 		>

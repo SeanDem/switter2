@@ -1,4 +1,4 @@
-import { badWordFilter, cleanInput } from '$lib/server/ServerUtils/badWords';
+import { cleanInput } from '$lib/server/ServerUtils/badWords';
 import { UserProfileDAO, type UserProfile, type UserProfilePartial } from '.';
 import { FollowDao } from '../followers/followerDao';
 
@@ -27,6 +27,8 @@ export class UserProfileService {
 			isFollowing: isFollowing
 		};
 	}
+
+	
 
 	static async updateUserProfile(
 		uid: string,

@@ -1,5 +1,4 @@
 import { supabase } from '$lib/supabaseClient';
-import { e } from 'vitest/dist/index-5aad25c1';
 import type { InteractionSearchRequest } from '.';
 import type { Interaction } from '../interactions';
 

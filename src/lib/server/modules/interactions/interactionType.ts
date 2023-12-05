@@ -13,6 +13,11 @@ export type InteractionDetails = SweetInteractionCount &
 		isCommented: boolean;
 		isResweeted: boolean;
 	};
+	
+
+export type InteractionBase = {
+	
+}
 
 export type SweetInteractionCount = {
 	commentsCount: number;
