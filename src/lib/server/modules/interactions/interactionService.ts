@@ -1,4 +1,10 @@
-import type { Interaction, InteractionIdRequest, InteractionType } from './interactionType';
+import { LikeService } from '../likes';
+import type {
+	Interaction,
+	InteractionIdRequest,
+	InteractionIdsListRequest,
+	InteractionType
+} from './interactionType';
 import { InteractionDao } from './interationDao';
 
 export class InteractionService {
@@ -14,6 +20,11 @@ export class InteractionService {
 		interactionRequest: InteractionIdRequest
 	): Promise<Interaction> {
 		return InteractionDao.GetInteractionById(uid, interactionRequest);
+	}
+
+	static async getAllLikedInteractions(uid: string, searchUid: string): Promise<Interaction[]> {
+		const likes = await LikeService.getAllLikesByUid(searchUid);
+		return InteractionDao.GetInteractionsByIdList(uid, likes);
 	}
 
 	static async getInteractionListByType(

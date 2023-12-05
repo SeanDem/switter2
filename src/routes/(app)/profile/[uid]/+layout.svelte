@@ -25,7 +25,9 @@
 						{isUserProfile ? 'Your Profile' : userProfile.name}
 					</div>
 					<div class="text-gray-500">@{userProfile.handle}</div>
-					<div class="text-gray-500">Birthday: {userProfile.birthday}</div>
+					{#if userProfile.birthday}
+						<div class="text-gray-500">Birthday: {userProfile.birthday}</div>
+					{/if}
 				</div>
 			</div>
 
@@ -55,7 +57,7 @@
 			<div class="navbar bg-base-100">
 				<div class="navbar-start">
 					<div class="dropdown">
-						<label class="btn btn-ghost lg:hidden" for="bars-icon">
+						<label tabindex="0" class="dropdown btn lg:hidden" for="bars-icon">
 							<Icon src={Bars3} class="h-6 w-10" id="bars-icon" />
 						</label>
 						<ul
@@ -72,6 +74,7 @@
 					</div>
 				</div>
 				<div class="navbar-center flex justify-around font-bold hidden border-0 pb-0 lg:flex">
+					<a href="/profile/{userProfile.uid}/likes">Likes</a>
 					<a href="/profile/{userProfile.uid}/sweets">Sweets</a>
 					<a href="/profile/{userProfile.uid}/comments">Comments</a>
 					<a href="/profile/{userProfile.uid}/resweets">Resweets</a>

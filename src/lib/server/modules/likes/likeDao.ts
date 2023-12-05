@@ -1,6 +1,6 @@
 import { supabase } from '$lib/supabaseClient';
 import type { InteractionIdRequest } from '../interactions';
-import type { SweetLike } from './likeType';
+import type { LikesList, SweetLike } from './likeType';
 
 export class SweetLikesDAO {
 	static async insertSweetLike(
@@ -67,6 +67,33 @@ export class SweetLikesDAO {
 		if (error) throw new Error(error.details + error.message + error.hint);
 		if (data && data.length > 0) return data[0].like_id;
 		return null;
+	}
+	static async fetchAllLikesByUid(uid: string): Promise<LikesList> {
+		try {
+			const { data: likes, error } = await supabase
+				.from('sweetlike')
+				.select('sweet_id, comment_id, resweet_id')
+				.eq('uid', uid);
+
+			if (error) throw error;
+			//need to fix and simplify logic, sql function is more complicated then it needs to be
+			let sweetLikes = likes.filter((like) => like.sweet_id !== null).map((like) => like.sweet_id);
+			let commentLikes = likes
+				.filter((like) => like.comment_id !== null)
+				.map((like) => like.comment_id);
+			let resweetLikes = likes
+				.filter((like) => like.resweet_id !== null)
+				.map((like) => like.resweet_id);
+
+			return {
+				sweets: sweetLikes,
+				comments: commentLikes,
+				resweets: resweetLikes
+			};
+		} catch (error) {
+			console.error('Error fetching likes:', error);
+			throw error;
+		}
 	}
 
 	static mapInteractionRequestToSnakeCase(interactionRequest: InteractionIdRequest) {

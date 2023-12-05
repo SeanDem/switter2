@@ -11,10 +11,7 @@ export class UserProfileService {
 		return UserProfileDAO.createUserProfile(userProfile);
 	}
 
-	static async getUserProfileById(
-		uid: string,
-		profileUid: string
-	): Promise<UserProfilePartial | null> {
+	static async getUserProfileById(uid: string, profileUid: string): Promise<UserProfile | null> {
 		const [isFollowing, userProfile] = await Promise.all([
 			FollowDao.isUserFollowing(uid, profileUid),
 			UserProfileDAO.getUserProfileById(profileUid)
@@ -27,8 +24,6 @@ export class UserProfileService {
 			isFollowing: isFollowing
 		};
 	}
-
-	
 
 	static async updateUserProfile(
 		uid: string,

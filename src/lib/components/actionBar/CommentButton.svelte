@@ -10,7 +10,6 @@
 	let text = '';
 
 	function handleComment(event: Event) {
-		event.stopPropagation();
 		showDialog = false;
 		interaction = {
 			...interaction,
@@ -20,19 +19,13 @@
 				: interaction.commentsCount + 1
 		};
 	}
-
-	function openCommentDialog(event: MouseEvent) {
-		event.stopPropagation();
-		showDialog = true;
-	}
 </script>
 
-<span>
+<form>
 	<button
 		class="flex items-center space-x-1 border-none pr-3"
 		aria-label="Comment"
-		type="button"
-		on:click|stopPropagation={openCommentDialog}
+		on:click|stopPropagation={() => (showDialog = true)}
 	>
 		<Icon
 			src={ChatBubbleLeft}
@@ -42,7 +35,7 @@
 			>{interaction.commentsCount}</span
 		>
 	</button>
-</span>
+</form>
 {#if showDialog}
 	<div class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
 		<div class="bg-white p-4 rounded shadow-lg w-96">

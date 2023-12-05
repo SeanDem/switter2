@@ -12,3 +12,5 @@ export type SweetLike = {
 };
 
 export type LikeDetail = SweetLike & InteractionDetails;
+
+export type LikesList = { sweets: string[]; comments: string[]; resweets: string[] };

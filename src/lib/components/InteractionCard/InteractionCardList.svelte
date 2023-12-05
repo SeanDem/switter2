@@ -2,23 +2,19 @@
 	import type { Interaction, InteractionType } from '$lib/server/modules/interactions';
 	import InteractionCard from './InteractionCard.svelte';
 	export let interactionList: Interaction[];
-	export let interactionType: InteractionType;
-
-	type getId = (interaction: Interaction) => string | null | undefined;
-	let getId: getId;
 </script>
 
 {#if interactionList.length === 0}
-	<div class="flex justify-center mt-4">
+	<div class="flex justify-center mt-2">
 		<div class="w-full max-w-md">
-			<div class="mb-4">No sweets found</div>
+			<div class="mb-4">None found</div>
 		</div>
 	</div>
 {:else}
 	<div class="flex flex-col items-center min-h-screen">
 		{#each interactionList as interaction}
 			<div class="mt-1">
-				<InteractionCard {interaction} {interactionType} />
+				<InteractionCard {interaction} />
 			</div>
 		{/each}
 	</div>

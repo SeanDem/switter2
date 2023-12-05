@@ -1,3 +1,4 @@
+import type { LikesList } from '.';
 import type { InteractionIdRequest } from './../interactions/interactionType';
 import { SweetLikesDAO } from './likeDao';
 
@@ -32,6 +33,9 @@ export class LikeService {
 			sweetId: sweetLike.sweetId,
 			resweetId: sweetLike.resweetId
 		};
+	}
+	static getAllLikesByUid(uid: string): Promise<LikesList> {
+		return SweetLikesDAO.fetchAllLikesByUid(uid);
 	}
 	private static validateInteractionIdRequest(interactionIdRequest: InteractionIdRequest): void {
 		let count = 0;

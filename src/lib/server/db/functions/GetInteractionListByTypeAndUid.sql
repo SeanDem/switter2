@@ -117,9 +117,45 @@ BEGIN
         WHERE
             rs.uid = _search_uid;
         ORDER BY rs.timestamp DESC;
-
+    ELSIF _type = 'like' THEN
+        RETURN QUERY
+        SELECT
+            sl.like_id as actionId,
+            COALESCE(s.sweet_id, c.comment_id, rs.resweet_id) as sweetId,
+            c.comment_id as commentId,
+            rs.resweet_id as resweetId,
+            NULL::UUID as parentCommentId,
+            NULL::UUID as parentResweetId,
+            sl.uid,
+            sl.timestamp, 
+            CASE 
+                WHEN s.sweet_id IS NOT NULL THEN 'sweet'
+                WHEN c.comment_id IS NOT NULL THEN 'comment'
+                WHEN rs.resweet_id IS NOT NULL THEN 'resweet'
+            END as type, 
+            COALESCE(s.text, c.text, rs.text) as text,
+            s.media_urls as mediaUrls,
+            up.handle,
+            up.name,
+            up.profile_url as profileUrl,
+            up.bio,
+            (SELECT COUNT(*) FROM Comment WHERE sweet_id = COALESCE(s.sweet_id, c.sweet_id, rs.sweet_id)) AS commentsCount,
+            (SELECT COUNT(*) FROM SweetLike WHERE sweet_id = COALESCE(s.sweet_id, c.sweet_id, rs.sweet_id)) AS likesCount,
+            (SELECT COUNT(*) FROM ReSweet WHERE sweet_id = COALESCE(s.sweet_id, c.sweet_id, rs.sweet_id)) AS resweetsCount,
+            (SELECT EXISTS(SELECT 1 FROM SweetLike WHERE sweet_id = COALESCE(s.sweet_id, c.sweet_id, rs.sweet_id) AND SweetLike.uid = _uid)) AS isLiked,
+            (SELECT EXISTS(SELECT 1 FROM ReSweet WHERE sweet_id = COALESCE(s.sweet_id, c.sweet_id, rs.sweet_id) AND ReSweet.uid = _uid)) AS isResweeted,
+            (SELECT EXISTS(SELECT 1 FROM Comment WHERE sweet_id = COALESCE(s.sweet_id, c.sweet_id, rs.sweet_id) AND Comment.uid = _uid)) AS isCommented
+        FROM
+            SweetLike sl
+            LEFT JOIN Sweet s ON sl.sweet_id = s.sweet_id
+            LEFT JOIN Comment c ON sl.comment_id = c.comment_id
+            LEFT JOIN ReSweet rs ON sl.resweet_id = rs.resweet_id
+            JOIN UserProfile up ON sl.uid = up.uid
+        WHERE
+            sl.uid = _search_uid;
+        ORDER BY sl.timestamp DESC;
     ELSE
-        RAISE EXCEPTION 'Invalid type specified. Must be sweet, comment, or resweet.';
+        RAISE EXCEPTION 'Invalid type specified. Must be sweet, comment, resweet, or like.';
     END IF;
 END;
 $$ language plpgsql;

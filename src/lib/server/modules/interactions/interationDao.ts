@@ -1,4 +1,5 @@
 import { supabase } from '$lib/supabaseClient';
+import type { LikesList } from '../likes';
 import type { Interaction, InteractionIdRequest, InteractionType } from './interactionType';
 
 export class InteractionDao {
@@ -36,6 +37,20 @@ export class InteractionDao {
 		});
 		if (error) throw new Error(error.details + error.message + error.hint);
 		return data![0];
+	}
+	static async GetInteractionsByIdList(uid: string, likes: LikesList): Promise<Interaction[]> {
+		const { data, error } = await supabase.rpc('getinteractionbyids', {
+			_uid: uid,
+			_sweet_ids: likes.sweets,
+			_comment_ids: likes.comments,
+			_resweet_ids: likes.resweets
+		});
+
+		if (error) {
+			throw new Error(error.details + error.message + error.hint);
+		}
+
+		return data!;
 	}
 
 	static async GetInteractionListByType(

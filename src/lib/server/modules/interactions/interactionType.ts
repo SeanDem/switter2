@@ -13,11 +13,8 @@ export type InteractionDetails = SweetInteractionCount &
 		isCommented: boolean;
 		isResweeted: boolean;
 	};
-	
 
-export type InteractionBase = {
-	
-}
+export type InteractionBase = {};
 
 export type SweetInteractionCount = {
 	commentsCount: number;
@@ -30,5 +27,10 @@ export type InteractionIdRequest = {
 	commentId?: string | null;
 	resweetId?: string | null;
 };
+export type InteractionIdsListRequest ={
+	sweetIds?: string[] | null;
+	commentIds?: string[] | null;
+	resweetIds?: string[] | null;
+}
 
 export type InteractionType = 'sweet' | 'comment' | 'resweet';
