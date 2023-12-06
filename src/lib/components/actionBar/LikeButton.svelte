@@ -21,7 +21,7 @@
 
 	<button
 		on:click|stopPropagation
-		class="flex items-center space-x-1 border-none pr-3"
+		class="flex items-center space-x-1 border-none pl-5 pr-7"
 		aria-label="Like"
 		formaction={interaction.isLiked ? '/?/unlike' : '/?/like'}
 	>

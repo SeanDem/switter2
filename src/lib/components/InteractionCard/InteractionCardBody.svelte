@@ -5,7 +5,7 @@
 	export let isMain = false;
 </script>
 
-<div class="flex">
+<div class="flex p-4">
 	<div class="flex-shrink-0">
 		<a href="/profile/{interaction.uid}">
 			<img
@@ -19,8 +19,11 @@
 	</div>
 	<div class="flex-grow ml-4 text-left">
 		<a href="/profile/{interaction.uid}">
-			<span class="font-semibold hover:underline mr-2 {isMain ? 'text-xl' : 'text-lg'}"
+			<span class="font-semibold hover:underline mr-1 {isMain ? 'text-xl' : 'text-lg'}"
 				>{interaction?.name}</span
+			>
+			<span class="text-gray-500 hover:underline mr-2 {isMain ? 'text-s' : 'text-xs'}"
+				>@{interaction?.handle}</span
 			>
 		</a>
 		{#if isMain}

@@ -23,7 +23,7 @@
 
 <form>
 	<button
-		class="flex items-center space-x-1 border-none pr-3"
+		class="flex items-center space-x-1 border-none pl-5 pr-7"
 		aria-label="Comment"
 		on:click|stopPropagation={() => (showDialog = true)}
 	>
@@ -42,14 +42,14 @@
 			<h2 class="text-2xl font-bold mb-4">Write a Comment</h2>
 			<form use:enhance method="post" on:submit={handleComment}>
 				<textarea
-					class="input input-ghost w-full max-w-xs resize-none h-28"
+					class="input input-ghost w-full max-w-xs resize-none h-28 mb-4"
 					name="text"
 					maxlength="150"
 					bind:value={text}
 					placeholder="Your comment..."
 				/>
 				<input type="hidden" name="interaction" value={JSON.stringify(interactionIdRequest)} />
-				<s class="flex justify-around">
+				<div class="flex justify-around">
 					<button class="btn rounded" on:click|stopPropagation={() => (showDialog = false)}
 						>Cancel</button
 					>

@@ -7,7 +7,7 @@
 	export let interaction: Interaction;
 </script>
 
-<div class="flex justify-around w-full pt-1">
+<div class="flex justify-around w-full mb-1">
 	<CommentButton {interaction} />
 	<RetweetButton {interaction} />
 	<LikeButton {interaction} />

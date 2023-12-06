@@ -29,7 +29,7 @@
 	<input type="hidden" name="interaction" value={JSON.stringify(interactionIdRequest)} />
 	<button
 		on:click|stopPropagation
-		class="flex items-center space-x-1 border-none pr-3"
+		class="flex items-center space-x-1 border-none pl-5 pr-7"
 		aria-label="Resweet"
 		formaction="/?/unresweet"
 	>
@@ -49,7 +49,7 @@
 			<h2 class="text-2xl font-bold mb-4">Write a Resweet</h2>
 			<form use:enhance method="post" action="/?/resweet" on:submit={toggle}>
 				<textarea
-					class="input input-ghost w-full max-w-xs resize-none h-28"
+					class="input input-ghost w-full max-w-xs resize-none h-28 mb-4"
 					name="text"
 					maxlength="150"
 					bind:value={text}
