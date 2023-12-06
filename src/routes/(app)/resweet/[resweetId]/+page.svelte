@@ -1,5 +1,5 @@
 <script lang="ts">
-	import InteractionCardFocus from '$lib/components/InteractionCard/InteractionCardFocus.svelte'
+	import InteractionCardFocus from '$lib/components/InteractionCard/InteractionCardFocus.svelte';
 	import type { CommentDetail } from '$lib/server/modules/comments';
 	import type { ResweetDetails } from '$lib/server/modules/resweets';
 
@@ -8,4 +8,4 @@
 	$: commentDetailList = data.commentDetailList;
 </script>
 
-<InteractionCardFocus {interaction} {commentDetailList} interactionType={'resweet'} />
+<InteractionCardFocus {interaction} {commentDetailList} />

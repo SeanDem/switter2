@@ -7,4 +7,4 @@
 	$: commentDetailList = data.commentList;
 </script>
 
-<InteractionCardFocus {interaction} {commentDetailList} interactionType={'sweet'} />
+<InteractionCardFocus {interaction} {commentDetailList} />

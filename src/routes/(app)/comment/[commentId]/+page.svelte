@@ -13,10 +13,4 @@
 	$: commentDetailList = data.commentList;
 </script>
 
-<InteractionCardFocus
-	{interaction}
-	{commentDetailList}
-	interactionType={'comment'}
-	{parentInteraction}
-	parentInteractionType={'sweet'}
-/>
+<InteractionCardFocus {interaction} {commentDetailList} {parentInteraction} />

@@ -5,24 +5,15 @@
 
 	export let commentDetailList: CommentDetail[];
 	export let interaction: Interaction;
-	export let interactionType: InteractionType;
-
 	export let parentInteraction: Interaction | null = null;
-	export let parentInteractionType: InteractionType | null = null;
 </script>
 
 <div class="flex flex-col items-center min-h-screen">
-	<InteractionCard
-		{interaction}
-		isMain={true}
-		{interactionType}
-		{parentInteraction}
-		{parentInteractionType}
-	/>
+	<InteractionCard {interaction} isMain={true} {parentInteraction} />
 	{#if commentDetailList}
 		{#each commentDetailList as interaction}
 			<div class="border-l border-gray-300 pt-1 ml-5 pl-7">
-				<InteractionCard {interaction} interactionType="comment" />
+				<InteractionCard {interaction} />
 			</div>
 		{/each}
 	{/if}
