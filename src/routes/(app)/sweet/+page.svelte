@@ -20,7 +20,7 @@
 					>Cancel</a
 				>
 				<button type="submit" class="bg-black text-white font-semibold px-4 py-2 rounded"
-					>Create Tweet</button
+					>Create Sweet</button
 				>
 			</div>
 		</form>
