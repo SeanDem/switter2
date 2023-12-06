@@ -29,10 +29,10 @@
 	>
 		<Icon
 			src={ChatBubbleLeft}
-			class={`h-7 w-10 ${interaction.isCommented ? 'text-blue-500' : 'text-black'}`}
+			class={`h-7 w-10 ${interaction?.isCommented ? 'text-blue-500' : 'text-black'}`}
 		/>
-		<span class={`text-xs ${interaction.isCommented ? 'text-blue-500' : 'text-black'}`}
-			>{interaction.commentsCount}</span
+		<span class={`text-xs ${interaction?.isCommented ? 'text-blue-500' : 'text-black'}`}
+			>{interaction?.commentsCount}</span
 		>
 	</button>
 </form>

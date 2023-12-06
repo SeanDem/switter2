@@ -6,15 +6,17 @@ import {
 } from '$lib/server/modules/interactions';
 import { LikeService } from '$lib/server/modules/likes';
 import { ResweetService, type Resweet } from '$lib/server/modules/resweets';
+import type { APIResponse } from '$lib/server/modules/types/types';
 import { error, fail, redirect, type Actions } from '@sveltejs/kit';
 
 export const load = async ({ cookies }) => {
 	const uid = cookies.get('uid');
 	if (!uid) throw redirect(301, '/auth');
-	const sweetDetailList: Interaction[] = await InteractionService.getInteractionListByType(
+	const res = await InteractionService.getInteractionListByType(
 		uid,
 		'sweet'
 	);
+	const sweetDetailList = res.data;
 	return { sweetDetailList };
 };
 

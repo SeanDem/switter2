@@ -4,7 +4,7 @@
 	import InteractionCardBody from './InteractionCardBody.svelte';
 
 	export let parentInteraction: Interaction | null = null;
-	export let interaction: Interaction;
+	export let interaction: Interaction | null;
 	export let isMain = false;
 </script>
 

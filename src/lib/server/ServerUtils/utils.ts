@@ -1,17 +1,26 @@
-export function safeExecuteList<T>(func: () => T): T | [] {
+import { HttpStatus, type APIResponse } from '../modules/types/types';
+
+export function safeExecuteList<T>(func: () => T): T | null {
 	try {
 		return func();
 	} catch (error) {
 		console.error(error);
-		return [];
+		return null;
 	}
 }
 
-export function safeExecuteObj<T>(func: () => T): T | {} {
+export async function executeWithApiResponse<T>(
+	func: () => Promise<T>
+): Promise<APIResponse<T | null>> {
 	try {
-		return func();
-	} catch (error) {
+		const data = await func();
+		return { data, status: HttpStatus.OK, message: 'Success' };
+	} catch (error: any) {
 		console.error(error);
-		return {};
+		return {
+			data: null,
+			status: HttpStatus.InternalServerError,
+			message: 'An error occurred'
+		};
 	}
 }

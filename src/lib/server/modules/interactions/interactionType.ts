@@ -27,10 +27,10 @@ export type InteractionIdRequest = {
 	commentId?: string | null;
 	resweetId?: string | null;
 };
-export type InteractionIdsListRequest ={
+export type InteractionIdsListRequest = {
 	sweetIds?: string[] | null;
 	commentIds?: string[] | null;
 	resweetIds?: string[] | null;
-}
+};
 
 export type InteractionType = 'sweet' | 'comment' | 'resweet';
