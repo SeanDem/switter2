@@ -20,8 +20,9 @@
 				>
 			</li>
 			<li>
-				<a class="text-xl {isActive('/profile') ? 'border-b-1 border-black' : ''}" href="/profile"
-					>Profile</a
+				<a
+					class="text-xl {$page.url.pathname.includes('/profile') ? 'border-b-1 border-black' : ''}"
+					href="/profile">Profile</a
 				>
 			</li>
 		</ul>
