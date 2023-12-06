@@ -5,7 +5,7 @@ export type UserProfile = {
 	name?: string;
 	bio?: string | null;
 	phone?: string | null;
-	birthday?: Date | null;
+	birthday?: string | null;
 	profileUrl?: string | null;
 	isFollowing?: boolean | null;
 };

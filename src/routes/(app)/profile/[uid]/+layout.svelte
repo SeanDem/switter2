@@ -1,6 +1,9 @@
 <script lang="ts">
+	import { Cake, Icon } from 'svelte-hero-icons';
+
 	import { enhance } from '$app/forms';
 	import { page } from '$app/stores';
+	import { formatDateBirthday } from '$lib/utils/utils.js';
 	export let data;
 
 	$: userProfile = data.userProfile;
@@ -14,7 +17,7 @@
 		<div class="flex flex-row w-full">
 			<div class="flex flex-row flex-grow items-center">
 				<div class="flex-shrink-0 avatar">
-					<div class="w-28 rounded-xl ronded-full">
+					<div class="w-24 rounded-xl">
 						<img
 							src={userProfile.profileUrl ||
 								'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxroUOuhHpV9KBpOuiYJSvok9YOgMoxGfFnw&s'}
@@ -27,8 +30,12 @@
 						{isUserProfile ? 'Your Profile' : userProfile.name}
 					</div>
 					<div class="text-gray-500">@{userProfile.handle}</div>
+
 					{#if userProfile.birthday}
-						<div class="text-gray-500">Birthday: {userProfile.birthday}</div>
+						<div class="flex items-center justify-center">
+							<Icon src={Cake} class="w-5 h-5 mr-2" />
+							<span class="text-gray-500">{formatDateBirthday(userProfile.birthday)}</span>
+						</div>
 					{/if}
 				</div>
 			</div>

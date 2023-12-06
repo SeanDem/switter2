@@ -45,3 +45,27 @@ export function formatDateDetailed(
 
 	return new Intl.DateTimeFormat(language, options).format(date);
 }
+
+export function formatDateBirthday(dateString: string | null | undefined): string {
+	if (!dateString) return '';
+	const date = new Date(dateString);
+	const monthNames = [
+		'January',
+		'February',
+		'March',
+		'April',
+		'May',
+		'June',
+		'July',
+		'August',
+		'September',
+		'October',
+		'November',
+		'December'
+	];
+
+	const monthIndex = date.getMonth();
+	const day = date.getDate();
+
+	return `${monthNames[monthIndex]} ${day}`;
+}
