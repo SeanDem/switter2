@@ -19,17 +19,26 @@
 	</div>
 	<div class="flex-grow ml-4 text-left">
 		<a href="/profile/{interaction.uid}">
-			<span class="font-semibold hover:underline mr-1 {isMain ? 'text-xl' : 'text-lg'}"
+			<span class="font-semibold hover:underline mr-2 {isMain ? 'text-xl' : 'text-lg'}"
 				>{interaction?.name}</span
 			>
-			<span class="text-gray-500 hover:underline mr-2 {isMain ? 'text-s' : 'text-xs'}"
-				>@{interaction?.handle}</span
-			>
+			{#if isMain}
+				<a href="/profile/{interaction.uid}">
+					<span class="text-gray-500 text-s hover:underline mr-2">@{interaction?.handle}</span>
+				</a>
+			{/if}
 		</a>
 		{#if isMain}
 			<div class="text-sm text-gray-500">{formatDateDetailed(interaction?.timestamp)}</div>
 		{:else}
 			<span class="text-sm text-gray-500">{formatDateSmall(interaction?.timestamp)}</span>
+		{/if}
+		{#if !isMain}
+			<div class="flex items-start">
+				<a href="/profile/{interaction.uid}" class="flex items-start">
+					<span class="text-gray-500 text-xs hover:underline mr-2">@{interaction?.handle}</span>
+				</a>
+			</div>
 		{/if}
 		<div class="mt-2">
 			<p class={isMain ? 'text-lg mb-2' : 'text-base'}>{interaction?.text}</p>
