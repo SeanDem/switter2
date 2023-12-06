@@ -1,11 +1,8 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { page } from '$app/stores';
-	import { onMount } from 'svelte';
 	export let data;
-	onMount(() => {
-		console.log($page);
-	});
+
 	$: userProfile = data.userProfile;
 	$: isUserProfile = data.isUserProfile;
 	$: isActive = (type: string) => $page.url.pathname === createPath(type);

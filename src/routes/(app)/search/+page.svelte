@@ -9,27 +9,34 @@
 	const interactionTypes: InteractionType[] = ['sweet', 'comment', 'resweet'];
 
 	let selectedCategory: InteractionType = 'sweet';
-	let lastSubmitType: InteractionType = 'sweet';
 	let submit: boolean = false;
-
-	function handleFormSubmit() {
-		submit = true;
-		lastSubmitType = selectedCategory;
-	}
 </script>
 
-<div class="flex justify-center mt-4">
-	<form use:enhance method="post" action="?/search" on:submit={handleFormSubmit}>
-		<div class="flex justify-center mb-4 space-x-2">
+<div class="flex justify-center mt-3">
+	<form
+		use:enhance
+		method="post"
+		action="?/search"
+		on:submit={() =>
+			setTimeout(() => {
+				submit = true;
+			}, 300)}
+	>
+		<div class="flex text-lg font-bold justify-center mb-4 space-x-8">
 			{#each interactionTypes as type}
-				<button
-					name="interactionType"
-					type="button"
+				<div
 					on:click={() => (selectedCategory = type)}
-					class={`btn btn-sm rounded ${selectedCategory === type ? 'btn-primary' : 'btn-outline'}`}
+					on:keydown={(event) => {
+						if (event.key === 'Enter') {
+							selectedCategory = type;
+						}
+					}}
+					class={`${selectedCategory === type ? 'border-b-1 border-black' : ''}`}
+					role="button"
+					tabindex="0"
 				>
-					{type}
-				</button>
+					{type.charAt(0).toUpperCase() + type.slice(1)}
+				</div>
 			{/each}
 		</div>
 		<input type="hidden" name="interactionType" bind:value={selectedCategory} />
@@ -40,11 +47,11 @@
 				placeholder="Search..."
 				class="input input-bordered input-primary flex-1 rounded"
 			/>
-			<button type="submit" class="btn btn-primary rounded"> Search </button>
+			<button type="submit" class="btn btn-primary rounded mb-3"> Search </button>
 		</div>
 	</form>
 </div>
 
 {#if submit}
-	<InteractionCardList {interactionList} interactionType={lastSubmitType} />
+	<InteractionCardList {interactionList} />
 {/if}

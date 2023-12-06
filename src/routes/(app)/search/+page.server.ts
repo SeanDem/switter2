@@ -24,7 +24,7 @@ export const actions: Actions = {
 			searchText,
 			interactionType
 		});
-
+		console.log('interactionList', interactionList);
 		return { interactionList };
 	}
 };

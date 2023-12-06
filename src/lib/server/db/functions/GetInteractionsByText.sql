@@ -87,7 +87,7 @@ BEGIN
     ELSIF _type = 'resweet' THEN
         RETURN QUERY
         SELECT
-            rs.comment_id as actionId,
+            rs.resweet_id as actionId,
             rs.sweet_id as sweetId,
             rs.comment_id commentId,
             rs.resweet_id as resweetId,
