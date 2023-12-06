@@ -29,7 +29,7 @@
 	>
 		<Icon
 			src={ChatBubbleLeft}
-			class={`h-6 w-10 ${interaction.isCommented ? 'text-blue-500' : 'text-black'}`}
+			class={`h-7 w-10 ${interaction.isCommented ? 'text-blue-500' : 'text-black'}`}
 		/>
 		<span class={`text-xs ${interaction.isCommented ? 'text-blue-500' : 'text-black'}`}
 			>{interaction.commentsCount}</span
@@ -49,7 +49,7 @@
 					placeholder="Your comment..."
 				/>
 				<input type="hidden" name="interaction" value={JSON.stringify(interactionIdRequest)} />
-				<div class="flex justify-around">
+				<s class="flex justify-around">
 					<button class="btn rounded" on:click|stopPropagation={() => (showDialog = false)}
 						>Cancel</button
 					>

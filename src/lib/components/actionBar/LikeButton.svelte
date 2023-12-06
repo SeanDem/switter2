@@ -25,7 +25,7 @@
 		aria-label="Like"
 		formaction={interaction.isLiked ? '/?/unlike' : '/?/like'}
 	>
-		<Icon src={Heart} class={`h-6 w-10 ${interaction.isLiked ? 'text-pink-500' : 'text-black'}`} />
+		<Icon src={Heart} class={`h-7 w-10 ${interaction.isLiked ? 'text-pink-500' : 'text-black'}`} />
 		<span class={`text-xs ${interaction.isLiked ? 'text-pink-500' : 'text-black'}`}
 			>{interaction.likesCount}</span
 		>

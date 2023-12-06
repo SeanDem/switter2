@@ -8,15 +8,17 @@
 	export let isMain = false;
 </script>
 
-<a href="/{interaction.type}/{interaction.actionId}">
-	<div class="card rounded-lg {isMain ? 'w-115 my-2 border-slate-300 mb-2' : 'w-96 mt-2 mb-0'}">
-		{#if parentInteraction}
-			<div class="pt-1 border-l border-gray-300 ml-2 pl-2 pb-6 mt-2">
+<div class="card rounded-lg pb-1 {isMain ? 'w-115 my-2 border-slate-300 mb-2' : 'w-96 mt-0 mb-0'}">
+	{#if parentInteraction}
+		<div class="pt-1 border-l border-gray-300 ml-2 pl-2 pb-6 mt-2">
+			<a href="/{parentInteraction.type}/{parentInteraction.actionId}">
 				<InteractionCardBody interaction={parentInteraction} />
 				<ActionBar {interaction} />
-			</div>
-		{/if}
+			</a>
+		</div>
+	{/if}
+	<a href="/{interaction.type}/{interaction.actionId}">
 		<InteractionCardBody {interaction} {isMain} />
-		<ActionBar {interaction} />
-	</div>
-</a>
+	</a>
+	<ActionBar {interaction} />
+</div>

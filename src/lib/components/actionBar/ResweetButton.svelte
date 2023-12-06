@@ -35,7 +35,7 @@
 	>
 		<Icon
 			src={ArrowPathRoundedSquare}
-			class={`h-6 w-10 ${interaction.isResweeted ? 'text-green-500' : 'text-black'}`}
+			class={`h-7 w-10 ${interaction.isResweeted ? 'text-green-500' : 'text-black'}`}
 		/>
 		<span class={`text-xs ${interaction.isResweeted ? 'text-green-500' : 'text-black'}`}
 			>{interaction.resweetsCount}</span
