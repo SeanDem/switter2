@@ -1,6 +1,8 @@
 import { cleanInput } from '$lib/server/ServerUtils/badWords';
+import { executeWithApiResponse } from '$lib/server/ServerUtils/utils';
 import { UserProfileDAO, type UserProfile, type UserProfilePartial } from '.';
 import { FollowDao } from '../followers/followerDao';
+import type { APIResponse } from '../types/types';
 
 export class UserProfileService {
 	static async createUserProfile(userProfile: UserProfile): Promise<UserProfile> {
@@ -27,9 +29,19 @@ export class UserProfileService {
 
 	static async updateUserProfile(
 		uid: string,
-		userProfileUpdates: Partial<UserProfile>
-	): Promise<UserProfile> {
-		return UserProfileDAO.updateUserProfile(uid, userProfileUpdates);
+		userProfileUpdates: UserProfile
+	): Promise<APIResponse<boolean | null>> {
+		if (await UserProfileDAO.emailExists(userProfileUpdates.email)) {
+			return { status: 400, message: 'Email already exists' };
+		}
+
+		if (await UserProfileDAO.handleExists(userProfileUpdates.handle)) {
+			return { status: 400, message: 'Handle already exists' };
+		}
+
+		return executeWithApiResponse(async () => {
+			return UserProfileDAO.updateUserProfile(uid, userProfileUpdates);
+		});
 	}
 
 	static async deleteUserProfile(uid: string): Promise<boolean> {

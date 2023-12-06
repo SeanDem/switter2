@@ -20,7 +20,7 @@ export class UserProfileDAO {
 		return data;
 	}
 
-	static async getUserProfileParrtialById(uid: string): Promise<UserProfilePartial | null> {
+	static async getUserProfilePartialById(uid: string): Promise<UserProfilePartial | null> {
 		const { data, error } = await supabase
 			.from('userprofile')
 			.select('uid, handle, bio, name, profileUrl:profile_url')
@@ -30,10 +30,11 @@ export class UserProfileDAO {
 		if (error) throw new Error(error.details + error.message + error.hint);
 		return data;
 	}
+
 	static async updateUserProfile(
 		uid: string,
 		userProfileUpdates: Partial<UserProfile>
-	): Promise<UserProfile> {
+	): Promise<boolean> {
 		const { data, error } = await supabase
 			.from('userprofile')
 			.update(userProfileUpdates)
@@ -41,7 +42,7 @@ export class UserProfileDAO {
 			.single();
 
 		if (error) throw new Error(error.details + error.message + error.hint);
-		return data;
+		return true;
 	}
 
 	static async deleteUserProfile(uid: string): Promise<boolean> {
@@ -56,5 +57,27 @@ export class UserProfileDAO {
 
 		if (error) throw new Error(error.message);
 		return data!;
+	}
+
+	static async emailExists(email: string): Promise<boolean> {
+		const { data, error } = await supabase
+			.from('userprofile')
+			.select('email')
+			.eq('email', email)
+			.single();
+
+		if (error) throw new Error(error.message);
+		return data !== null;
+	}
+
+	static async handleExists(handle: string): Promise<boolean> {
+		const { data, error } = await supabase
+			.from('userprofile')
+			.select('handle')
+			.eq('handle', handle)
+			.single();
+
+		if (error) throw new Error(error.message);
+		return data !== null;
 	}
 }

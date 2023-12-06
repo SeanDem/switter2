@@ -20,10 +20,9 @@ export const actions: Actions = {
 		const name = form.get('name') as string;
 		const phone = form.get('phone') as string;
 		const email = form.get('email') as string;
-		const birthdayStr = form.get('birthday') as string;
-		const birthday = birthdayStr ? new Date(birthdayStr) : null;
+		const birthday = form.get('birthday') as string;
 		const profileUrl = form.get('profileUrl') as string;
-		const UserProfile: UserProfile = {
+		const userProfile: UserProfile = {
 			uid,
 			name,
 			handle,
@@ -32,8 +31,10 @@ export const actions: Actions = {
 			email,
 			birthday
 		};
-		UserProfileService.updateUserProfile(uid, UserProfile);
-
+		const res = await UserProfileService.updateUserProfile(uid, userProfile);
+		if (!res.data) {
+			return fail(res.status, { message: res?.message });
+		}
 		throw redirect(301, '/profile');
 	}
 };

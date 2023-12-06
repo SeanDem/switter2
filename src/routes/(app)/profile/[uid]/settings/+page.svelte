@@ -5,6 +5,7 @@
 	import { userStore } from '$lib/store/store';
 	import { supabase } from '$lib/supabaseClient';
 
+	export let form;
 	export let data: { userProfile: UserProfile };
 	let { handle, name, bio, phone, email, birthday } = data.userProfile;
 
@@ -71,7 +72,7 @@
 					<span class="label-text">Bio:</span>
 				</label>
 				<input
-					maxlength="200"
+					maxlength="250"
 					type="text"
 					name="bio"
 					bind:value={bio}
@@ -107,7 +108,12 @@
 				<input type="date" name="birthday" bind:value={birthday} class="input input-bordered" />
 			</div>
 
-			<button type="submit" class="btn btn-primary mt-4 w-full">Save Profile</button>
+			{#if form?.message}
+				<div class="text-error my-2">{form?.message}</div>
+			{/if}
+			<button disabled={!!form?.message} type="submit" class="btn btn-primary mt-4 w-full"
+				>Save Profile</button
+			>
 		</form>
 
 		<div class="mt-4 text-center">

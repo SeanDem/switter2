@@ -51,7 +51,7 @@
 				<textarea
 					class="input input-ghost w-full max-w-xs resize-none h-28 mb-4"
 					name="text"
-					maxlength="200"
+					maxlength="250"
 					bind:value={text}
 					placeholder="Your resweet..."
 				/>
