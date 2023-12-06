@@ -44,7 +44,7 @@
 				<textarea
 					class="input input-ghost w-full max-w-xs resize-none h-28 mb-4"
 					name="text"
-					maxlength="150"
+					maxlength="200"
 					bind:value={text}
 					placeholder="Your comment..."
 				/>

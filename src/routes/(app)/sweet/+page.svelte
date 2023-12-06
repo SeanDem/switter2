@@ -8,7 +8,7 @@
 			<div class="mb-1">
 				<textarea
 					id="sweet"
-					maxlength="150"
+					maxlength="200"
 					name="sweet"
 					class="w-full p-2 rounded border border-gray-300 resize-none mb-2 outline-none h-28 focus:outline-none"
 					placeholder="Compose your sweet"

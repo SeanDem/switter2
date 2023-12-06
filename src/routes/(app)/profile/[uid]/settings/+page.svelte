@@ -19,7 +19,6 @@
 
 <div class="flex flex-col min-h-screen justify-start items-center">
 	<div class="w-full max-w-md bg-white rounded-lg">
-		<!-- <h1 class="text-2xl font-bold mb-4 text-center">Profile Settings</h1> -->
 		<form use:enhance method="post" class="form-control">
 			<div class="form-control">
 				<div class="flex justify-between items-center">
@@ -44,7 +43,13 @@
 				<label for="name" class="label">
 					<span class="label-text">Name:</span>
 				</label>
-				<input max="60" type="string" name="name" bind:value={name} class="input input-bordered" />
+				<input
+					maxlength="30"
+					type="string"
+					name="name"
+					bind:value={name}
+					class="input input-bordered"
+				/>
 			</div>
 
 			<div class="form-control">
@@ -52,7 +57,7 @@
 					<span class="label-text">Handle:</span>
 				</label>
 				<input
-					max="50"
+					maxlength="20"
 					type="text"
 					name="handle"
 					bind:value={handle}
@@ -65,7 +70,13 @@
 				<label for="bio" class="label">
 					<span class="label-text">Bio:</span>
 				</label>
-				<input max="250" type="text" name="bio" bind:value={bio} class="input input-bordered" />
+				<input
+					maxlength="200"
+					type="text"
+					name="bio"
+					bind:value={bio}
+					class="input input-bordered"
+				/>
 			</div>
 
 			<div class="form-control">
@@ -80,7 +91,7 @@
 					<span class="label-text">Email:</span>
 				</label>
 				<input
-					max="100"
+					maxlength="100"
 					type="email"
 					name="email"
 					bind:value={email}
