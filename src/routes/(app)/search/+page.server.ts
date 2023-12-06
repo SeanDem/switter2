@@ -20,11 +20,12 @@ export const actions: Actions = {
 			return fail(401, { interactionType, missing: true });
 		}
 
-		const interactionList: Interaction[] = await SearchService.searchInteractionText(uid, {
+		const interactionListRes = await SearchService.searchInteractionText(uid, {
 			searchText,
 			interactionType
 		});
-		console.log('interactionList', interactionList);
+
+		const interactionList = interactionListRes.data;
 		return { interactionList };
 	}
 };

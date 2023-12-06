@@ -2,12 +2,10 @@
 	import { enhance } from '$app/forms';
 	import type { InteractionType } from '$lib/server/modules/interactions';
 	import InteractionCardList from '$lib/components/InteractionCard/InteractionCardList.svelte';
-
 	export let form;
-	$: interactionList = form?.interactionList ?? [];
-
 	const interactionTypes: InteractionType[] = ['sweet', 'comment', 'resweet'];
 
+	$: interactionList = form?.interactionList ?? [];
 	let selectedCategory: InteractionType = 'sweet';
 	let submit: boolean = false;
 </script>

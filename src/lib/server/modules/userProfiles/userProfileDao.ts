@@ -59,23 +59,25 @@ export class UserProfileDAO {
 		return data!;
 	}
 
-	static async emailExists(email: string): Promise<boolean> {
+	static async handleExists(handle: string, uid: string): Promise<boolean> {
 		const { data, error } = await supabase
 			.from('userprofile')
-			.select('email')
-			.eq('email', email)
-			.single();
+			.select('handle')
+			.eq('handle', handle)
+			.not('uid', 'eq', uid)
+			.maybeSingle();
 
 		if (error) throw new Error(error.message);
 		return data !== null;
 	}
 
-	static async handleExists(handle: string): Promise<boolean> {
+	static async emailExists(email: string, uid: string): Promise<boolean> {
 		const { data, error } = await supabase
 			.from('userprofile')
-			.select('handle')
-			.eq('handle', handle)
-			.single();
+			.select('email')
+			.eq('email', email)
+			.not('uid', 'eq', uid)
+			.maybeSingle();
 
 		if (error) throw new Error(error.message);
 		return data !== null;
