@@ -5,7 +5,7 @@
 	$: followersList = data.followersList ?? [];
 </script>
 
-{#if followersList}
+{#if followersList && followersList.length > 0}
 	{#each followersList as userProfile}
 		<div class="flex justify-center">
 			<ProfileCard {userProfile} />

@@ -31,6 +31,7 @@
 	const handleScroll = () => {
 		const currentScrollY = window.scrollY;
 		showNavbar = currentScrollY < lastScrollY || currentScrollY < 50;
+		console.log(showNavbar);
 		lastScrollY = currentScrollY;
 	};
 

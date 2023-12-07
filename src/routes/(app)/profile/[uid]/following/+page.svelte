@@ -5,7 +5,7 @@
 	$: followingList = data.followingList ?? [];
 </script>
 
-{#if followingList}
+{#if followingList && followingList.length > 0}
 	{#each followingList as userProfile}
 		<div class="flex justify-center">
 			<ProfileCard {userProfile} />
