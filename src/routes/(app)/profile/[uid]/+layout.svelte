@@ -13,7 +13,7 @@
 </script>
 
 <div class="flex justify-center mt-4">
-	<div class="flex flex-col items-center bg-white rounded-lg shadow-s card w-130 pb-1">
+	<div class="flex flex-col items-center bg-white rounded-lg shadow-s card border-1 p-5 w-130 pb-1">
 		<div class="flex flex-row w-full">
 			<div class="flex flex-row flex-grow items-center">
 				<div class="flex-shrink-0 avatar">

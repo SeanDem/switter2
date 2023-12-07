@@ -31,7 +31,6 @@
 	const handleScroll = () => {
 		const currentScrollY = window.scrollY;
 		showNavbar = currentScrollY < lastScrollY || currentScrollY < 50;
-		console.log(showNavbar);
 		lastScrollY = currentScrollY;
 	};
 
@@ -47,8 +46,8 @@
 	});
 </script>
 
-<main class="pt-16">
+<main class="pt-12">
 	<Header {showNavbar} />
-	<slot />
+	<div class="mt-4"><slot /></div>
 	<footer />
 </main>

@@ -10,7 +10,7 @@
 	let submit: boolean = false;
 </script>
 
-<div class="flex justify-center mt-3">
+<div class="flex justify-center">
 	<form
 		use:enhance
 		method="post"

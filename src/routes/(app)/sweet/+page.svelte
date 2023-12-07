@@ -2,7 +2,7 @@
 	import { enhance } from '$app/forms';
 </script>
 
-<div class="min-h-screen flex justify-center bg-white mt-2">
+<div class="min-h-screen flex justify-center bg-white">
 	<div class="bg-white p-2 w-96">
 		<form use:enhance method="post" action="?/create">
 			<div class="mb-1">

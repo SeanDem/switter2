@@ -12,29 +12,28 @@
 </script>
 
 <header
-	class={`bg-base-100 fixed top-0 left-0 w-full z-10 transform transition-all duration-200 ${
-		showNavbar ? 'top-0' : 'top-full'
+	class={`bg-base-100 border-b-2 fixed top-0 left-0 w-full max-w-none z-10 transform transition-all duration-200 ${
+		showNavbar ? 'top-0' : '-top-20'
 	}`}
 >
-	<nav>
-		<ul class="menu menu-horizontal">
+	<nav class="flex justify-center overflow-x-auto">
+		<ul class="flex space-x-4 px-4 py-2 font-bold">
 			<li>
-				<a class="text-xl {isActive('/') ? 'border-b-1 border-black' : ''}" href="/">Home</a>
+				<a class="text-xl {isActive('/') ? 'border-b-2 border-black' : ''}" href="/">Home</a>
 			</li>
 			<li>
-				<a class="text-xl {isActive('/search') ? 'border-b-1 border-black' : ''}" href="/search"
+				<a class="text-xl {isActive('/search') ? 'border-b-2 border-black' : ''}" href="/search"
 					>Search</a
 				>
 			</li>
 			<li>
-				<a class="text-xl {isActive('/sweet') ? 'border-b-1 border-black' : ''}" href="/sweet"
+				<a class="text-xl {isActive('/sweet') ? 'border-b-2 border-black' : ''}" href="/sweet"
 					>Sweet</a
 				>
 			</li>
 			<li>
-				<a
-					class="text-xl {$page.url.pathname.includes('/profile') ? 'border-b-1 border-black' : ''}"
-					href="/profile">Profile</a
+				<a class="text-xl {isActive('/profile') ? 'border-b-2 border-black' : ''}" href="/profile"
+					>Profile</a
 				>
 			</li>
 			<li>
