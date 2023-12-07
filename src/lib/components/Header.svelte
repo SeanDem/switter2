@@ -11,7 +11,7 @@
 </script>
 
 <header
-	class={`bg-base-100 fixed top-0 left-0 w-full z-10 transform transition-all duration-200 ${
+	class={`bg-base-100 fixed top-0 left-0 w-full z-10 transform transition-all duration-150 ${
 		showNavbar ? 'top-0' : '-top-full'
 	}`}
 >
