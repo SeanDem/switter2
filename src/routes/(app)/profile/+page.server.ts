@@ -15,8 +15,8 @@ export const actions: Actions = {
 		if (typeof otherUid !== 'string') {
 			return fail(400, { invalid: true });
 		}
-		FollowerService.follow(uid, otherUid);
-		return { success: true };
+		const res = await FollowerService.follow(uid, otherUid);
+		return { success: res.status === 200 };
 	},
 	unfollow: async ({ request, cookies }) => {
 		const uid = cookies.get('uid');
@@ -29,6 +29,7 @@ export const actions: Actions = {
 			return fail(400, { invalid: true });
 		}
 
-		FollowerService.unfollow(uid, otherUid);
+		const res = await FollowerService.unfollow(uid, otherUid);
+		return { success: res.status === 200 };
 	}
 };

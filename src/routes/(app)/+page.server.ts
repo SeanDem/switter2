@@ -1,21 +1,13 @@
 import { CommentService, type SweetComment } from '$lib/server/modules/comments';
-import {
-	InteractionService,
-	type Interaction,
-	type InteractionIdRequest
-} from '$lib/server/modules/interactions';
+import { InteractionService, type InteractionIdRequest } from '$lib/server/modules/interactions';
 import { LikeService } from '$lib/server/modules/likes';
 import { ResweetService, type Resweet } from '$lib/server/modules/resweets';
-import type { APIResponse } from '$lib/server/modules/types/types';
 import { error, fail, redirect, type Actions } from '@sveltejs/kit';
 
 export const load = async ({ cookies }) => {
 	const uid = cookies.get('uid');
 	if (!uid) throw redirect(301, '/auth');
-	const res = await InteractionService.getInteractionListByType(
-		uid,
-		'sweet'
-	);
+	const res = await InteractionService.getInteractionListByType(uid, 'sweet');
 	const sweetDetailList = res.data;
 	return { sweetDetailList };
 };
@@ -31,7 +23,7 @@ export const actions: Actions = {
 			return fail(400, { missing: true });
 		}
 		const interaction: InteractionIdRequest = JSON.parse(interactionReq?.toString());
-		LikeService.createSweetLike(uid, interaction);
+		const res = LikeService.createSweetLike(uid, interaction);
 	},
 	unlike: async ({ request, cookies }) => {
 		const uid = cookies.get('uid');
@@ -44,7 +36,7 @@ export const actions: Actions = {
 			return fail(400, { missing: true });
 		}
 		const interaction: InteractionIdRequest = JSON.parse(interactionReq?.toString());
-		LikeService.deleteSweetLike(uid, interaction);
+		const res = await LikeService.deleteSweetLike(uid, interaction);
 	},
 	comment: async ({ request, cookies }) => {
 		const uid = cookies.get('uid');
@@ -77,7 +69,7 @@ export const actions: Actions = {
 			return fail(400, { invalid: true });
 		}
 
-		CommentService.createComment(sweetComment);
+		const res = await CommentService.createComment(sweetComment);
 	},
 	resweet: async ({ request, cookies }) => {
 		const uid = cookies.get('uid');
@@ -106,7 +98,7 @@ export const actions: Actions = {
 			commentId: commentId || null
 		};
 
-		ResweetService.createResweet(resweet);
+		const res = await ResweetService.createResweet(resweet);
 	},
 	unresweet: async ({ request, cookies }) => {
 		const uid = cookies.get('uid');
@@ -121,6 +113,6 @@ export const actions: Actions = {
 		}
 		const interaction: InteractionIdRequest = JSON.parse(interactionReq?.toString());
 
-		ResweetService.deleteResweet(uid, interaction);
+		const res = await ResweetService.deleteResweet(uid, interaction);
 	}
 };

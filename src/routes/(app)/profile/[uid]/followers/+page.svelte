@@ -2,7 +2,7 @@
 	import ProfileCard from '$lib/components/ProfileCard.svelte';
 
 	export let data;
-	$: followersList = data.followersList;
+	$: followersList = data.followersList ?? [];
 </script>
 
 {#if followersList}

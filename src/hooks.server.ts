@@ -6,7 +6,7 @@ import { createServerClient } from '@supabase/ssr';
 import type { Handle } from '@sveltejs/kit';
 
 export const handle: Handle = async ({ event, resolve }) => {
-	console.log('handle');
+	// @ts-ignore
 	event.locals.supabase = createServerClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY, {
 		cookies: {
 			get: (key) => event.cookies.get(key),
@@ -24,9 +24,11 @@ export const handle: Handle = async ({ event, resolve }) => {
 	 * of calling `const { data: { session } } = await supabase.auth.getSession()`
 	 * you just call this `await getSession()`
 	 */
+	// @ts-ignore
 	event.locals.getSession = async () => {
 		const {
 			data: { session }
+			// @ts-ignore
 		} = await event.locals.supabase.auth.getSession();
 		return session;
 	};

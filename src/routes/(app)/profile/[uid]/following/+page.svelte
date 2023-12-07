@@ -1,8 +1,8 @@
 <script lang="ts">
 	import ProfileCard from '$lib/components/ProfileCard.svelte';
-
 	export let data;
-	$: followingList = data.followingList;
+
+	$: followingList = data.followingList ?? [];
 </script>
 
 {#if followingList}

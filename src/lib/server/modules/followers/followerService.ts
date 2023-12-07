@@ -1,24 +1,37 @@
-import { safeExecuteList } from '$lib/server/ServerUtils/utils';
+import { executeWithApiResponse } from '$lib/server/ServerUtils/utils';
+import { APIResponse, HttpStatus } from '../types/types';
 import type { UserProfilePartial } from '../userProfiles';
 import { FollowDao } from './followerDao';
+
 export class FollowerService {
-	static async getFollowers(uid: string): Promise<UserProfilePartial[]> {
-		return FollowDao.getFollowers(uid);
+	static async getFollowers(uid: string): Promise<APIResponse<UserProfilePartial[]>> {
+		return executeWithApiResponse(() => FollowDao.getFollowers(uid));
 	}
 
-	static async getFollowing(uid: string): Promise<UserProfilePartial[]> {
-		return FollowDao.getFollowing(uid);
+	static async getFollowing(uid: string): Promise<APIResponse<UserProfilePartial[]>> {
+		return executeWithApiResponse(() => FollowDao.getFollowing(uid));
 	}
 
-	static async follow(uid: string, followerUid: string): Promise<void> {
-		if (uid === followerUid) throw new Error('User cannot follow themselves.');
+	static async follow(uid: string, followerUid: string): Promise<APIResponse<null>> {
+		if (uid === followerUid) {
+			return {
+				data: null,
+				status: HttpStatus.BadRequest,
+				message: 'User cannot follow themselves.'
+			};
+		}
 		const isFollowing = await FollowDao.isUserFollowing(uid, followerUid);
-		if (isFollowing) return Promise.resolve();
-
-		return safeExecuteList(() => FollowDao.follow(uid, followerUid));
+		if (isFollowing) {
+			return {
+				data: null,
+				status: HttpStatus.OK,
+				message: 'Already following.'
+			};
+		}
+		return executeWithApiResponse(() => FollowDao.follow(uid, followerUid));
 	}
 
-	static async unfollow(uid: string, followerUid: string) {
-		return safeExecuteList(() => FollowDao.unfollow(uid, followerUid));
+	static async unfollow(uid: string, followerUid: string): Promise<APIResponse<void>> {
+		return executeWithApiResponse(() => FollowDao.unfollow(uid, followerUid));
 	}
 }

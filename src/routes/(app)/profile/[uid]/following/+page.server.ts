@@ -1,6 +1,8 @@
 import { FollowerService } from '$lib/server/modules/followers/followerService.js';
 
 export const load = async ({ params }) => {
-	const followingList = await FollowerService.getFollowing(params.uid);
+	const followingListRes = await FollowerService.getFollowing(params.uid);
+	const followingList = followingListRes.data;
+
 	return { followingList };
 };

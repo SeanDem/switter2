@@ -1,14 +1,5 @@
 import { HttpStatus, type APIResponse } from '../modules/types/types';
 
-export function safeExecuteList<T>(func: () => T): T | null {
-	try {
-		return func();
-	} catch (error) {
-		console.error(error);
-		return null;
-	}
-}
-
 export async function executeWithApiResponse<T>(
 	func: () => Promise<T>
 ): Promise<APIResponse<T | null>> {
@@ -20,7 +11,7 @@ export async function executeWithApiResponse<T>(
 		return {
 			data: null,
 			status: HttpStatus.InternalServerError,
-			message: 'An error occurred'
+			message: error.message
 		};
 	}
 }

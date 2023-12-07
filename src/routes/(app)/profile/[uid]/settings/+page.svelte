@@ -2,9 +2,7 @@
 	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
 	import type { UserProfile } from '$lib/server/modules/userProfiles';
-	import { userStore } from '$lib/store/store';
 	import { supabase } from '$lib/supabaseClient';
-
 	export let form;
 	export let data: { userProfile: UserProfile };
 	let { handle, name, bio, phone, email, birthday } = data.userProfile;
@@ -13,8 +11,13 @@
 	function logout() {
 		supabase.auth.signOut();
 		document.cookie = 'uid=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-		userStore.set(null);
 		goto('/');
+	}
+
+	function clearFormMessage() {
+		if (form?.message) {
+			form.message = undefined;
+		}
 	}
 </script>
 
@@ -58,6 +61,7 @@
 					<span class="label-text">Handle:</span>
 				</label>
 				<input
+					on:focus={clearFormMessage}
 					maxlength="20"
 					type="text"
 					name="handle"
@@ -84,7 +88,13 @@
 				<label for="phone" class="label">
 					<span class="label-text">Phone:</span>
 				</label>
-				<input type="tel" name="phone" bind:value={phone} class="input input-bordered" />
+				<input
+					on:focus={clearFormMessage}
+					type="tel"
+					name="phone"
+					bind:value={phone}
+					class="input input-bordered"
+				/>
 			</div>
 
 			<div class="form-control">
@@ -92,6 +102,7 @@
 					<span class="label-text">Email:</span>
 				</label>
 				<input
+					on:focus={clearFormMessage}
 					maxlength="100"
 					type="email"
 					name="email"

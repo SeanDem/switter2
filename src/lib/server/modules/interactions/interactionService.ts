@@ -28,7 +28,9 @@ export class InteractionService {
 		searchUid: string
 	): Promise<APIResponse<Interaction[] | null>> {
 		return executeWithApiResponse(async () => {
-			const likes = await LikeService.getAllLikesByUid(searchUid);
+			const allLikesRes = await LikeService.getAllLikesByUid(searchUid);
+			const likes = allLikesRes.data;
+			if (!likes) return null;
 			return await InteractionDao.GetInteractionsByIdList(uid, likes);
 		});
 	}
