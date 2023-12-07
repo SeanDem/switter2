@@ -1,13 +1,15 @@
 // I know there are type errors on this file but it's fine.
 // It's copied directly from official sveltekit docs and works fine.
 
-import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from '$env/static/public';
 import { createServerClient } from '@supabase/ssr';
 import type { Handle } from '@sveltejs/kit';
 
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL ?? '';
+const supabaseKey = import.meta.env.VITE_SUPABASE_KEY ?? '';
+
 export const handle: Handle = async ({ event, resolve }) => {
 	// @ts-ignore
-	event.locals.supabase = createServerClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY, {
+	event.locals.supabase = createServerClient(supabaseUrl, supabaseKey, {
 		cookies: {
 			get: (key) => event.cookies.get(key),
 			set: (key, value, options) => {
