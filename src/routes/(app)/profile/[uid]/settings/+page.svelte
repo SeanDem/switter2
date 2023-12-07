@@ -1,7 +1,7 @@
 <script lang="ts">
+	import type { UserProfile } from '$lib/server/modules/userProfiles';
 	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
-	import type { UserProfile } from '$lib/server/modules/userProfiles';
 	import { supabase } from '$lib/supabaseClient';
 	export let form;
 	export let data: { userProfile: UserProfile };

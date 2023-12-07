@@ -42,8 +42,9 @@
 
 			<div class="flex flex-col justify-center ml-4">
 				{#if isUserProfile}
-					<a href="/profile/{userProfile.uid}/settings" class="btn btn-primary rounded w-24"
-						>Settings</a
+					<a
+						href="/profile/{userProfile.uid}/settings"
+						class="btn rounded w-24 {isActive('settings') ? '' : 'btn-primary'}">Settings</a
 					>
 				{:else}
 					<form use:enhance method="post">

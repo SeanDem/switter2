@@ -6,6 +6,8 @@
 	import { webVitals } from '$lib/vitals';
 	import { onMount } from 'svelte';
 	export let data;
+	let lastScrollY = 0;
+	let showNavbar = true;
 
 	$: if (browser && data?.analyticsId) {
 		webVitals({
@@ -25,10 +27,20 @@
 			}
 		});
 	});
+
+	const handleScroll = () => {
+		const currentScrollY = window.scrollY;
+		showNavbar = currentScrollY < lastScrollY || currentScrollY < 50;
+		lastScrollY = currentScrollY;
+	};
+
+	onMount(() => {
+		window.addEventListener('scroll', handleScroll);
+	});
 </script>
 
-<main>
-	<Header />
+<main class="pt-16">
+	<Header {showNavbar} />
 	<slot />
 	<footer />
 </main>
