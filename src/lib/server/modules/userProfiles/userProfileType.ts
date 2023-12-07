@@ -7,10 +7,19 @@ export type UserProfile = {
 	phone?: string | null;
 	birthday?: string | null;
 	profileUrl?: string | null;
-	isFollowing?: boolean | null;
+	isFollowing?: boolean;
+	followerCount?: number;
+	followingCount?: number;
 };
 
 export type UserProfilePartial = Pick<
 	UserProfile,
-	'uid' | 'handle' | 'bio' | 'name' | 'profileUrl' | 'isFollowing'
+	| 'uid'
+	| 'handle'
+	| 'bio'
+	| 'name'
+	| 'profileUrl'
+	| 'isFollowing'
+	| 'followerCount'
+	| 'followingCount'
 >;

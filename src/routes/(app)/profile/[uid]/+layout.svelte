@@ -67,12 +67,14 @@
 			<a
 				class="text-lg {isActive('followers') ? 'border-b-1 border-black' : ''}"
 				href={createPath('followers')}
-				><span class="font-bold mr-2">100</span> <span class="text-gray-500">Followers</span></a
+				><span class="font-bold mr-2">{userProfile.followerCount}</span>
+				<span class="text-gray-500">Followers</span></a
 			>
 			<a
 				class="text-lg {isActive('following') ? 'border-b-1 border-black' : ''}"
 				href={createPath('following')}
-				><span class="font-bold mr-2">100</span> <span class="text-gray-500">Following</span></a
+				><span class="font-bold mr-2">{userProfile.followingCount}</span>
+				<span class="text-gray-500">Following</span></a
 			>
 		</div>
 

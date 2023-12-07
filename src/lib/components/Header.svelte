@@ -1,17 +1,18 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { Icon, ArrowPath } from 'svelte-hero-icons';
+	import { ArrowPath, Icon } from 'svelte-hero-icons';
 	export let showNavbar: boolean;
 	$: isActive = (path: string) => $page.url.pathname === path;
 
 	async function refreshPage() {
 		await invalidateAll();
+		window.scrollTo(0, 0);
 	}
 </script>
 
 <header
-	class={`bg-base-100 fixed top-0 left-0 w-full z-10 transform transition-all duration-150 ${
+	class={`bg-base-100 fixed top-0 left-0 w-full z-10 transform transition-all duration-200 ${
 		showNavbar ? 'top-0' : '-top-full'
 	}`}
 >

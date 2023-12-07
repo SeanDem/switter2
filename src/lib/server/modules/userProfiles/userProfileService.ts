@@ -22,7 +22,9 @@ export class UserProfileService {
 		profileUid: string
 	): Promise<APIResponse<UserProfile | null>> {
 		return executeWithApiResponse<UserProfile | null>(async () => {
-			const [isFollowing, userProfile] = await Promise.all([
+			const [followerCount, followingCount, isFollowing, userProfile] = await Promise.all([
+				FollowDao.getFollowerCount(profileUid),
+				FollowDao.getFollowingCount(profileUid),
 				FollowDao.isUserFollowing(uid, profileUid),
 				UserProfileDAO.getUserProfileById(profileUid)
 			]);
@@ -31,7 +33,9 @@ export class UserProfileService {
 
 			return {
 				...userProfile,
-				isFollowing: isFollowing
+				isFollowing: isFollowing,
+				followerCount: followerCount,
+				followingCount: followingCount
 			};
 		});
 	}

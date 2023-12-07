@@ -45,4 +45,24 @@ export class FollowDao {
 
 		return !!data;
 	}
+
+	static async getFollowerCount(uid: string): Promise<number> {
+		const { count, error } = await supabase
+			.from('userfollowers')
+			.select('follower_id', { count: 'exact' })
+			.eq('followee_uid', uid);
+
+		if (error) throw new Error(error.message);
+		return count ?? 0;
+	}
+
+	static async getFollowingCount(uid: string): Promise<number> {
+		const { count, error } = await supabase
+			.from('userfollowers')
+			.select('follower_id', { count: 'exact' })
+			.eq('follower_uid', uid);
+
+		if (error) throw new Error(error.message);
+		return count ?? 0;
+	}
 }

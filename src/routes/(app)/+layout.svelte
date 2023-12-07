@@ -4,7 +4,7 @@
 	import Header from '$lib/components/Header.svelte';
 	import { supabase } from '$lib/supabaseClient';
 	import { webVitals } from '$lib/vitals';
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	export let data;
 	let lastScrollY = 0;
 	let showNavbar = true;
@@ -35,7 +35,14 @@
 	};
 
 	onMount(() => {
-		window.addEventListener('scroll', handleScroll);
+		if (browser) {
+			window.addEventListener('scroll', handleScroll);
+		}
+	});
+	onDestroy(() => {
+		if (browser) {
+			window.removeEventListener('scroll', handleScroll);
+		}
 	});
 </script>
 
