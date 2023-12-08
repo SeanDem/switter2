@@ -1,5 +1,5 @@
 import { error } from '@sveltejs/kit';
-import { supabase } from '$lib/supabaseClient';
+import { supabase } from '$lib/utils/supabaseClient';
 import type { Resweet } from '.';
 import type { InteractionIdRequest } from '../interactions';
 
@@ -21,6 +21,7 @@ export class ResweetDAO {
 		if (error) throw new Error(error.message);
 		return true;
 	}
+
 	static async getResweetByIdRequestAndUid(
 		uid: string,
 		interactionIdRequest: InteractionIdRequest

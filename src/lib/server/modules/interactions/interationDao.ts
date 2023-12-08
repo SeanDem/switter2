@@ -1,4 +1,4 @@
-import { supabase } from '$lib/supabaseClient';
+import { supabase } from '$lib/utils/supabaseClient';
 import type { LikesList } from '../likes';
 import type { Interaction, InteractionIdRequest, InteractionType } from './interactionType';
 

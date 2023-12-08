@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Interaction } from '$lib/server/modules/interactions';
-	import { formatDateDetailed, formatDateSmall } from '$lib/utils/utils';
+	import { formatDateDetailed, formatDateSmall } from '$lib/utils/dateutils';
 	export let interaction: Interaction | null = null;
 	export let isMain = false;
 </script>

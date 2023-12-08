@@ -1,4 +1,4 @@
-import { supabase } from '$lib/supabaseClient';
+import { supabase } from '$lib/utils/supabaseClient';
 import type { UserProfile, UserProfilePartial } from './userProfileType';
 
 export class UserProfileDAO {

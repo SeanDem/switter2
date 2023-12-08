@@ -21,8 +21,6 @@ export class ResweetService {
 	): Promise<APIResponse<boolean | null>> {
 		return executeWithApiResponse<boolean>(async () => {
 			ResweetService.validateInteractionIdRequest(interactionIdRequest);
-			console.log('interactionIdRequest: ' + JSON.stringify(interactionIdRequest));
-			console.log('uid: ' + uid);
 			const resweetId = await ResweetDAO.getResweetByIdRequestAndUid(uid, interactionIdRequest);
 
 			if (!resweetId) throw new Error('Resweet does not exist.');

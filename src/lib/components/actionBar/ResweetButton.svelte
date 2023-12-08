@@ -28,7 +28,6 @@
 				},
 				body: JSON.stringify(resweet)
 			});
-			console.log(res);
 		} else {
 			const res = await fetch('/api/action/resweet', {
 				method: 'POST',
@@ -37,8 +36,15 @@
 				},
 				body: JSON.stringify(resweet)
 			});
-			console.log(res);
 		}
+		interaction = {
+			...interaction,
+			isResweeted: !interaction.isResweeted,
+			resweetsCount: interaction.isResweeted
+				? interaction.resweetsCount - 1
+				: interaction.resweetsCount + 1
+		};
+		text = '';
 	}
 </script>
 

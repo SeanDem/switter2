@@ -25,7 +25,7 @@ export class CommentService {
 				message: 'Cannot have more than one parent'
 			};
 		}
-		comment.text = badWordFilter.clean(comment.text?.trim().toString() ?? '');
+		comment.text = badWordFilter.clean(comment.text?.trim() ?? '');
 		return executeWithApiResponse(async () => {
 			return CommentDAO.createComment(comment);
 		});

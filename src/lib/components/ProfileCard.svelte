@@ -9,6 +9,12 @@
 		bio: '',
 		profileUrl: ''
 	};
+
+	function handleFollow() {
+		userProfile.isFollowing
+			? FollowService.unfollow(userProfile.uid)
+			: FollowService.follow(userProfile.uid);
+	}
 </script>
 
 <a href="/profile/{userProfile.uid}">
@@ -29,24 +35,13 @@
 			</div>
 		</div>
 		<div class="flex flex-col justify-center">
-			<form use:enhance method="post">
-				<input type="hidden" name="otherUid" value={userProfile.uid} />
-				{#if userProfile.isFollowing}
-					<button
-						on:click|stopPropagation
-						on:submit|stopPropagation
-						formaction="/profile/?/unfollow"
-						class="btn btn-primary rounded w-24">unfollow</button
-					>
-				{:else}
-					<button
-						on:click|stopPropagation
-						on:submit|stopPropagation
-						formaction="/profile/?/follow"
-						class="btn btn rounded w-24">follow</button
-					>
-				{/if}
-			</form>
+			{#if userProfile.isFollowing}
+				<button on:click|stopPropagation={handleFollow} class="btn btn-primary rounded w-24"
+					>Unfollow</button
+				>
+			{:else}
+				<button on:click|stopPropagation={handleFollow} class="btn rounded w-24">Follow</button>
+			{/if}
 		</div>
 	</div>
 </a>

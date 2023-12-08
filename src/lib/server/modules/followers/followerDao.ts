@@ -1,4 +1,4 @@
-import { supabase } from '$lib/supabaseClient';
+import { supabase } from '$lib/utils/supabaseClient';
 export class FollowDao {
 	static async getFollowers(uid: string) {
 		const _uid = uid;

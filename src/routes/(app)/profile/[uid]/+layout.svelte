@@ -1,15 +1,20 @@
 <script lang="ts">
 	import { Cake, Icon } from 'svelte-hero-icons';
 
-	import { enhance } from '$app/forms';
 	import { page } from '$app/stores';
-	import { formatDateBirthday } from '$lib/utils/utils.js';
+	import { formatDateBirthday } from '$lib/utils/dateutils.js';
+	import { follow, unfollow } from '$lib/services/follow.js';
 	export let data;
 
 	$: userProfile = data.userProfile;
 	$: isUserProfile = data.isUserProfile;
 	$: isActive = (type: string) => $page.url.pathname === createPath(type);
 	$: createPath = (type: string) => `/profile/${userProfile.uid}/${type}`;
+
+	async function handleFollow() {
+		userProfile.isFollowing ? unfollow(userProfile.uid) : follow(userProfile.uid);
+		userProfile.isFollowing = !userProfile.isFollowing;
+	}
 </script>
 
 <div class="flex justify-center my-4">
@@ -43,17 +48,12 @@
 						>
 							Settings
 						</a>
+					{:else if userProfile.isFollowing}
+						<button on:click|stopPropagation={handleFollow} class="btn btn-primary rounded w-24"
+							>Unfollow</button
+						>
 					{:else}
-						<form use:enhance method="post">
-							<input type="hidden" name="otherUid" value={userProfile.uid} />
-							{#if userProfile.isFollowing}
-								<button formaction="/profile/?/unfollow" class="btn btn-primary rounded w-24"
-									>Unfollow</button
-								>
-							{:else}
-								<button formaction="/profile/?/follow" class="btn rounded w-24">Follow</button>
-							{/if}
-						</form>
+						<button on:click|stopPropagation={handleFollow} class="btn rounded w-24">Follow</button>
 					{/if}
 				</div>
 			</div>

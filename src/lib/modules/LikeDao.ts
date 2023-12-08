@@ -1,6 +1,6 @@
 import type { InteractionIdRequest } from '$lib/server/modules/interactions';
 import type { SweetLike } from '$lib/server/modules/likes';
-import { supabase } from '$lib/supabaseClient';
+import { supabase } from '$lib/utils/supabaseClient';
 
 export class ClientLikeDao {
 	static async insertSweetLike(

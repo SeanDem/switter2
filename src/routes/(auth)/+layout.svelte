@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { supabase } from '$lib/supabaseClient.js';
+	import { supabase } from '$lib/utils/supabaseClient.js';
 	import { onMount } from 'svelte';
 	export let form;
 

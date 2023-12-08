@@ -8,6 +8,7 @@ export async function POST({ request, cookies }) {
 		return json({ message: 'Not logged in.', status: 401 });
 	}
 	const resweet: Resweet = await request.json();
+	resweet.uid = uid;
 	const res = await ResweetService.createResweet(resweet);
 	return json({ res });
 }

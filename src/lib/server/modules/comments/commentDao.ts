@@ -1,4 +1,4 @@
-import { supabase } from '$lib/supabaseClient';
+import { supabase } from '$lib/utils/supabaseClient';
 import type { SweetComment } from '.';
 import type { Interaction, InteractionIdRequest } from '../interactions';
 

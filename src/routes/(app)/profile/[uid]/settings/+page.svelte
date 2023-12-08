@@ -2,7 +2,7 @@
 	import type { UserProfile } from '$lib/server/modules/userProfiles';
 	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
-	import { supabase } from '$lib/supabaseClient';
+	import { supabase } from '$lib/utils/supabaseClient.js';
 	export let form;
 	export let data: { userProfile: UserProfile };
 	let { handle, name, bio, phone, email, birthday } = data.userProfile;

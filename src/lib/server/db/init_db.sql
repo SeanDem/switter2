@@ -48,9 +48,9 @@ CREATE TABLE Sweet (
 
 CREATE TABLE ReSweet (
     resweet_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    parent_resweet_id UUID NULL REFERENCES ReSweet(resweet_id),
-    sweet_id UUID NULL REFERENCES Sweet(sweet_id),
-    comment_id UUID NULL REFERENCES Comment(comment_id),
+    parent_resweet_id UUID NULL REFERENCES ReSweet(resweet_id) ON DELETE CASCADE,
+    sweet_id UUID NULL REFERENCES Sweet(sweet_id) ON DELETE CASCADE,
+    comment_id UUID NULL REFERENCES Comment(comment_id) ON DELETE CASCADE,
     media_urls TEXT,
     uid UUID NOT NULL REFERENCES UserProfile(uid),
     timestamp TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
@@ -59,9 +59,9 @@ CREATE TABLE ReSweet (
 
 CREATE TABLE Comment (
     comment_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    parent_comment_id UUID NULL REFERENCES Comment(comment_id),
-    sweet_id UUID  NULL REFERENCES Sweet(sweet_id),
-    resweet_id UUID NULL REFERENCES ReSweet(resweet_id),
+    parent_comment_id UUID NULL REFERENCES Comment(comment_id) ON DELETE CASCADE,
+    sweet_id UUID  NULL REFERENCES Sweet(sweet_id) ON DELETE CASCADE,
+    resweet_id UUID NULL REFERENCES ReSweet(resweet_id) ON DELETE CASCADE,
     media_urls TEXT,
     uid UUID NOT NULL REFERENCES UserProfile(uid),
     timestamp TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
@@ -70,9 +70,9 @@ CREATE TABLE Comment (
 
 CREATE TABLE SweetLike (
     like_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    sweet_id UUID NULL REFERENCES Sweet(sweet_id),
-    comment_id UUID NULL REFERENCES Comment(comment_id),
-    resweet_id UUID NULL REFERENCES ReSweet(resweet_id),
+    sweet_id UUID NULL REFERENCES Sweet(sweet_id) ON DELETE CASCADE,
+    comment_id UUID NULL REFERENCES Comment(comment_id) ON DELETE CASCADE,
+    resweet_id UUID NULL REFERENCES ReSweet(resweet_id) ON DELETE CASCADE,
     uid UUID NOT NULL REFERENCES UserProfile(uid),
     timestamp TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );

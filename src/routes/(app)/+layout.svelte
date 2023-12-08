@@ -2,8 +2,8 @@
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 	import Header from '$lib/components/Header.svelte';
-	import { supabase } from '$lib/supabaseClient';
-	import { webVitals } from '$lib/vitals';
+	import { supabase } from '$lib/utils/supabaseClient.js';
+	import { webVitals } from '$lib/utils/vitals.js';
 	import { onDestroy, onMount } from 'svelte';
 	export let data;
 	let lastScrollY = 0;

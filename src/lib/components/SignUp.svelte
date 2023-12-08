@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import type { UserProfile } from '$lib/server/modules/userProfiles';
-	import { supabase } from '$lib/supabaseClient';
+	import { supabase } from '$lib/utils/supabaseClient';
 
 	let userProfile: UserProfile = {
 		name: '',
