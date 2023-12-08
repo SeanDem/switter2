@@ -16,7 +16,27 @@ export class UserProfileService {
 			return UserProfileDAO.createUserProfile(userProfile);
 		});
 	}
+	static async updateUserProfile(
+		uid: string,
+		userProfileUpdates: UserProfile
+	): Promise<APIResponse<boolean | null>> {
+		try {
+			if (await UserProfileDAO.emailExists(userProfileUpdates.email, uid)) {
+				return { data: null, status: 400, message: 'Email already exists' };
+			}
 
+			if (await UserProfileDAO.handleExists(userProfileUpdates.handle, uid)) {
+				return { data: null, status: 400, message: 'Handle already exists' };
+			}
+		} catch (error) {
+			console.error(error);
+			return { data: null, status: 400, message: 'unexpected error' };
+		}
+
+		return executeWithApiResponse(async () => {
+			return UserProfileDAO.updateUserProfile(uid, userProfileUpdates);
+		});
+	}
 	static async getUserProfileById(
 		uid: string,
 		profileUid: string
