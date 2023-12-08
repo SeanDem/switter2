@@ -1,0 +1,6 @@
+version: 2
+updates:
+  - package-ecosystem: "npm" # SvelteKit projects use npm package ecosystem
+    directory: "/" # Root directory of the project where package.json and pnpm-lock.yaml are located
+    schedule:
+      interval: "weekly" # Dependabot will check for updates on a weekly basis
