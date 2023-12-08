@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import type { UserProfilePartial } from '$lib/server/modules/userProfiles';
+	import type { UserProfilePartial } from '$lib/server/modules/userProfile';
 	import { unfollow, follow } from '$lib/services/follow';
 
 	export let userProfile: UserProfilePartial = {

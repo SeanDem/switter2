@@ -1,7 +1,7 @@
 import type { SweetComment } from '../comments';
 import type { Resweet } from '../resweets';
 import type { Sweet } from '../sweets';
-import type { UserProfile } from '../userProfiles';
+import type { UserProfile } from '../userProfile';
 
 export type Interaction = Sweet & SweetComment & Resweet & InteractionDetails;
 

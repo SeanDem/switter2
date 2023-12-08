@@ -1,6 +1,6 @@
 import { executeWithApiResponse } from '$lib/server/utils/utils';
 import { APIResponse, HttpStatus } from '../types/types';
-import type { UserProfilePartial } from '../userProfiles';
+import type { UserProfilePartial } from '../userProfile';
 import { FollowDao } from './followerDao';
 
 export class FollowerService {

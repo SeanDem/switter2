@@ -1,4 +1,4 @@
-import { UserProfileService } from '$lib/server/modules/userProfiles';
+import { UserProfileService } from '$lib/server/modules/userProfile';
 import { error, redirect } from '@sveltejs/kit';
 
 export const load = async ({ params, cookies }) => {

@@ -1,4 +1,4 @@
-import { UserProfileService, type UserProfile } from '$lib/server/modules/userProfiles';
+import { UserProfileService, type UserProfile } from '$lib/server/modules/userProfile';
 import { fail, redirect, type Actions } from '@sveltejs/kit';
 
 export const load = async ({ parent }) => {
@@ -21,7 +21,6 @@ export const actions: Actions = {
 		const phone = form.get('phone') as string;
 		const email = form.get('email') as string;
 		const birthday = form.get('birthday') as string;
-		const profileUrl = form.get('profileUrl') as string;
 		const userProfile: UserProfile = {
 			uid,
 			name,

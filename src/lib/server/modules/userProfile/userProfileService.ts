@@ -37,6 +37,7 @@ export class UserProfileService {
 			return UserProfileDAO.updateUserProfile(uid, userProfileUpdates);
 		});
 	}
+	
 	static async getUserProfileById(
 		uid: string,
 		profileUid: string
@@ -63,6 +64,15 @@ export class UserProfileService {
 	static async deleteUserProfile(uid: string): Promise<APIResponse<boolean | null>> {
 		return executeWithApiResponse<boolean>(async () => {
 			return UserProfileDAO.deleteUserProfile(uid);
+		});
+	}
+
+	static async uploadProfilePicture(
+		file: Blob,
+		fileName?: string
+	): Promise<APIResponse<any | null>> {
+		return executeWithApiResponse<any>(async () => {
+			return await UserProfileDAO.uploadProfilePicture(file);
 		});
 	}
 }

@@ -59,6 +59,16 @@ export class UserProfileDAO {
 		return data!;
 	}
 
+	static async uploadProfilePicture(file: Blob) {
+		const filePath = `pictures/${'test'}.png`;
+		const { data, error } = await supabase.storage.from('profile-pictures').upload("test.png", file, {
+			cacheControl: '3600',
+			upsert: true
+		});
+		if (error) throw new Error(error.message);
+		return data;
+	}
+
 	static async handleExists(handle: string, uid: string): Promise<boolean> {
 		const { data, error } = await supabase
 			.from('userprofile')
