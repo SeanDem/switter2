@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import type { UserProfilePartial } from '$lib/server/modules/userProfiles';
+	import { unfollow, follow } from '$lib/services/follow';
 
 	export let userProfile: UserProfilePartial = {
 		uid: '',
@@ -11,9 +12,8 @@
 	};
 
 	function handleFollow() {
-		userProfile.isFollowing
-			? FollowService.unfollow(userProfile.uid)
-			: FollowService.follow(userProfile.uid);
+		userProfile.isFollowing ? unfollow(userProfile.uid) : follow(userProfile.uid);
+		userProfile.isFollowing = !userProfile.isFollowing;
 	}
 </script>
 
