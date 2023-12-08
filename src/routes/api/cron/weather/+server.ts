@@ -1,7 +1,7 @@
 import { fetchWeatherAndCreateSweet } from '$lib/server/bot/weatherBot';
 import { json } from '@sveltejs/kit';
 
-export async function POST() {
+export async function GET() {
 	const res = fetchWeatherAndCreateSweet();
 	console.log(res);
 	return json({ res });
