@@ -7,15 +7,13 @@
 {#if interactionList && interactionList.length > 0}
 	<div class="flex flex-col items-center min-h-screen">
 		{#each interactionList as interaction}
-			<div class="mt-1">
+			<div class="mb-4">
 				<InteractionCard {interaction} />
 			</div>
 		{/each}
 	</div>
 {:else}
-	<div class="flex justify-center mt-2">
-		<div class="w-full max-w-md">
-			<div class="mb-4">None found</div>
-		</div>
+	<div class="flex justify-center">
+		<div class="w-full max-w-md">None found</div>
 	</div>
 {/if}

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Interaction, InteractionType } from '$lib/server/modules/interactions';
+	import type { Interaction } from '$lib/server/modules/interactions';
 	import ActionBar from '../actionBar/ActionBar.svelte';
 	import InteractionCardBody from './InteractionCardBody.svelte';
 
@@ -17,7 +17,7 @@
 			</a>
 		</div>
 	{/if}
-	<a href="/{interaction.type}/{interaction.actionId}">
+	<a href="/{interaction?.type}/{interaction?.actionId}">
 		<InteractionCardBody {interaction} {isMain} />
 	</a>
 	<ActionBar {interaction} />

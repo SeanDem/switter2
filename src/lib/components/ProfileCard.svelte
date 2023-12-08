@@ -12,7 +12,7 @@
 </script>
 
 <a href="/profile/{userProfile.uid}">
-	<div class="flex flex-row items-center p-4 bg-white rounded-lg shadow-s card w-96">
+	<div class="flex flex-row items-center p-4 bg-white rounded-lg shadow-s card w-96 border-1">
 		<div class="flex-grow flex flex-grow">
 			<div class="flex-shrink-0">
 				<img

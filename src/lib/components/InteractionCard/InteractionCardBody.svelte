@@ -1,13 +1,13 @@
 <script lang="ts">
-	import type { Interaction, InteractionType } from '$lib/server/modules/interactions';
+	import type { Interaction } from '$lib/server/modules/interactions';
 	import { formatDateDetailed, formatDateSmall } from '$lib/utils/utils';
-	export let interaction: Interaction;
+	export let interaction: Interaction | null = null;
 	export let isMain = false;
 </script>
 
 <div class="flex p-4">
 	<div class="flex-shrink-0">
-		<a href="/profile/{interaction.uid}">
+		<a href="/profile/{interaction?.uid}">
 			<img
 				class="{isMain ? 'w-14 h-14' : 'w-12 h-12'} rounded-full"
 				src={interaction?.profileUrl ??
@@ -18,12 +18,12 @@
 		</a>
 	</div>
 	<div class="flex-grow ml-4 text-left">
-		<a href="/profile/{interaction.uid}">
+		<a href="/profile/{interaction?.uid}">
 			<span class="font-semibold hover:underline mr-2 {isMain ? 'text-xl' : 'text-lg'}"
 				>{interaction?.name}</span
 			>
 			{#if isMain}
-				<a href="/profile/{interaction.uid}">
+				<a href="/profile/{interaction?.uid}">
 					<span class="text-gray-500 text-s hover:underline mr-2">@{interaction?.handle}</span>
 				</a>
 			{/if}
@@ -35,7 +35,7 @@
 		{/if}
 		{#if !isMain}
 			<div class="flex items-start">
-				<a href="/profile/{interaction.uid}" class="flex items-start">
+				<a href="/profile/{interaction?.uid}" class="flex items-start">
 					<span class="text-gray-500 text-xs hover:underline mr-2">@{interaction?.handle}</span>
 				</a>
 			</div>

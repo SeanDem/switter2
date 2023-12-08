@@ -13,31 +13,32 @@ export const load = async ({ cookies }) => {
 };
 
 export const actions: Actions = {
-	like: async ({ request, cookies }) => {
-		const uid = cookies.get('uid');
-		if (!uid) throw error(401, 'Unauthorized');
+	// like: async ({ request, cookies }) => {
+	// 	const uid = cookies.get('uid');
+	// 	if (!uid) throw error(401, 'Unauthorized');
 
-		const form = await request.formData();
-		const interactionReq = form.get('interaction');
-		if (!interactionReq) {
-			return fail(400, { missing: true });
-		}
-		const interaction: InteractionIdRequest = JSON.parse(interactionReq?.toString());
-		const res = LikeService.createSweetLike(uid, interaction);
-	},
-	unlike: async ({ request, cookies }) => {
-		const uid = cookies.get('uid');
-		if (!uid) throw error(401, 'Unauthorized');
+	// 	const form = await request.formData();
+	// 	const interactionReq = form.get('interaction');
+	// 	if (!interactionReq) {
+	// 		return fail(400, { missing: true });
+	// 	}
+	// 	const interaction: InteractionIdRequest = JSON.parse(interactionReq?.toString());
+	// 	const res = LikeService.createSweetLike(uid, interaction);
+	// },
 
-		const form = await request.formData();
-		const interactionReq = form.get('interaction');
+	// unlike: async ({ request, cookies }) => {
+	// 	const uid = cookies.get('uid');
+	// 	if (!uid) throw error(401, 'Unauthorized');
 
-		if (!interactionReq) {
-			return fail(400, { missing: true });
-		}
-		const interaction: InteractionIdRequest = JSON.parse(interactionReq?.toString());
-		const res = await LikeService.deleteSweetLike(uid, interaction);
-	},
+	// 	const form = await request.formData();
+	// 	const interactionReq = form.get('interaction');
+
+	// 	if (!interactionReq) {
+	// 		return fail(400, { missing: true });
+	// 	}
+	// 	const interaction: InteractionIdRequest = JSON.parse(interactionReq?.toString());
+	// 	const res = await LikeService.deleteSweetLike(uid, interaction);
+	// },
 	comment: async ({ request, cookies }) => {
 		const uid = cookies.get('uid');
 		if (!uid) throw redirect(301, '/auth');

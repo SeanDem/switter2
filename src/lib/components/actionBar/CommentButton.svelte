@@ -9,7 +9,14 @@
 	let showDialog = false;
 	let text = '';
 
-	function handleComment(event: Event) {
+	async function handleComment(event: Event) {
+		const res = await fetch('api/action/comment', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ interactionIdRequest, text })
+		});
 		showDialog = false;
 		interaction = {
 			...interaction,

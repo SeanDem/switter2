@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
 	import type { Interaction } from '$lib/server/modules/interactions';
+	import type { Resweet } from '$lib/server/modules/resweets';
 	import { createInteractionIdRequest } from '$lib/utils/formUtils';
 	import { ArrowPathRoundedSquare, Icon } from 'svelte-hero-icons';
 
@@ -9,62 +9,70 @@
 	$: showDialog = false;
 	let text = '';
 
-	function handleResweet() {
-		interaction.isResweeted ? toggle() : (showDialog = true);
+	function toggle() {
+		interaction.isResweeted ? handleResweet() : (showDialog = true);
 	}
 
-	function toggle() {
+	async function handleResweet() {
 		showDialog = false;
-		interaction = {
-			...interaction,
-			isLiked: !interaction.resweetId,
-			likesCount: interaction.isResweeted
-				? interaction.resweetsCount - 1
-				: interaction.resweetsCount + 1
+		const resweet: Partial<Resweet> = {
+			...interactionIdRequest,
+			text
 		};
+		let res: Response;
+		if (interaction.isResweeted) {
+			const res = await fetch('/api/action/unresweet', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(resweet)
+			});
+			console.log(res);
+		} else {
+			const res = await fetch('/api/action/resweet', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(resweet)
+			});
+			console.log(res);
+		}
 	}
 </script>
 
-<form use:enhance method="post" on:submit|preventDefault={handleResweet}>
-	<input type="hidden" name="interaction" value={JSON.stringify(interactionIdRequest)} />
-	<button
-		on:click|stopPropagation
-		class="flex items-center space-x-1 border-none pl-5 pr-7"
-		aria-label="Resweet"
-		formaction="/?/unresweet"
+<button
+	on:click={toggle}
+	class="flex items-center space-x-1 border-none pl-5 pr-7"
+	aria-label="Resweet"
+>
+	<Icon
+		src={ArrowPathRoundedSquare}
+		class={`h-7 w-10 ${interaction.isResweeted ? 'text-green-500' : 'text-black'}`}
+	/>
+	<span class={`text-xs ${interaction.isResweeted ? 'text-green-500' : 'text-black'}`}
+		>{interaction.resweetsCount}</span
 	>
-		<Icon
-			src={ArrowPathRoundedSquare}
-			class={`h-7 w-10 ${interaction.isResweeted ? 'text-green-500' : 'text-black'}`}
-		/>
-		<span class={`text-xs ${interaction.isResweeted ? 'text-green-500' : 'text-black'}`}
-			>{interaction.resweetsCount}</span
-		>
-	</button>
-</form>
+</button>
 
 {#if showDialog}
 	<div class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
 		<div class="bg-white p-4 rounded shadow-lg w-96">
 			<h2 class="text-2xl font-bold mb-4">Write a Resweet</h2>
-			<form use:enhance method="post" action="/?/resweet" on:submit={toggle}>
-				<textarea
-					class="input input-ghost w-full max-w-xs resize-none h-28 mb-4"
-					name="text"
-					maxlength="250"
-					bind:value={text}
-					placeholder="Your resweet..."
-				/>
-				<input type="hidden" name="interaction" value={JSON.stringify(interactionIdRequest)} />
-				<div class="flex justify-around">
-					<button class="btn rounded rounded" on:click|stopPropagation={() => (showDialog = false)}
-						>Cancel</button
-					>
-					<button type="submit" class="btn btn-primary rounded" on:click|stopPropagation
-						>Submit</button
-					>
-				</div>
-			</form>
+			<textarea
+				class="input input-ghost w-full max-w-xs resize-none h-28 mb-4"
+				name="text"
+				maxlength="250"
+				bind:value={text}
+				placeholder="Your resweet..."
+			/>
+			<div class="flex justify-around">
+				<button class="btn rounded rounded" on:click={() => (showDialog = false)}>Cancel</button>
+				<button type="submit" class="btn btn-primary rounded" on:click={handleResweet}
+					>Submit</button
+				>
+			</div>
 		</div>
 	</div>
 {/if}

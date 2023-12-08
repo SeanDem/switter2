@@ -48,6 +48,8 @@
 
 <main class="pt-12">
 	<Header {showNavbar} />
-	<div class="mt-4"><slot /></div>
+	<div class="mt-10 pr-8">
+		<slot />
+	</div>
 	<footer />
 </main>

@@ -2,14 +2,14 @@ import { executeWithApiResponse } from '$lib/server/ServerUtils/utils';
 import type { InteractionIdRequest } from '../interactions';
 import type { APIResponse } from '../types/types';
 import { SweetLikesDAO } from './likeDao';
-import type { LikesList } from './likeType';
+import type { LikesList, SweetLike } from './likeType';
 
 export class LikeService {
 	static async createSweetLike(
 		uid: string,
 		interactionIdRequest: InteractionIdRequest
-	): Promise<APIResponse<boolean | null>> {
-		return executeWithApiResponse<boolean>(async () => {
+	): Promise<APIResponse<SweetLike | null>> {
+		return executeWithApiResponse<SweetLike>(async () => {
 			LikeService.validateInteractionIdRequest(interactionIdRequest);
 
 			const likeId = await SweetLikesDAO.getSweetLikeByUidAndIdTypeRequest(
@@ -19,7 +19,7 @@ export class LikeService {
 
 			if (!likeId) {
 				const insertResult = await SweetLikesDAO.insertSweetLike(uid, interactionIdRequest);
-				return !!insertResult;
+				return insertResult;
 			} else {
 				throw new Error('Liked already exists.');
 			}
@@ -46,7 +46,7 @@ export class LikeService {
 		});
 	}
 
-	static async getAllLikesByUid(uid: string): Promise<APIResponse<LikesList| null>> {
+	static async getAllLikesByUid(uid: string): Promise<APIResponse<LikesList | null>> {
 		return executeWithApiResponse<LikesList>(() => SweetLikesDAO.fetchAllLikesByUid(uid));
 	}
 

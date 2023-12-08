@@ -7,7 +7,7 @@
 
 {#if followingList && followingList.length > 0}
 	{#each followingList as userProfile}
-		<div class="flex justify-center">
+		<div class="flex justify-center mb-3">
 			<ProfileCard {userProfile} />
 		</div>
 	{/each}

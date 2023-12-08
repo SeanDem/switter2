@@ -48,6 +48,9 @@
 		<p class="text-error mt-2">{loginError}</p>
 	{/if}
 </div>
-
-<span class="text-base-content pr-2"> Need an account? </span>
-<a class="btn rounded" href="/auth/signup"> SignUp </a>
+<div class="flex flex-col items-center">
+	<div>
+		<span class="text-base-content pr-2"> Need an account? </span>
+		<a class="btn rounded" href="/auth/signup"> SignUp </a>
+	</div>
+</div>

@@ -122,5 +122,9 @@
 		<p class="text-error mt-2">{signupError}</p>
 	{/if}
 </div>
-<span class="text-base-content pr-2"> Already have an account? </span>
-<a class="btn rounded" href="/auth/signin"> SignIn </a>
+<div class="flex flex-col items-center">
+	<div>
+		<span class="text-base-content pr-2"> Already have an account? </span>
+		<a class="btn rounded" href="/auth/signin"> SignIn </a>
+	</div>
+</div>

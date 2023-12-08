@@ -1,7 +1,5 @@
 import { supabase } from '$lib/supabaseClient';
-import type { PostgrestResponse } from '@supabase/supabase-js';
 import type { Sweet } from './sweetType';
-import type { Interaction } from '../interactions';
 
 export class SweetDao {
 	static async createSweet(uid: string, text: string, mediaUrls?: string[]): Promise<Sweet> {
