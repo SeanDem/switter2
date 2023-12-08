@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { ClientLikeService } from '$lib/modules/LikeService';
 	import type { Interaction } from '$lib/server/modules/interactions';
 	import { createInteractionIdRequest } from '$lib/utils/formUtils';
 	import { Heart, Icon } from 'svelte-hero-icons';
