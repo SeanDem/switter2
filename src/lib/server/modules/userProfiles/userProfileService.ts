@@ -1,5 +1,5 @@
-import { cleanInput } from '$lib/server/ServerUtils/badWords';
-import { executeWithApiResponse } from '$lib/server/ServerUtils/utils';
+import { cleanInput } from '$lib/server/utils/badWords';
+import { executeWithApiResponse } from '$lib/server/utils/utils';
 import { UserProfileDAO, type UserProfile, type UserProfilePartial } from '.';
 import { FollowDao } from '../followers/followerDao';
 import type { APIResponse } from '../types/types';

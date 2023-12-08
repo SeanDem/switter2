@@ -1,4 +1,4 @@
-import { executeWithApiResponse } from '$lib/server/ServerUtils/utils';
+import { executeWithApiResponse } from '$lib/server/utils/utils';
 import { APIResponse, HttpStatus } from '../types/types';
 import type { UserProfilePartial } from '../userProfiles';
 import { FollowDao } from './followerDao';

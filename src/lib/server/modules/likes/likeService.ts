@@ -1,4 +1,4 @@
-import { executeWithApiResponse } from '$lib/server/ServerUtils/utils';
+import { executeWithApiResponse } from '$lib/server/utils/utils';
 import type { InteractionIdRequest } from '../interactions';
 import type { APIResponse } from '../types/types';
 import { SweetLikesDAO } from './likeDao';

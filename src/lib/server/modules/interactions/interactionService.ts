@@ -1,4 +1,4 @@
-import { executeWithApiResponse } from '$lib/server/ServerUtils/utils';
+import { executeWithApiResponse } from '$lib/server/utils/utils';
 import { LikeService } from '../likes';
 import type { APIResponse } from '../types/types';
 import type { Interaction, InteractionIdRequest, InteractionType } from './interactionType';

@@ -1,5 +1,5 @@
-import { badWordFilter } from '$lib/server/ServerUtils/badWords';
-import { executeWithApiResponse } from '$lib/server/ServerUtils/utils';
+import { badWordFilter } from '$lib/server/utils/badWords';
+import { executeWithApiResponse } from '$lib/server/utils/utils';
 import { SweetDao, type Sweet } from '.';
 import type { APIResponse } from '../types/types';
 

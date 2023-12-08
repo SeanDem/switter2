@@ -1,6 +1,6 @@
 import { ResweetDAO, type Resweet } from '.';
 import type { InteractionIdRequest } from '../interactions';
-import { executeWithApiResponse } from '$lib/server/ServerUtils/utils';
+import { executeWithApiResponse } from '$lib/server/utils/utils';
 import type { APIResponse } from '../types/types';
 
 export class ResweetService {
