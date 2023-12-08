@@ -11,7 +11,8 @@
 		profileUrl: ''
 	};
 
-	function handleFollow() {
+	function handleFollow(event: Event) {
+		event.stopPropagation();
 		userProfile.isFollowing ? unfollow(userProfile.uid) : follow(userProfile.uid);
 		userProfile.isFollowing = !userProfile.isFollowing;
 	}
@@ -36,11 +37,14 @@
 		</div>
 		<div class="flex flex-col justify-center">
 			{#if userProfile.isFollowing}
-				<button on:click|stopPropagation={handleFollow} class="btn btn-primary rounded w-24"
-					>Unfollow</button
+				<button
+					on:click|stopPropagation|preventDefault={handleFollow}
+					class="btn btn-primary rounded w-24">Unfollow</button
 				>
 			{:else}
-				<button on:click|stopPropagation={handleFollow} class="btn rounded w-24">Follow</button>
+				<button on:click|stopPropagation|preventDefault={handleFollow} class="btn rounded w-24"
+					>Follow</button
+				>
 			{/if}
 		</div>
 	</div>

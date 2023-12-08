@@ -9,7 +9,6 @@ export async function POST({ request, cookies }) {
 	}
 	const comment: SweetComment = await request.json();
 	comment.uid = uid;
-	console.log(comment);
 	const res = await CommentService.createComment(comment);
 	return json({ res });
 }

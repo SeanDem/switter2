@@ -7,7 +7,6 @@ export async function POST({ request, cookies }) {
 		return json({ message: 'Not logged in.', status: 401 });
 	}
 	const followUid = await request.json();
-	console.log('followUid', followUid);
 	const res = await FollowerService.follow(uid, followUid);
 	return json({ res });
 }
