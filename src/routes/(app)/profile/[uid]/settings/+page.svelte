@@ -36,8 +36,8 @@
 	}
 </script>
 
-<div class="flex flex-col min-h-screen justify-start items-center">
-	<div class="w-full max-w-md bg-white rounded-lg">
+<div class="flex flex-col justify-start items-center">
+	<div class="w-full max-w-sm bg-white rounded-lg">
 		<div class="form-control">
 			<div class="flex justify-between items-center">
 				<label for="profilePicture" class="label cursor-pointer">
@@ -51,7 +51,7 @@
 						name="profilePicture"
 						accept="image/*"
 						class="hidden"
-						bind:files={files}
+						bind:files
 					/>
 				</label>
 			</div>

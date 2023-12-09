@@ -1,6 +1,6 @@
-import type { Interaction, InteractionType } from '$lib/server/modules/interactions';
+import type { InteractionType } from '$lib/server/modules/interactions';
 import { SearchService } from '$lib/server/modules/search';
-import { fail, type Actions, redirect } from '@sveltejs/kit';
+import { fail, redirect, type Actions } from '@sveltejs/kit';
 
 export const actions: Actions = {
 	search: async ({ cookies, request }) => {
