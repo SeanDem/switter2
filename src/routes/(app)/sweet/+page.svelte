@@ -13,7 +13,7 @@
 </script>
 
 <div class="min-h-screen flex justify-center bg-white">
-	<div class="bg-white p-2 w-96">
+	<div class="bg-white w-96">
 		<div class="mb-1">
 			<textarea
 				id="sweet"
