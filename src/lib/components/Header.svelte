@@ -1,12 +1,17 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
 	import { page } from '$app/stores';
+	import { onMount } from 'svelte';
 	import { ArrowPath, Icon } from 'svelte-hero-icons';
 	export let showNavbar: boolean;
 
 	const refreshDuration = 1000;
 	let isRotating = false;
 	$: isActive = (path: string) => $page.url.pathname === path;
+
+	onMount(() => {
+		startRotate();
+	});
 
 	async function refreshPage() {
 		startRotate();
@@ -53,7 +58,7 @@
 	} font-normal text-base sm:text-lg overflow-hidden`}
 >
 	<nav class="flex justify-center overflow-x-auto">
-		<ul class="flex space-x-6 px-2 py-4 font-semibold uppercase">
+		<ul class="flex space-x-4 px-2 py-4 font-semibold uppercase">
 			<li>
 				<a class="text-xl pb-2 {isActive('/') ? 'border-b-2 border-black' : ''}" href="/">Home</a>
 			</li>
