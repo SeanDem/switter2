@@ -27,7 +27,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 	 * you just call this `await getSession()`
 	 */
 	// @ts-ignore
-	event.locals.getSession = async () => {
+	event.locals.getSession = async () => {``
 		const {
 			data: { session }
 			// @ts-ignore

@@ -57,8 +57,12 @@ export async function fetchWeatherAndCreateSweet(): Promise<void> {
 		);
 
 		for (const forecastText of weatherReports) {
-			const sweet = await createSweet(uid, forecastText);
-			console.log('Sweet created:', sweet);
+			if (forecastText) {
+				const sweet = await createSweet(uid, forecastText);
+				console.log('Sweet created:', forecastText);
+			} else {
+				console.log('No forecast text available.');
+			}
 		}
 	} catch (error) {
 		console.error('Error:', error);
