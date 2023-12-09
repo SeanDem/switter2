@@ -2,7 +2,7 @@
 	import { invalidateAll } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
-	import { ArrowPath, Icon } from 'svelte-hero-icons';
+	import { ArrowLeft, ArrowPath, Icon, User } from 'svelte-hero-icons';
 	export let showNavbar: boolean;
 
 	const refreshDuration = 1000;
@@ -37,18 +37,35 @@
 		};
 	}
 
-	function outro(node: any) {
-		return {
-			duration: 1,
-			css: () => `transform: rotate(360deg);`
-		};
-	}
-
 	function startRotate() {
 		isRotating = true;
 		setTimeout(() => {
 			isRotating = false;
 		}, refreshDuration);
+	}
+
+	function slideLeftAndShrink(node: HTMLDivElement) {
+		const duration = 200;
+		const distance = 10;
+		const scaleAmount = 0.85;
+
+		return {
+			duration,
+			css: (t: number) => `
+            transform: translateX(${-distance * (1 - t)}px) scale(${
+				1 - (1 - scaleAmount) * (1 - t)
+			});
+            opacity: ${t};
+        `
+		};
+	}
+	let isBack = false;
+	function navigateBack() {
+		isBack = true;
+		setTimeout(() => {
+			isBack = false;
+		}, 200);
+		window.history.back();
 	}
 </script>
 
@@ -59,6 +76,20 @@
 >
 	<nav class="flex justify-center overflow-x-auto">
 		<ul class="flex space-x-4 px-2 py-4 font-semibold uppercase">
+			{#if !isBack}
+				<div>
+					<button on:click={navigateBack}>
+						<Icon class="w-7 h-7" src={ArrowLeft} />
+					</button>
+				</div>
+			{:else}
+				<div in:slideLeftAndShrink>
+					<button disabled>
+						<Icon class="w-7 h-7" src={ArrowLeft} />
+					</button>
+				</div>
+			{/if}
+
 			<li>
 				<a class="text-xl pb-2 {isActive('/') ? 'border-b-2 border-black' : ''}" href="/">Home</a>
 			</li>
@@ -78,7 +109,7 @@
 					class="text-xl pb-2 {$page.url.pathname.includes('/profile')
 						? 'border-b-2 border-black'
 						: ''}"
-					href="/profile">Profile</a
+					href="/profile"><Icon class="w-7 h-7" src={User} /></a
 				>
 			</li>
 			<li>
@@ -87,8 +118,8 @@
 						<Icon src={ArrowPath} name="refresh" class="w-7 h-7" />
 					</button>
 				{:else}
-					<button>
-						<div in:rotate out:outro>
+					<button disabled>
+						<div in:rotate>
 							<Icon src={ArrowPath} class="w-7 h-7" />
 						</div>
 					</button>
