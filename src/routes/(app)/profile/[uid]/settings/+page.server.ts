@@ -23,12 +23,12 @@ export const actions: Actions = {
 		const birthday = form.get('birthday') as string;
 		const userProfile: UserProfile = {
 			uid,
-			name,
+			name: name || undefined,
 			handle,
-			bio,
-			phone,
+			bio: bio || undefined,
+			phone: phone || undefined,
 			email,
-			birthday
+			birthday: birthday || undefined
 		};
 		const res = await UserProfileService.updateUserProfile(uid, userProfile);
 		if (!res.data) {
