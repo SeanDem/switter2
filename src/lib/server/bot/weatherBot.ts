@@ -53,10 +53,8 @@ export async function fetchWeatherAndCreateSweet(): Promise<void> {
 				}
 
 				return `${location.city} weather ${String(period.name).toLowerCase} is: ${
-					String(period.shortForecast).toLowerCase
-				}, with a high near ${period.temperature}°${period.temperatureUnit}. ${
-					period.detailedForecast
-				}`;
+					String(period.detailedForecast).toLowerCase
+				}, with a high near ${period.temperature}°${period.temperatureUnit}.`;
 			})
 		);
 
