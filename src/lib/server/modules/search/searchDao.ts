@@ -1,4 +1,4 @@
-import { supabase } from '$lib/utils/supabaseClient';
+import { supabaseService } from '$lib/server/utils/supabaseService';
 import type { InteractionSearchRequest } from '.';
 import type { Interaction } from '../interactions';
 
@@ -10,7 +10,7 @@ export class SearchDao {
 		const _uid = uid;
 		const _search_text = `%${interactionSearchRequest.searchText}%`;
 		const _type = interactionSearchRequest.interactionType;
-		const { data, error } = await supabase.rpc('getinteractionsbytext', {
+		const { data, error } = await supabaseService.rpc('getinteractionsbytext', {
 			_uid,
 			_search_text,
 			_type

@@ -1,4 +1,4 @@
-import { supabase } from '$lib/utils/supabaseClient';
+import { supabaseService } from '$lib/server/utils/supabaseService';
 import type { LikesList } from '../likes';
 import type { Interaction, InteractionIdRequest, InteractionType } from './interactionType';
 
@@ -11,7 +11,7 @@ export class InteractionDao {
 			resweetId: _resweet_id = null
 		}: InteractionIdRequest
 	): Promise<Interaction[]> {
-		const { data, error } = await supabase.rpc('getcommentsbyid', {
+		const { data, error } = await supabaseService.rpc('getcommentsbyid', {
 			_uid: uid,
 			_sweet_id,
 			_comment_id,
@@ -29,7 +29,7 @@ export class InteractionDao {
 			resweetId: _resweet_id = null
 		}: InteractionIdRequest
 	): Promise<Interaction> {
-		const { data, error } = await supabase.rpc('getinteractionbyid', {
+		const { data, error } = await supabaseService.rpc('getinteractionbyid', {
 			_uid: uid,
 			_sweet_id,
 			_comment_id,
@@ -39,7 +39,7 @@ export class InteractionDao {
 		return data![0];
 	}
 	static async GetInteractionsByIdList(uid: string, likes: LikesList): Promise<Interaction[]> {
-		const { data, error } = await supabase.rpc('getinteractionbyids', {
+		const { data, error } = await supabaseService.rpc('getinteractionbyids', {
 			_uid: uid,
 			_sweet_ids: likes.sweets,
 			_comment_ids: likes.comments,
@@ -57,7 +57,7 @@ export class InteractionDao {
 		uid: string,
 		interactionType: InteractionType
 	): Promise<Interaction[]> {
-		const { data, error } = await supabase.rpc('getinteractionlistbytype', {
+		const { data, error } = await supabaseService.rpc('getinteractionlistbytype', {
 			_uid: uid,
 			_type: interactionType
 		});
@@ -70,7 +70,7 @@ export class InteractionDao {
 		interactionType: InteractionType,
 		searchUid: string
 	): Promise<Interaction[]> {
-		const { data, error } = await supabase.rpc('getinteractionlistbytypeanduid', {
+		const { data, error } = await supabaseService.rpc('getinteractionlistbytypeanduid', {
 			_uid: uid,
 			_type: interactionType,
 			_search_uid: searchUid

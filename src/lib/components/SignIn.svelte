@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { supabase } from '$lib/utils/supabaseClient';
+	import { supabaseClient } from '$lib/utils/supabaseClient';
 
 	let email = '';
 	let password = '';
 	let loginError: string = '';
 
 	async function submit() {
-		const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+		const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
 		if (error) {
 			loginError = error.message;
 			return;

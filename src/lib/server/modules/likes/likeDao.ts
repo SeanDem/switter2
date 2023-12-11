@@ -1,4 +1,4 @@
-import { supabase } from '$lib/utils/supabaseClient';
+import { supabaseService } from '$lib/server/utils/supabaseService';
 import type { InteractionIdRequest } from '../interactions';
 import type { LikesList, SweetLike } from './likeType';
 
@@ -11,7 +11,7 @@ export class SweetLikesDAO {
 			uid,
 			...this.mapInteractionRequestToSnakeCase(interactionIdRequest)
 		};
-		const { data, error } = await supabase.from('sweetlike').insert([sweetLike]);
+		const { data, error } = await supabaseService.from('sweetlike').insert([sweetLike]);
 		if (error) throw new Error(error.message);
 		return data!;
 	}
@@ -28,7 +28,7 @@ export class SweetLikesDAO {
 
 		const queryCondition = conditions.join(',');
 
-		const { data, error } = await supabase
+		const { data, error } = await supabaseService
 			.from('sweetlike')
 			.select('*')
 			.eq('uid', uid)
@@ -39,7 +39,10 @@ export class SweetLikesDAO {
 	}
 
 	static async deleteSweetLikeById(likeId: string): Promise<boolean> {
-		const { data, error } = await supabase.from('sweetlike').delete().match({ like_id: likeId });
+		const { data, error } = await supabaseService
+			.from('sweetlike')
+			.delete()
+			.match({ like_id: likeId });
 		if (error) throw new Error(error?.details + error?.message + error?.hint);
 		return true;
 	}
@@ -58,7 +61,7 @@ export class SweetLikesDAO {
 		}
 
 		const queryCondition = conditions.join(',');
-		const { data, error } = await supabase
+		const { data, error } = await supabaseService
 			.from('sweetlike')
 			.select('like_id')
 			.eq('uid', uid)
@@ -70,7 +73,7 @@ export class SweetLikesDAO {
 	}
 	static async fetchAllLikesByUid(uid: string): Promise<LikesList> {
 		try {
-			const { data: likes, error } = await supabase
+			const { data: likes, error } = await supabaseService
 				.from('sweetlike')
 				.select('sweet_id, comment_id, resweet_id')
 				.eq('uid', uid);

@@ -1,18 +1,18 @@
-import { supabase } from '$lib/utils/supabaseClient';
+import { supabaseService } from '$lib/server/utils/supabaseService';
 import type { SweetComment } from '.';
 import type { Interaction, InteractionIdRequest } from '../interactions';
 
 export class CommentDAO {
 	static async createComment(comment: SweetComment): Promise<SweetComment> {
 		const sweetCommentTable = this.mapCommentToSnakeCase(comment);
-		const { data, error } = await supabase.from('comment').insert([sweetCommentTable]);
+		const { data, error } = await supabaseService.from('comment').insert([sweetCommentTable]);
 
 		if (error) throw new Error(error.message);
 		return data!;
 	}
 
 	static async getCommentById(comment_id: string): Promise<SweetComment | null> {
-		const { data, error } = await supabase
+		const { data, error } = await supabaseService
 			.from('comment')
 			.select('*')
 			.eq('comment_id', comment_id)
@@ -23,7 +23,7 @@ export class CommentDAO {
 	}
 
 	static async getAllComments(): Promise<SweetComment[]> {
-		const { data, error } = await supabase.from('comment').select('*');
+		const { data, error } = await supabaseService.from('comment').select('*');
 
 		if (error) throw new Error(error.message + error.details + error.hint);
 		return data!;
@@ -37,7 +37,7 @@ export class CommentDAO {
 			resweetId: _resweet_id = null
 		}: InteractionIdRequest
 	): Promise<Interaction[]> {
-		const { data, error } = await supabase.rpc('getcommentsbyid', {
+		const { data, error } = await supabaseService.rpc('getcommentsbyid', {
 			_uid: uid,
 			_sweet_id,
 			_comment_id,

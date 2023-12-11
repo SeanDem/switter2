@@ -1,19 +1,18 @@
-import { error } from '@sveltejs/kit';
-import { supabase } from '$lib/utils/supabaseClient';
+import { supabaseService } from '$lib/server/utils/supabaseService';
 import type { Resweet } from '.';
 import type { InteractionIdRequest } from '../interactions';
 
 export class ResweetDAO {
 	static async insertResweet(resweet: Omit<Resweet, 'resweetId'>): Promise<Resweet> {
 		const resweetTable = this.mapResweetToSnakeCase(resweet);
-		const { data, error } = await supabase.from('resweet').insert([resweetTable]);
+		const { data, error } = await supabaseService.from('resweet').insert([resweetTable]);
 
 		if (error) throw new Error(error.message);
 		return data!;
 	}
 
 	static async deleteResweet(resweetId: string): Promise<boolean> {
-		const { data, error } = await supabase
+		const { data, error } = await supabaseService
 			.from('resweet')
 			.delete()
 			.match({ resweet_id: resweetId });
@@ -40,7 +39,7 @@ export class ResweetDAO {
 
 		const queryCondition = conditions.join(',');
 
-		const { data, error } = await supabase
+		const { data, error } = await supabaseService
 			.from('resweet')
 			.select('*')
 			.eq('uid', uid)

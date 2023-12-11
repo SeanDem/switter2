@@ -2,7 +2,7 @@
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 	import Header from '$lib/components/Header.svelte';
-	import { supabase } from '$lib/utils/supabaseClient.js';
+	import { supabaseClient } from '$lib/utils/supabaseClient.js';
 	import { webVitals } from '$lib/utils/vitals.js';
 	import { onDestroy, onMount } from 'svelte';
 	export let data;
@@ -18,7 +18,7 @@
 	}
 
 	onMount(() => {
-		supabase.auth.onAuthStateChange((event, session) => {
+		supabaseClient.auth.onAuthStateChange((event, session) => {
 			console.info('AuthStateChange: ', event);
 			if (session && session.user && session.user.aud === 'authenticated') {
 				document.cookie = `uid=${session.user.id}; path=/;`;

@@ -1,4 +1,4 @@
-import { supabase } from '$lib/utils/supabaseClient';
+import { supabaseService } from '../utils/supabaseService';
 
 interface Location {
 	lat: string;
@@ -30,7 +30,7 @@ async function fetchForecastData(forecastUrl: string): Promise<any> {
 }
 
 async function createSweet(uid: string, text: string): Promise<any> {
-	const { data, error } = await supabase.from('sweet').insert({ uid, text }).single();
+	const { data, error } = await supabaseService.from('sweet').insert({ uid, text }).single();
 	if (error) throw new Error(error.message);
 	return data;
 }

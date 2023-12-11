@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import type { UserProfile } from '$lib/server/modules/userProfile';
-	import { supabase } from '$lib/utils/supabaseClient';
+	import { supabaseClient } from '$lib/utils/supabaseClient';
 
 	let userProfile: UserProfile = {
 		name: '',
@@ -16,7 +16,10 @@
 
 	async function submit(event: SubmitEvent) {
 		event.preventDefault();
-		const { data, error } = await supabase.auth.signUp({ email: userProfile.email, password });
+		const { data, error } = await supabaseClient.auth.signUp({
+			email: userProfile.email,
+			password
+		});
 		if (error) {
 			signupError = error.message;
 			return;
@@ -28,7 +31,10 @@
 		}
 		userProfile.uid = uid;
 		try {
-			const { data, error } = await supabase.from('userprofile').insert([userProfile]).single();
+			const { data, error } = await supabaseClient
+				.from('userprofile')
+				.insert([userProfile])
+				.single();
 			if (error) {
 				signupError = error.message;
 				return;

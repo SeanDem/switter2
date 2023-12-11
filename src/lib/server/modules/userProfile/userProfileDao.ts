@@ -1,16 +1,19 @@
-import { supabase } from '$lib/utils/supabaseClient';
+import { supabaseService } from '$lib/server/utils/supabaseService';
 import type { UserProfile, UserProfilePartial } from './userProfileType';
 
 export class UserProfileDAO {
 	static async createUserProfile(userProfile: Omit<UserProfile, 'uid'>): Promise<UserProfile> {
-		const { data, error } = await supabase.from('userprofile').insert([userProfile]).single();
+		const { data, error } = await supabaseService
+			.from('userprofile')
+			.insert([userProfile])
+			.single();
 
 		if (error) throw new Error(error.details + error.message + error.hint);
 		return data;
 	}
 
 	static async getUserProfileById(uid: string): Promise<UserProfile | null> {
-		const { data, error } = await supabase
+		const { data, error } = await supabaseService
 			.from('userprofile')
 			.select('uid, handle, bio, name, profileUrl:profile_url, birthday, phone, email')
 			.eq('uid', uid)
@@ -21,7 +24,7 @@ export class UserProfileDAO {
 	}
 
 	static async getUserProfilePartialById(uid: string): Promise<UserProfilePartial | null> {
-		const { data, error } = await supabase
+		const { data, error } = await supabaseService
 			.from('userprofile')
 			.select('uid, handle, bio, name, profileUrl:profile_url')
 			.eq('uid', uid)
@@ -35,7 +38,7 @@ export class UserProfileDAO {
 		uid: string,
 		userProfileUpdates: Partial<UserProfile>
 	): Promise<boolean> {
-		const { data, error } = await supabase
+		const { data, error } = await supabaseService
 			.from('userprofile')
 			.update(userProfileUpdates)
 			.eq('uid', uid)
@@ -46,14 +49,14 @@ export class UserProfileDAO {
 	}
 
 	static async deleteUserProfile(uid: string): Promise<boolean> {
-		const { error } = await supabase.from('userprofile').delete().eq('uid', uid);
+		const { error } = await supabaseService.from('userprofile').delete().eq('uid', uid);
 
 		if (error) throw new Error(error.message);
 		return true;
 	}
 
 	static async getAllUserProfiles(): Promise<UserProfile[]> {
-		const { data, error } = await supabase.from('userprofile').select('*');
+		const { data, error } = await supabaseService.from('userprofile').select('*');
 
 		if (error) throw new Error(error.message);
 		return data!;
@@ -61,16 +64,18 @@ export class UserProfileDAO {
 
 	static async uploadProfilePicture(file: Blob) {
 		const filePath = `pictures/${'test'}.png`;
-		const { data, error } = await supabase.storage.from('profile-pictures').upload("test.png", file, {
-			cacheControl: '3600',
-			upsert: true
-		});
+		const { data, error } = await supabaseService.storage
+			.from('profile-pictures')
+			.upload('test.png', file, {
+				cacheControl: '3600',
+				upsert: true
+			});
 		if (error) throw new Error(error.message);
 		return data;
 	}
 
 	static async handleExists(handle: string, uid: string): Promise<boolean> {
-		const { data, error } = await supabase
+		const { data, error } = await supabaseService
 			.from('userprofile')
 			.select('handle')
 			.eq('handle', handle)
@@ -82,7 +87,7 @@ export class UserProfileDAO {
 	}
 
 	static async emailExists(email: string, uid: string): Promise<boolean> {
-		const { data, error } = await supabase
+		const { data, error } = await supabaseService
 			.from('userprofile')
 			.select('email')
 			.eq('email', email)

@@ -2,13 +2,13 @@
 	import type { UserProfile } from '$lib/server/modules/userProfile/index.js';
 	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
-	import { supabase } from '$lib/utils/supabaseClient.js';
+	import { supabaseClient } from '$lib/utils/supabaseClient.js';
 	export let form;
 	export let data: { userProfile: UserProfile };
 	let { handle, name, bio, phone, email, birthday } = data.userProfile;
 
 	function logout() {
-		supabase.auth.signOut();
+		supabaseClient.auth.signOut();
 		document.cookie = 'uid=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
 		goto('/');
 	}
