@@ -52,7 +52,11 @@ export async function fetchWeatherAndCreateSweet(): Promise<void> {
 					throw new Error('No weather forecast data available.');
 				}
 
-				return `${location.city} weather ${period.name} is: ${period.shortForecast}, with a high near ${period.temperature}°${period.temperatureUnit}. ${period.detailedForecast}`;
+				return `${location.city} weather ${String(period.name).toLowerCase} is: ${
+					String(period.shortForecast).toLowerCase
+				}, with a high near ${period.temperature}°${period.temperatureUnit}. ${
+					period.detailedForecast
+				}`;
 			})
 		);
 
