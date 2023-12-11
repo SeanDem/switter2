@@ -2,7 +2,15 @@
 	import { invalidateAll } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
-	import { ArrowLeft, ArrowPath, Icon, User } from 'svelte-hero-icons';
+	import {
+		ArrowLeft,
+		ArrowPath,
+		Home,
+		Icon,
+		MagnifyingGlass,
+		Pencil,
+		User
+	} from 'svelte-hero-icons';
 	export let showNavbar: boolean;
 
 	const refreshDuration = 1000;
@@ -91,17 +99,24 @@
 			{/if}
 
 			<li>
-				<a class="text-xl pb-2 {isActive('/') ? 'border-b-2 border-black' : ''}" href="/">Home</a>
+				<a class="text-xl pb-2 {isActive('/') ? 'border-b-2 border-black' : ''}" href="/"
+					><span class="block hidden sm:block">Home</span>
+					<Icon class="block sm:hidden w-7 h-7" src={Home} /></a
+				>
 			</li>
 			<li>
 				<a
 					class="text-xl pb-2 {isActive('/search') ? 'border-b-2 border-black' : ''}"
-					href="/search">Search</a
+					href="/search"
 				>
+					<span class="block hidden sm:block">Search</span>
+					<Icon class="block sm:hidden w-7 h-7" src={MagnifyingGlass} />
+				</a>
 			</li>
 			<li>
 				<a class="text-xl pb-2 {isActive('/sweet') ? 'border-b-2 border-black' : ''}" href="/sweet"
-					>Sweet</a
+					><span class="block hidden sm:block">Sweet</span>
+					<Icon class="block sm:hidden w-7 h-7" src={Pencil} /></a
 				>
 			</li>
 			<li>
@@ -109,8 +124,11 @@
 					class="text-xl pb-2 {$page.url.pathname.includes('/profile')
 						? 'border-b-2 border-black'
 						: ''}"
-					href="/profile"><Icon class="w-7 h-7" src={User} /></a
+					href="/profile"
 				>
+					<span class="block hidden sm:block">Profile</span>
+					<Icon class="block sm:hidden w-7 h-7" src={User} />
+				</a>
 			</li>
 			<li>
 				{#if !isRotating}
