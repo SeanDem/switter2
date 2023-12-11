@@ -13,7 +13,7 @@
 		{/each}
 	</div>
 {:else}
-	<div class="flex justify-center">
-		<div class="w-full max-w-md">None found</div>
+	<div class="flex justify-center items-center">
+		<div>None found</div>
 	</div>
 {/if}
