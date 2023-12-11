@@ -84,46 +84,42 @@
 >
 	<nav class="flex justify-center items-center overflow-x-auto">
 		<ul class="flex space-x-7 py-4 font-semibold uppercase">
-			{#if !isBack}
-				<div>
-					<button on:click={navigateBack}>
-						<Icon class="w-9 h-9" src={ArrowLeft} />
-					</button>
-				</div>
-			{:else}
-				<div in:slideLeftAndShrink>
-					<button disabled>
-						<Icon class="w-9 h-9" src={ArrowLeft} />
-					</button>
-				</div>
-			{/if}
-
 			<li class="flex items-center">
-				<a class="text-xl pb-2 {isActive('/') ? 'border-b-2 border-black' : ''}" href="/"
+				{#if !isBack}
+					<div>
+						<button on:click={navigateBack}>
+							<Icon class="w-9 h-9" src={ArrowLeft} />
+						</button>
+					</div>
+				{:else}
+					<div in:slideLeftAndShrink>
+						<button disabled>
+							<Icon class="w-9 h-9 mt-1" src={ArrowLeft} />
+						</button>
+					</div>
+				{/if}
+			</li>
+			<li class="flex items-center">
+				<a class="text-xl {isActive('/') ? 'border-b-2 border-black' : ''}" href="/"
 					><span class="hidden sm:block">Home</span>
 					<Icon class="block sm:hidden w-9 h-9" src={Home} /></a
 				>
 			</li>
 			<li class="flex items-center">
-				<a
-					class="text-xl pb-2 {isActive('/search') ? 'border-b-2 border-black' : ''}"
-					href="/search"
-				>
+				<a class="text-xl {isActive('/search') ? 'border-b-2 border-black' : ''}" href="/search">
 					<span class="block hidden sm:block">Search</span>
 					<Icon class="block sm:hidden w-9 h-9" src={MagnifyingGlass} />
 				</a>
 			</li>
 			<li class="flex items-center">
-				<a class="text-xl pb-2 {isActive('/sweet') ? 'border-b-2 border-black' : ''}" href="/sweet"
+				<a class="text-xl {isActive('/sweet') ? 'border-b-2 border-black' : ''}" href="/sweet"
 					><span class="block hidden sm:block">Sweet</span>
 					<Icon class="block sm:hidden w-9 h-9" src={Pencil} /></a
 				>
 			</li>
 			<li class="flex items-center">
 				<a
-					class="text-xl pb-2 {$page.url.pathname.includes('/profile')
-						? 'border-b-2 border-black'
-						: ''}"
+					class="text-xl {$page.url.pathname.includes('/profile') ? 'border-b-2 border-black' : ''}"
 					href="/profile"
 				>
 					<span class="block hidden sm:block">Profile</span>
