@@ -86,17 +86,15 @@
 		<ul class="flex space-x-7 py-4 font-semibold uppercase">
 			<li class="flex items-center">
 				{#if !isBack}
-					<div>
-						<button on:click={navigateBack}>
-							<Icon class="w-9 h-9" src={ArrowLeft} />
-						</button>
-					</div>
+					<button on:click={navigateBack}>
+						<Icon class="block w-9 h-9" src={ArrowLeft} />
+					</button>
 				{:else}
-					<div in:slideLeftAndShrink>
-						<button disabled>
-							<Icon class="w-9 h-9 mt-1" src={ArrowLeft} />
-						</button>
-					</div>
+					<button disabled>
+						<div in:slideLeftAndShrink>
+							<Icon class=" block w-9 h-9" src={ArrowLeft} />
+						</div>
+					</button>
 				{/if}
 			</li>
 			<li class="flex items-center">
