@@ -50,16 +50,22 @@
 </form>
 {#if showDialog}
 	<div class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-		<div class="bg-white p-4 rounded shadow-lg w-96">
-			<h2 class="text-2xl font-bold mb-4">Write a Comment</h2>
+		<div class="relative bg-white p-4 rounded shadow-lg w-96">
+			<button
+				class="absolute top-0 right-0 m-2 btn btn-circle btn-sm"
+				on:click={() => (showDialog = false)}
+			>
+				×
+			</button>
+			<h2 class="text-2xl font-bold mb-3">Write a Comment</h2>
 			<textarea
 				bind:value={text}
-				class="input input-ghost w-full max-w-xs resize-none h-28 mb-4"
+				class="input input-ghost w-full max-w-xs resize-none h-24 mb-3"
 				name="text"
 				maxlength="250"
 				placeholder="Your comment..."
 			/>
-			<div class="flex justify-around">
+			<div class="flex justify-between">
 				<button class="btn rounded" on:click={() => (showDialog = false)}>Cancel</button>
 				<button class="btn btn-primary rounded" on:click={handleComment}>Submit</button>
 			</div>
