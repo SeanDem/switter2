@@ -82,44 +82,44 @@
 		showNavbar ? 'translate-y-0' : '-translate-y-full'
 	} font-normal text-base sm:text-lg overflow-hidden`}
 >
-	<nav class="flex justify-center overflow-x-auto">
-		<ul class="flex space-x-4 px-2 py-4 font-semibold uppercase">
+	<nav class="flex justify-center items-center overflow-x-auto">
+		<ul class="flex space-x-7 py-4 font-semibold uppercase">
 			{#if !isBack}
 				<div>
 					<button on:click={navigateBack}>
-						<Icon class="w-7 h-7" src={ArrowLeft} />
+						<Icon class="w-9 h-9" src={ArrowLeft} />
 					</button>
 				</div>
 			{:else}
 				<div in:slideLeftAndShrink>
 					<button disabled>
-						<Icon class="w-7 h-7" src={ArrowLeft} />
+						<Icon class="w-9 h-9" src={ArrowLeft} />
 					</button>
 				</div>
 			{/if}
 
-			<li>
+			<li class="flex items-center">
 				<a class="text-xl pb-2 {isActive('/') ? 'border-b-2 border-black' : ''}" href="/"
-					><span class="block hidden sm:block">Home</span>
-					<Icon class="block sm:hidden w-7 h-7" src={Home} /></a
+					><span class="hidden sm:block">Home</span>
+					<Icon class="block sm:hidden w-9 h-9" src={Home} /></a
 				>
 			</li>
-			<li>
+			<li class="flex items-center">
 				<a
 					class="text-xl pb-2 {isActive('/search') ? 'border-b-2 border-black' : ''}"
 					href="/search"
 				>
 					<span class="block hidden sm:block">Search</span>
-					<Icon class="block sm:hidden w-7 h-7" src={MagnifyingGlass} />
+					<Icon class="block sm:hidden w-9 h-9" src={MagnifyingGlass} />
 				</a>
 			</li>
-			<li>
+			<li class="flex items-center">
 				<a class="text-xl pb-2 {isActive('/sweet') ? 'border-b-2 border-black' : ''}" href="/sweet"
 					><span class="block hidden sm:block">Sweet</span>
-					<Icon class="block sm:hidden w-7 h-7" src={Pencil} /></a
+					<Icon class="block sm:hidden w-9 h-9" src={Pencil} /></a
 				>
 			</li>
-			<li>
+			<li class="flex items-center">
 				<a
 					class="text-xl pb-2 {$page.url.pathname.includes('/profile')
 						? 'border-b-2 border-black'
@@ -127,18 +127,18 @@
 					href="/profile"
 				>
 					<span class="block hidden sm:block">Profile</span>
-					<Icon class="block sm:hidden w-7 h-7" src={User} />
+					<Icon class="block sm:hidden w-9 h-9" src={User} />
 				</a>
 			</li>
-			<li>
+			<li class="flex items-center">
 				{#if !isRotating}
 					<button on:click={refreshPage}>
-						<Icon src={ArrowPath} name="refresh" class="w-7 h-7" />
+						<Icon src={ArrowPath} name="refresh" class="w-9 h-9" />
 					</button>
 				{:else}
 					<button disabled>
 						<div in:rotate>
-							<Icon src={ArrowPath} class="w-7 h-7" />
+							<Icon src={ArrowPath} class="w-9 h-9" />
 						</div>
 					</button>
 				{/if}

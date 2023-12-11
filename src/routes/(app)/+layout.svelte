@@ -48,7 +48,7 @@
 
 <main class="pt-12">
 	<Header {showNavbar} />
-	<div class="mt-10">
+	<div class="my-10">
 		<slot />
 	</div>
 	<footer />

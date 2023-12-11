@@ -17,7 +17,7 @@
 	}
 </script>
 
-<div class="flex justify-center">
+<div class="flex justify-center mb-4">
 	<div class="flex flex-col items-center bg-white rounded-lg shadow-s card border-1 p-5 w-130 pb-1">
 		<div class="flex w-full">
 			<div class="flex w-full justify-between items-center">
