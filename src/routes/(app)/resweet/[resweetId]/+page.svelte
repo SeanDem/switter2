@@ -4,6 +4,7 @@
 	export let data;
 	$: interaction = data.resweetDetail ?? null;
 	$: commentDetailList = data.commentDetailList ?? [];
+	$: parentInteraction = data.parentInteraction ?? null;
 </script>
 
-<InteractionCardFocus {interaction} {commentDetailList} />
+<InteractionCardFocus {parentInteraction} {interaction} {commentDetailList} />

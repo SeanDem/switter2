@@ -3,6 +3,5 @@ import { json } from '@sveltejs/kit';
 
 export async function GET() {
 	const res = fetchWeatherAndCreateSweet();
-	console.log(res);
 	return json({ res });
 }
