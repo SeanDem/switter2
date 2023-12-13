@@ -65,7 +65,7 @@ export function formatDateBirthday(dateString: string | null | undefined): strin
 	];
 
 	const monthIndex = date.getMonth();
-	const day = date.getDate();
+	const day = date.getDate() + 1;
 
 	return `${monthNames[monthIndex]} ${day}`;
 }
