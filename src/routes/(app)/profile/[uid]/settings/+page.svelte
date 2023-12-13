@@ -39,31 +39,35 @@
 
 <div class="flex flex-col justify-start items-center">
 	<div class="w-full max-w-sm bg-white rounded-lg">
-		<div class="form-control">
-			<div class="flex justify-around items-center">
-				<label for="profilePicture" class="label cursor-pointer">
-					<span class="label-text">Edit Profile Picture: </span>
-				</label>
-				<label for="profilePicture" class="cursor-pointer">
-					<div class="avatar">
-						<div class="flex-shrink-0 avatar w-32 rounded-full mr-4">
-							<img
-								src={data.userProfile.profileUrl ||
-									'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxroUOuhHpV9KBpOuiYJSvok9YOgMoxGfFnw&s'}
-								alt="{data.userProfile.name}'s profile image"
-							/>
-						</div>
+		<button
+			disabled={!!form?.message}
+			on:click={handleProfile}
+			type="submit"
+			class="btn btn-primary w-full">Save Profile</button
+		>
+		<div class="flex justify-between items-center">
+			<label for="profilePicture" class="label cursor-pointer">
+				<span class="label-text">Edit Profile Picture: </span>
+			</label>
+			<label for="profilePicture" class="cursor-pointer">
+				<div class="avatar">
+					<div class="flex-shrink-0 avatar w-32 rounded-full mr-4">
+						<img
+							src={data.userProfile.profileUrl ||
+								'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxroUOuhHpV9KBpOuiYJSvok9YOgMoxGfFnw&s'}
+							alt="{data.userProfile.name}'s profile image"
+						/>
 					</div>
-				</label>
-				<input
-					id="profilePicture"
-					type="file"
-					name="profilePicture"
-					accept="image/jpeg, image/png, img/heic"
-					class="hidden"
-					on:change={handleProfilePicChange}
-				/>
-			</div>
+				</div>
+			</label>
+			<input
+				id="profilePicture"
+				type="file"
+				name="profilePicture"
+				accept="image/jpeg, image/png, img/heic"
+				class="hidden"
+				on:change={handleProfilePicChange}
+			/>
 		</div>
 		<form use:enhance method="post" class="form-control">
 			<div class="form-control">
@@ -145,16 +149,10 @@
 			{#if form?.message}
 				<div class="text-error my-2">{form?.message}</div>
 			{/if}
-			<button
-				disabled={!!form?.message}
-				on:click={handleProfile}
-				type="submit"
-				class="btn btn-primary mt-4 w-full">Save Profile</button
-			>
 		</form>
 
-		<div class="mt-4 text-center">
-			<button on:click={logout} class="btn btn-outline">Logout</button>
+		<div class="w-full max-w-sm bg-white rounded-lg">
+			<button on:click={logout} class="btn btn-outline w-full">Logout</button>
 		</div>
 	</div>
 </div>
