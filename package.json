@@ -13,13 +13,13 @@
 		"format": "prettier --plugin-search-dir . --write ."
 	},
 	"devDependencies": {
-		"@fontsource/fira-mono": "^4.5.10",
+		"@fontsource/fira-mono": "^5.0.8",
 		"@neoconfetti/svelte": "^1.0.0",
 		"@playwright/test": "^1.40.1",
 		"@supabase/ssr": "^0.0.10",
 		"@supabase/supabase-js": "^2.39.0",
 		"@sveltejs/adapter-vercel": "^3.1.0",
-		"@sveltejs/kit": "^1.27.7",
+		"@sveltejs/kit": "^1.28.0",
 		"@types/cookie": "^0.5.4",
 		"@vercel/analytics": "^1.1.1",
 		"@vercel/speed-insights": "^1.0.1",
@@ -27,7 +27,7 @@
 		"bad-words": "^3.0.4",
 		"daisyui": "^4.4.19",
 		"eslint": "^8.55.0",
-		"eslint-config-prettier": "^8.10.0",
+		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-svelte": "^2.35.1",
 		"postcss": "^8.4.32",
 		"prettier": "^2.8.8",
@@ -38,7 +38,7 @@
 		"tailwindcss": "^3.3.6",
 		"typescript": "^5.3.3",
 		"vite": "^4.5.1",
-		"vitest": "^0.25.8",
+		"vitest": "^1.0.4",
 		"web-vitals": "^3.5.0"
 	},
 	"type": "module"
