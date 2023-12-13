@@ -70,7 +70,7 @@ export class UserProfileService {
 
 	static async uploadProfilePicture(file: File, uid: string): Promise<APIResponse<string | null>> {
 		return executeWithApiResponse<any>(async () => {
-			const resizedFile = await resizeAndCompressImage(await file.arrayBuffer(), file.name);
+			const resizedFile = await resizeAndCompressImage(file, file.name);
 			const {
 				data: { publicUrl }
 			} = await UserProfileDAO.uploadProfilePicture(resizedFile);
