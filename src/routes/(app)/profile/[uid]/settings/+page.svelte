@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { goto } from '$app/navigation';
+	import { goto, invalidateAll } from '$app/navigation';
 	import type { UserProfile } from '$lib/server/modules/userProfile/index.js';
 	import { supabaseClient } from '$lib/utils/supabaseClient.js';
 	export let form;
@@ -28,6 +28,7 @@
 			method: 'POST',
 			body: formData
 		});
+		invalidateAll();
 	}
 	function handleProfilePicChange(event: any) {
 		file = event.target.files[0];
@@ -44,7 +45,7 @@
 				disabled={!!form?.message}
 				on:click={handleProfile}
 				type="submit"
-				class="btn btn-primary w-full">Save Profile</button
+				class="btn btn-primary w-full mb-2">Save Profile</button
 			>
 			<div class="flex justify-between items-center">
 				<label for="profilePicture" class="label cursor-pointer">

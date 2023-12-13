@@ -1,4 +1,5 @@
-import type { UserProfile } from '$lib/server/modules/userProfile';
+import type { InteractionType } from '$lib/server/modules/interactions';
+import type { constants } from 'buffer';
 import { writable } from 'svelte/store';
 
-export const userProfileStore = writable<UserProfile>;
+export const selectedHomeCategoryStore = writable('following');

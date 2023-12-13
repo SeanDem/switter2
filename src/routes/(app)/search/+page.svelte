@@ -1,55 +1,62 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
-	import type { InteractionType } from '$lib/server/modules/interactions';
 	import InteractionCardList from '$lib/components/InteractionCard/InteractionCardList.svelte';
-	export let form;
-	const interactionTypes: InteractionType[] = ['sweet', 'comment', 'resweet'];
+	import type { InteractionType } from '$lib/server/modules/interactions';
+	import { searchStore } from '$lib/store/search';
+	import { onMount } from 'svelte';
 
-	$: interactionList = form?.interactionList ?? [];
-	let selectedCategory: InteractionType = 'sweet';
-	let submit: boolean = false;
+	const interactionTypes: InteractionType[] = ['sweet', 'comment', 'resweet'];
+	let submit = $searchStore.interactionList.length > 0 ? true : false;
+
+	async function handleSubmit() {
+		if (!$searchStore.searchText) return;
+
+		submit = false;
+		const state = $searchStore;
+
+		const response = await fetch('/api/search', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				searchText: state.searchText,
+				interactionType: state.selectedCategory
+			})
+		});
+
+		if (response.ok) {
+			const data = await response.json();
+			searchStore.update((currentState) => {
+				return { ...currentState, interactionList: data.interactionList };
+			});
+			submit = true;
+		}
+	}
 </script>
 
 <div class="flex justify-center">
-	<form
-		use:enhance
-		method="post"
-		action="?/search"
-		on:submit={() =>
-			setTimeout(() => {
-				submit = true;
-			}, 300)}
-	>
+	<form on:submit={handleSubmit}>
 		<div class="flex text-lg font-bold justify-center mb-4 space-x-8">
 			{#each interactionTypes as type}
-				<div
-					on:click={() => (selectedCategory = type)}
-					on:keydown={(event) => {
-						if (event.key === 'Enter') {
-							selectedCategory = type;
-						}
-					}}
-					class={`${selectedCategory === type ? 'border-b-1 border-black' : ''}`}
-					role="button"
+				<button
+					on:click={() => searchStore.update((s) => ({ ...s, selectedCategory: type }))}
+					class={$searchStore.selectedCategory === type ? 'border-b-1 border-black' : ''}
 					tabindex="0"
 				>
 					{type.charAt(0).toUpperCase() + type.slice(1)}
-				</div>
+				</button>
 			{/each}
 		</div>
-		<input type="hidden" name="interactionType" bind:value={selectedCategory} />
 		<div class="flex space-x-2">
 			<input
 				type="text"
-				name="search"
+				bind:value={$searchStore.searchText}
 				placeholder="Search..."
 				class="input input-bordered input-primary flex-1 rounded"
 			/>
-			<button type="submit" class="btn btn-primary rounded mb-3"> Search </button>
+			<button type="submit" class="btn btn-primary rounded mb-3">Search</button>
 		</div>
 	</form>
 </div>
 
 {#if submit}
-	<InteractionCardList {interactionList} />
+	<InteractionCardList interactionList={$searchStore.interactionList} />
 {/if}

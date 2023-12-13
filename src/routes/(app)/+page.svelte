@@ -1,22 +1,22 @@
 <script lang="ts">
 	import InteractionCardList from '$lib/components/InteractionCard/InteractionCardList.svelte';
+	import { selectedHomeCategoryStore } from '$lib/store/store.js';
 	export let data;
 	$: sweetDetailList =
-		selectedCategory === 'all' ? data.sweetDetailListAll : data.sweetDetailListFollowing;
-	let selectedCategory: string = 'following';
+		$selectedHomeCategoryStore === 'all' ? data.sweetDetailListAll : data.sweetDetailListFollowing;
 </script>
 
 <div class="flex text-lg font-bold justify-center mb-4 space-x-8">
 	<button
-		class="test {selectedCategory === 'following' ? 'border-b-1 border-black' : ''}"
+		class="{$selectedHomeCategoryStore === 'following' ? 'border-b-1 border-black' : ''}"
 		on:click={() => {
-			selectedCategory = 'following';
+			selectedHomeCategoryStore.set('following');
 		}}>Following</button
 	>
 	<button
-		class="test {selectedCategory === 'all' ? 'border-b-1 border-black' : ''}"
+		class="{$selectedHomeCategoryStore === 'all' ? 'border-b-1 border-black' : ''}"
 		on:click={() => {
-			selectedCategory = 'all';
+			selectedHomeCategoryStore.set('all');
 		}}>All</button
 	>
 </div>
