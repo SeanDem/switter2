@@ -25,8 +25,8 @@
 		text = '';
 		interaction = {
 			...interaction,
-			isLiked: !interaction.isCommented,
-			likesCount: interaction.isCommented
+			isCommented: true,
+			commentsCount: interaction.isCommented
 				? interaction.commentsCount - 1
 				: interaction.commentsCount + 1
 		};

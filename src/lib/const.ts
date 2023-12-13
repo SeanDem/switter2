@@ -1,2 +1,2 @@
-export const defaultProfileUrl =
-	'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxroUOuhHpV9KBpOuiYJSvok9YOgMoxGfFnw&s';
+import { base } from '$app/paths';
+export const defaultProfileUrl = `/${base}default-profile.png`;

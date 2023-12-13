@@ -53,13 +53,9 @@ export class InteractionDao {
 		return data!;
 	}
 
-	static async GetInteractionListByType(
-		uid: string,
-		interactionType: InteractionType
-	): Promise<Interaction[]> {
-		const { data, error } = await supabaseService.rpc('getinteractionlistbytype', {
-			_uid: uid,
-			_type: interactionType
+	static async GetInteractionList(uid: string): Promise<Interaction[]> {
+		const { data, error } = await supabaseService.rpc('getallinteractionlist', {
+			_uid: uid
 		});
 		if (error) throw new Error(error.details + error.message + error.hint);
 		return data!;
@@ -74,6 +70,14 @@ export class InteractionDao {
 			_uid: uid,
 			_type: interactionType,
 			_search_uid: searchUid
+		});
+		if (error) throw new Error(error.details + error.message + error.hint);
+		return data!;
+	}
+
+	static async GetInteractionListByTypeAndFollowing(uid: string): Promise<Interaction[]> {
+		const { data, error } = await supabaseService.rpc('getinteractionlistbyfollowing', {
+			_uid: uid
 		});
 		if (error) throw new Error(error.details + error.message + error.hint);
 		return data!;

@@ -35,12 +35,9 @@ export class InteractionService {
 		});
 	}
 
-	static async getInteractionListByType(
-		uid: string,
-		interactionType: InteractionType
-	): Promise<APIResponse<Interaction[] | null>> {
+	static async getInteractionList(uid: string): Promise<APIResponse<Interaction[] | null>> {
 		return executeWithApiResponse(async () => {
-			return await InteractionDao.GetInteractionListByType(uid, interactionType);
+			return await InteractionDao.GetInteractionList(uid);
 		});
 	}
 
@@ -51,6 +48,13 @@ export class InteractionService {
 	): Promise<APIResponse<Interaction[] | null>> {
 		return executeWithApiResponse(async () => {
 			return await InteractionDao.getInteractionListByTypeAndUid(uid, interaction, searchUid);
+		});
+	}
+	static async getInteractionListByFollowing(
+		uid: string
+	): Promise<APIResponse<Interaction[] | null>> {
+		return executeWithApiResponse(async () => {
+			return await InteractionDao.GetInteractionListByTypeAndFollowing(uid);
 		});
 	}
 }
