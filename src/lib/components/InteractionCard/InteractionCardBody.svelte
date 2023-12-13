@@ -1,6 +1,8 @@
 <script lang="ts">
+	import { defaultProfileUrl } from '$lib/const';
 	import type { Interaction } from '$lib/server/modules/interactions';
 	import { formatDateDetailed, formatDateSmall } from '$lib/utils/dateutils';
+
 	export let interaction: Interaction | null = null;
 	export let isMain = false;
 </script>
@@ -10,8 +12,7 @@
 		<a href="/profile/{interaction?.uid}">
 			<img
 				class="{isMain ? 'w-14 h-14' : 'w-12 h-12'} rounded-full"
-				src={interaction?.profileUrl ??
-					'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxroUOuhHpV9KBpOuiYJSvok9YOgMoxGfFnw&s'}
+				src={interaction?.profileUrl || defaultProfileUrl}
 				alt="Profile image"
 				aria-hidden="true"
 			/>

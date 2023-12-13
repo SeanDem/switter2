@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { UserProfile } from '$lib/server/modules/userProfile/index.js';
 	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
+	import type { UserProfile } from '$lib/server/modules/userProfile/index.js';
 	import { supabaseClient } from '$lib/utils/supabaseClient.js';
 	export let form;
 	export let data: { userProfile: UserProfile };
@@ -18,20 +18,27 @@
 			form.message = undefined;
 		}
 	}
-	let files: FileList;
+	let file: File;
 	async function handleProfile() {
-		if (files.length > 0) {
-			const formData = new FormData();
-			formData.append('profilePicture', files[0]);
+		const formData = new FormData();
+		const fileExtension = file.name.split('.').pop();
+		const uniqueFileName =
+			data.userProfile.uid +
+			'_' +
+			new Date().toISOString().replace(/:/g, '-') +
+			'.' +
+			fileExtension;
+		formData.append('profilePicture', file, uniqueFileName);
 
-			const response = await fetch('/api/profile/upload', {
-				method: 'POST',
-				body: formData
-			});
-
-			if (!response.ok) {
-				console.error('Upload failed');
-			}
+		const response = await fetch('/api/profile/upload', {
+			method: 'POST',
+			body: formData
+		});
+	}
+	function handleProfilePicChange(event: any) {
+		file = event.target.files[0];
+		if (file) {
+			data.userProfile.profileUrl = URL.createObjectURL(file);
 		}
 	}
 </script>
@@ -39,21 +46,29 @@
 <div class="flex flex-col justify-start items-center">
 	<div class="w-full max-w-sm bg-white rounded-lg">
 		<div class="form-control">
-			<div class="flex justify-between items-center">
+			<div class="flex justify-around items-center">
 				<label for="profilePicture" class="label cursor-pointer">
-					<span class="label-text mr-2">Profile Picture: (not yet working)</span>
+					<span class="label-text">Edit Profile Picture: </span>
 				</label>
-				<label class="btn btn-primary cursor-pointer">
-					Choose File
-					<input
-						id="profilePicture"
-						type="file"
-						name="profilePicture"
-						accept="image/*"
-						class="hidden"
-						bind:files
-					/>
+				<label for="profilePicture" class="cursor-pointer">
+					<div class="avatar">
+						<div class="flex-shrink-0 avatar w-32 rounded-full mr-4">
+							<img
+								src={data.userProfile.profileUrl ||
+									'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxroUOuhHpV9KBpOuiYJSvok9YOgMoxGfFnw&s'}
+								alt="{data.userProfile.name}'s profile image"
+							/>
+						</div>
+					</div>
 				</label>
+				<input
+					id="profilePicture"
+					type="file"
+					name="profilePicture"
+					accept="image/jpeg, image/png"
+					class="hidden"
+					on:change={handleProfilePicChange}
+				/>
 			</div>
 		</div>
 		<form use:enhance method="post" class="form-control">

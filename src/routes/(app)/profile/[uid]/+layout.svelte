@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { Cake, Icon } from 'svelte-hero-icons';
-
 	import { page } from '$app/stores';
-	import { formatDateBirthday } from '$lib/utils/dateutils.js';
+	import { defaultProfileUrl } from '$lib/const.js';
 	import { follow, unfollow } from '$lib/services/follow.js';
+	import { formatDateBirthday } from '$lib/utils/dateutils.js';
+	import { Cake, Icon } from 'svelte-hero-icons';
 	export let data;
 
 	$: userProfile = data.userProfile;
@@ -21,12 +21,13 @@
 	<div class="flex flex-col items-center bg-white rounded-lg shadow-s card border-1 p-5 w-130 pb-1">
 		<div class="flex w-full">
 			<div class="flex w-full justify-between items-center">
-				<div class="flex-shrink-0 avatar w-24 rounded-xl mr-4">
-					<img
-						src={userProfile.profileUrl ||
-							'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxroUOuhHpV9KBpOuiYJSvok9YOgMoxGfFnw&s'}
-						alt="{userProfile.name}'s profile image"
-					/>
+				<div class="avatar">
+					<div class="flex-shrink-0 avatar w-24 rounded-full mr-4">
+						<img
+							src={userProfile.profileUrl || defaultProfileUrl}
+							alt="{userProfile.name}'s profile image"
+						/>
+					</div>
 				</div>
 				<div class="flex flex-col items-center">
 					<div class="font-semibold text-2xl">

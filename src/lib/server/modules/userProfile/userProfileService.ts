@@ -1,6 +1,6 @@
 import { cleanInput } from '$lib/server/utils/badWords';
 import { executeWithApiResponse } from '$lib/server/utils/utils';
-import { UserProfileDAO, type UserProfile, type UserProfilePartial } from '.';
+import { UserProfileDAO, type UserProfile } from '.';
 import { FollowDao } from '../followers/followerDao';
 import type { APIResponse } from '../types/types';
 
@@ -37,7 +37,7 @@ export class UserProfileService {
 			return UserProfileDAO.updateUserProfile(uid, userProfileUpdates);
 		});
 	}
-	
+
 	static async getUserProfileById(
 		uid: string,
 		profileUid: string
@@ -67,12 +67,14 @@ export class UserProfileService {
 		});
 	}
 
-	static async uploadProfilePicture(
-		file: Blob,
-		fileName?: string
-	): Promise<APIResponse<any | null>> {
+	static async uploadProfilePicture(file: File, uid: string): Promise<APIResponse<string | null>> {
 		return executeWithApiResponse<any>(async () => {
-			return await UserProfileDAO.uploadProfilePicture(file);
+			const {
+				data: { publicUrl }
+			} = await UserProfileDAO.uploadProfilePicture(file);
+
+			await UserProfileDAO.updateUserProfileUrl(uid, publicUrl);
+			return publicUrl;
 		});
 	}
 }

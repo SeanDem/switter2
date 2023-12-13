@@ -2,7 +2,7 @@ import { UserProfileService, type UserProfile } from '$lib/server/modules/userPr
 import { fail, redirect, type Actions } from '@sveltejs/kit';
 
 export const load = async ({ parent }) => {
-	return parent();
+	return await parent();
 };
 
 export const actions: Actions = {

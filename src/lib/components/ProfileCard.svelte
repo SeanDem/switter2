@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
+	import { defaultProfileUrl } from '$lib/const';
 	import type { UserProfilePartial } from '$lib/server/modules/userProfile';
-	import { unfollow, follow } from '$lib/services/follow';
+	import { follow, unfollow } from '$lib/services/follow';
 
 	export let userProfile: UserProfilePartial = {
 		uid: '',
@@ -24,8 +24,7 @@
 			<div class="flex-shrink-0">
 				<img
 					class="w-14 h-14 rounded-full"
-					src={userProfile.profileUrl ||
-						'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxroUOuhHpV9KBpOuiYJSvok9YOgMoxGfFnw&s'}
+					src={userProfile.profileUrl || defaultProfileUrl}
 					alt="{userProfile.name}'s profile image"
 				/>
 			</div>

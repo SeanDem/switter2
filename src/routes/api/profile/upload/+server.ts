@@ -2,7 +2,7 @@ import { UserProfileService } from '$lib/server/modules/userProfile/userProfileS
 import { json } from '@sveltejs/kit';
 
 export async function POST({ request, cookies }) {
-	const uid = cookies.get('uid');
+	const uid = cookies.get('uid') ?? '';
 	const formData = await request.formData();
 	const profilePicture = formData.get('profilePicture');
 
@@ -10,6 +10,6 @@ export async function POST({ request, cookies }) {
 		return new Response(JSON.stringify({ error: 'No valid file uploaded' }), { status: 400 });
 	}
 
-	const res = await UserProfileService.uploadProfilePicture(profilePicture);
+	const res = await UserProfileService.uploadProfilePicture(profilePicture, uid);
 	return json({ res });
 }

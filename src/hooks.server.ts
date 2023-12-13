@@ -25,6 +25,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 	}
 
 	if (event.url.pathname.startsWith('/api')) {
+		return await resolve(event);
 		const apiKey = event.request.headers.get('apikey');
 		if (apiKey !== 'temp-api-key') {
 			return new Response('Invalid API Key', { status: 401 });

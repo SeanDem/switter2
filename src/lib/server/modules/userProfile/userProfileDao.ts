@@ -1,7 +1,9 @@
+import { error } from '@sveltejs/kit';
 import { supabaseService } from '$lib/server/utils/supabaseService';
 import type { UserProfile, UserProfilePartial } from './userProfileType';
 
 export class UserProfileDAO {
+	profilePicturesBucket = 'profile-pictures';
 	static async createUserProfile(userProfile: Omit<UserProfile, 'uid'>): Promise<UserProfile> {
 		const { data, error } = await supabaseService
 			.from('userprofile')
@@ -48,6 +50,18 @@ export class UserProfileDAO {
 		return true;
 	}
 
+	static async updateUserProfileUrl(uid: string, newProfileUrl: string): Promise<boolean> {
+		console.log('newProfileUrl', newProfileUrl);
+		const { data, error } = await supabaseService
+			.from('userprofile')
+			.update({ profile_url: newProfileUrl })
+			.eq('uid', uid)
+			.single();
+
+		if (error) throw new Error(error.details + error.message + error.hint);
+		return true;
+	}
+
 	static async deleteUserProfile(uid: string): Promise<boolean> {
 		const { error } = await supabaseService.from('userprofile').delete().eq('uid', uid);
 
@@ -62,16 +76,20 @@ export class UserProfileDAO {
 		return data!;
 	}
 
-	static async uploadProfilePicture(file: Blob) {
-		const filePath = `pictures/${'test'}.png`;
+	static async uploadProfilePicture(file: File) {
 		const { data, error } = await supabaseService.storage
 			.from('profile-pictures')
-			.upload('test.png', file, {
+			.upload(file.name, file, {
 				cacheControl: '3600',
 				upsert: true
 			});
 		if (error) throw new Error(error.message);
-		return data;
+		return supabaseService.storage.from('profile-pictures').getPublicUrl(file.name);
+	}
+
+	static async getPublicUrl(filePath: string): Promise<string> {
+		const { data } = supabaseService.storage.from('profile-pictures').getPublicUrl(filePath);
+		return data.publicUrl;
 	}
 
 	static async handleExists(handle: string, uid: string): Promise<boolean> {

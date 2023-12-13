@@ -44,10 +44,54 @@
 		} catch (error) {
 			signupError = 'Failed to create user profile';
 		}
+		handleProfile();
+	}
+
+	async function handleProfile() {
+		const formData = new FormData();
+		const fileExtension = file.name.split('.').pop();
+		const uniqueFileName =
+			userProfile.uid + '_' + new Date().toISOString().replace(/:/g, '-') + '.' + fileExtension;
+		formData.append('profilePicture', file, uniqueFileName);
+
+		const response = await fetch('/api/profile/upload', {
+			method: 'POST',
+			body: formData
+		});
+		console.log(response);
+	}
+	let file: File;
+	let profileUrl: string;
+	function handleProfilePicChange(event: any) {
+		file = event.target.files[0];
+		if (file) {
+			profileUrl = URL.createObjectURL(file);
+		}
 	}
 </script>
 
 <div class="flex flex-col items-center my-8">
+	<div class="flex justify-around items-center">
+		<label for="profilePicture" class="cursor-pointer">
+			<div class="avatar">
+				<div class="flex-shrink-0 avatar w-32 rounded-full mr-4">
+					<img
+						src={profileUrl ||
+							'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxroUOuhHpV9KBpOuiYJSvok9YOgMoxGfFnw&s'}
+						alt="{userProfile.name}'s profile image"
+					/>
+				</div>
+				<input
+					id="profilePicture"
+					type="file"
+					name="profilePicture"
+					accept="image/jpeg, image/png"
+					class="hidden"
+					on:change={handleProfilePicChange}
+				/>
+			</div>
+		</label>
+	</div>
 	<form on:submit|preventDefault={submit} class="flex flex-col gap-4 w-96">
 		<div>
 			<span class="label-text text-base-content">Email</span>
