@@ -1,4 +1,5 @@
 import { cleanInput } from '$lib/server/utils/badWords';
+import { resizeAndCompressImage } from '$lib/server/utils/img';
 import { executeWithApiResponse } from '$lib/server/utils/utils';
 import { UserProfileDAO, type UserProfile } from '.';
 import { FollowDao } from '../followers/followerDao';
@@ -69,9 +70,10 @@ export class UserProfileService {
 
 	static async uploadProfilePicture(file: File, uid: string): Promise<APIResponse<string | null>> {
 		return executeWithApiResponse<any>(async () => {
+			const resizedFile = await resizeAndCompressImage(await file.arrayBuffer(), file.name);
 			const {
 				data: { publicUrl }
-			} = await UserProfileDAO.uploadProfilePicture(file);
+			} = await UserProfileDAO.uploadProfilePicture(resizedFile);
 
 			await UserProfileDAO.updateUserProfileUrl(uid, publicUrl);
 			return publicUrl;

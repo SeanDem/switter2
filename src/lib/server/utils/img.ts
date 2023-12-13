@@ -1,11 +1,6 @@
-import Jimp from 'jimp';
+import sharp from 'sharp';
 
-async function resizeAndCompressImage(inputPath: string, outputPath: string): Promise<void> {
-	const image = await Jimp.read(inputPath);
-	await image.resize(500, Jimp.AUTO);
-	await image.quality(80);
-	await image.writeAsync(outputPath);
+export async function resizeAndCompressImage(file: ArrayBuffer, fileName: String): Promise<File> {
+	const buffer = await sharp(file).resize(500).jpeg({ quality: 75 }).toBuffer();
+	return new File([buffer], `${fileName}.jpeg`, { type: 'image/jpeg' });
 }
-
-// Usage example
-resizeAndCompressImage('path/to/input/image.jpg', 'path/to/output/resized-image.jpg');

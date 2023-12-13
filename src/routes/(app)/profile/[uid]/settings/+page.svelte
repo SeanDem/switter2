@@ -21,13 +21,7 @@
 	let file: File;
 	async function handleProfile() {
 		const formData = new FormData();
-		const fileExtension = file.name.split('.').pop();
-		const uniqueFileName =
-			data.userProfile.uid +
-			'_' +
-			new Date().toISOString().replace(/:/g, '-') +
-			'.' +
-			fileExtension;
+		const uniqueFileName = data.userProfile.uid + '_' + new Date().toISOString().replace(/:/g, '-');
 		formData.append('profilePicture', file, uniqueFileName);
 
 		const response = await fetch('/api/profile/upload', {
@@ -65,7 +59,7 @@
 					id="profilePicture"
 					type="file"
 					name="profilePicture"
-					accept="image/jpeg, image/png"
+					accept="image/jpeg, image/png, img/heic"
 					class="hidden"
 					on:change={handleProfilePicChange}
 				/>

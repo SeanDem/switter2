@@ -51,7 +51,6 @@ export class UserProfileDAO {
 	}
 
 	static async updateUserProfileUrl(uid: string, newProfileUrl: string): Promise<boolean> {
-		console.log('newProfileUrl', newProfileUrl);
 		const { data, error } = await supabaseService
 			.from('userprofile')
 			.update({ profile_url: newProfileUrl })
