@@ -151,7 +151,7 @@
 			{/if}
 		</form>
 
-		<div class="w-full max-w-sm bg-white rounded-lg">
+		<div class="w-full max-w-sm bg-white rounded-lg mt-4">
 			<button on:click={logout} class="btn btn-outline w-full">Logout</button>
 		</div>
 	</div>
