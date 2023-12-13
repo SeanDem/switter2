@@ -3,7 +3,7 @@
 	import { defaultProfileUrl } from '$lib/const.js';
 	import { follow, unfollow } from '$lib/services/follow.js';
 	import { formatDateBirthday } from '$lib/utils/dateutils.js';
-	import { Cake, Icon } from 'svelte-hero-icons';
+	import { Cake, Envelope, Icon } from 'svelte-hero-icons';
 	export let data;
 
 	$: userProfile = data.userProfile;
@@ -20,9 +20,9 @@
 <div class="flex justify-center mb-4">
 	<div class="flex flex-col items-center bg-white rounded-lg shadow-s card border-1 p-5 w-130 pb-1">
 		<div class="flex w-full">
-			<div class="flex w-full justify-between items-center">
-				<div class="avatar">
-					<div class="flex-shrink-0 avatar w-24 rounded-full mr-4">
+			<div class="flex w-full justify-between items-start">
+				<div class="avatar w-40 items-center mt-[-10px]">
+					<div class="flex-shrink-0 avatar w-24 rounded-full">
 						<img
 							src={userProfile.profileUrl || defaultProfileUrl}
 							alt="{userProfile.name}'s profile image"
@@ -41,26 +41,34 @@
 						</div>
 					{/if}
 				</div>
-				<div class="flex flex-col justify-center ml-4">
+				<div class="flex flex-col justify-start items-end w-40">
 					{#if isUserProfile}
 						<a
 							href="/profile/{userProfile.uid}/settings"
-							class="btn rounded w-24 {isActive('settings') ? '' : 'btn-primary'}"
+							class="btn btn-sm rounded w-24 {isActive('settings') ? '' : 'btn-primary'}"
 						>
 							Settings
 						</a>
-					{:else if userProfile.isFollowing}
-						<button on:click|stopPropagation={handleFollow} class="btn btn-primary rounded w-24"
-							>Unfollow</button
-						>
 					{:else}
-						<button on:click|stopPropagation={handleFollow} class="btn rounded w-24">Follow</button>
+						<button>
+							<Icon src={Envelope} class="w-10" />
+						</button>
+						{#if userProfile.isFollowing}
+							<button
+								on:click|stopPropagation={handleFollow}
+								class="btn btn-sm btn-primary rounded w-20">Unfollow</button
+							>
+						{:else}
+							<button on:click|stopPropagation={handleFollow} class="btn btn rounded w-20"
+								>Follow</button
+							>
+						{/if}
 					{/if}
 				</div>
 			</div>
 		</div>
 
-		<div class="flex text-gray-500 mb-3">
+		<div class="flex text-gray-500 mb-3 text-left">
 			{userProfile.bio}
 		</div>
 		<div class="flex flex-row w-full justify-around pb-4 mb-3 border-b-1">

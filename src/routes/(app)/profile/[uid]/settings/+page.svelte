@@ -40,13 +40,7 @@
 
 <div class="flex flex-col justify-start items-center">
 	<div class="w-full max-w-sm bg-white rounded-lg">
-		<form use:enhance method="post" class="form-control">
-			<button
-				disabled={!!form?.message}
-				on:click={handleProfile}
-				type="submit"
-				class="btn btn-primary w-full mb-2">Save Profile</button
-			>
+		<form use:enhance method="post" class="form-control mb-32">
 			<div class="flex justify-between items-center">
 				<label for="profilePicture" class="label cursor-pointer">
 					<span class="label-text">Edit Profile Picture: </span>
@@ -151,9 +145,21 @@
 				<div class="text-error my-2">{form?.message}</div>
 			{/if}
 		</form>
+		<div class="fixed bottom-0 left-0 right-0 flex flex-col items-center bg-white p-4">
+			<div class="w-full max-w-sm items-center justify-around">
+				<div class="w-full mb-4">
+					<button
+						disabled={!!form?.message}
+						on:click={handleProfile}
+						type="submit"
+						class="btn btn-primary w-full">Save Profile</button
+					>
+				</div>
 
-		<div class="w-full max-w-sm bg-white rounded-lg mt-4">
-			<button on:click={logout} class="btn btn-outline w-full">Logout</button>
+				<div class="w-full">
+					<button on:click={logout} class="btn btn-outline w-full">Logout</button>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
