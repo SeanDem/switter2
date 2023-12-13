@@ -6,4 +6,4 @@
 	$: commentDetailList = data.commentList ?? [];
 </script>
 
-<InteractionCardFocus {interaction} {commentDetailList} />
+<InteractionCardFocus  {interaction} {commentDetailList} />

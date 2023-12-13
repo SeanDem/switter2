@@ -45,6 +45,12 @@
 			signupError = 'Failed to create user profile';
 		}
 	}
+
+	function loginWithGoogle() {
+		supabaseClient.auth.signInWithOAuth({
+			provider: 'google'
+		});
+	}
 </script>
 
 <div class="flex flex-col items-center my-8">
@@ -127,6 +133,10 @@
 	{#if signupError}
 		<p class="text-error mt-2">{signupError}</p>
 	{/if}
+</div>
+
+<div class="flex flex-col items-center">
+	<button on:click={loginWithGoogle}>Google Sing in</button>
 </div>
 <div class="flex flex-col items-center">
 	<div>

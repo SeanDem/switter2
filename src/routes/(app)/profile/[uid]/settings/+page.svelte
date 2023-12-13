@@ -4,11 +4,11 @@
 	import { goto } from '$app/navigation';
 	import { supabaseClient } from '$lib/utils/supabaseClient.js';
 	export let form;
-	export let data: { userProfile: UserProfile };
+	export let data;
 	let { handle, name, bio, phone, email, birthday } = data.userProfile;
 
 	function logout() {
-		supabaseClient.auth.signOut();
+		data.
 		document.cookie = 'uid=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
 		goto('/');
 	}

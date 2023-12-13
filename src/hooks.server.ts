@@ -1,14 +1,9 @@
+import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from '$env/static/public';
 import { createServerClient } from '@supabase/ssr';
-import type { Handle, RequestEvent } from '@sveltejs/kit';
-import type { Session, SupabaseClient } from '@supabase/supabase-js';
-
-const supabaseUrl: string = import.meta.env.VITE_SUPABASE_URL ?? '';
-const supabaseKey: string = import.meta.env.VITE_SUPABASE_KEY ?? '';
+import type { Handle } from '@sveltejs/kit';
 
 export const handle: Handle = async ({ event, resolve }) => {
-	const locals = event.locals as ExtendedLocals;
-	locals.getSession = () => getSession(locals);
-	locals.supabase = createServerClient(supabaseUrl, supabaseKey, {
+	event.locals.supabase = createServerClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY, {
 		cookies: {
 			get: (key) => event.cookies.get(key),
 			set: (key, value, options) => {
@@ -20,36 +15,21 @@ export const handle: Handle = async ({ event, resolve }) => {
 		}
 	});
 
-	if (event.url.pathname.startsWith('/auth')) {
-		return await resolve(event);
-	}
-
-	if (event.url.pathname.startsWith('/api')) {
-		const apiKey = event.request.headers.get('apikey');
-		if (apiKey !== 'temp-api-key') {
-			return new Response('Invalid API Key', { status: 401 });
-		}
-	}
-
-	const session = await locals.getSession();
-	// if (!session) return new Response('Unauthorized', { status: 401 });
-
-	return resolve(event);
-};
-
-async function getSession(locals: ExtendedLocals): Promise<Session | null> {
-	try {
+	/**
+	 * a little helper that is written for convenience so that instead
+	 * of calling `const { data: { session } } = await supabase.auth.getSession()`
+	 * you just call this `await getSession()`
+	 */
+	event.locals.getSession = async () => {
 		const {
 			data: { session }
-		} = await locals.supabase.auth.getSession();
+		} = await event.locals.supabase.auth.getSession();
 		return session;
-	} catch (error) {
-		console.error('Error getting session:', error);
-		return null;
-	}
-}
+	};
 
-interface ExtendedLocals extends RequestEvent {
-	supabase: SupabaseClient;
-	getSession: () => Promise<Session | null>;
-}
+	return resolve(event, {
+		filterSerializedResponseHeaders(name) {
+			return name === 'content-range';
+		}
+	});
+};
