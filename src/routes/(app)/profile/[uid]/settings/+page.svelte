@@ -25,7 +25,7 @@
 			return;
 		}
 		const formData = new FormData();
-		const uniqueFileName = data.userProfile.uid + '_' + new Date().toISOString().replace(/:/g, '-');
+		const uniqueFileName = data.userProfile.uid + '_profilePicture';
 		formData.append('profilePicture', file, uniqueFileName);
 
 		const response = await fetch('/api/profile/upload', {
