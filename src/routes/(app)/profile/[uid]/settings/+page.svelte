@@ -20,6 +20,10 @@
 	}
 	let file: File;
 	async function handleProfile() {
+		if (!file) {
+			goto('/profile/' + data.userProfile.uid);
+			return;
+		}
 		const formData = new FormData();
 		const uniqueFileName = data.userProfile.uid + '_' + new Date().toISOString().replace(/:/g, '-');
 		formData.append('profilePicture', file, uniqueFileName);
@@ -28,6 +32,7 @@
 			method: 'POST',
 			body: formData
 		});
+		goto('/profile/' + data.userProfile.uid);
 		invalidateAll();
 	}
 	function handleProfilePicChange(event: any) {

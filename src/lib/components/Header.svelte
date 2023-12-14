@@ -52,30 +52,6 @@
 			isRotating = false;
 		}, refreshDuration);
 	}
-
-	function slideLeftAndShrink(node: HTMLDivElement) {
-		const duration = 200;
-		const distance = 10;
-		const scaleAmount = 0.85;
-
-		return {
-			duration,
-			css: (t: number) => `
-            transform: translateX(${-distance * (1 - t)}px) scale(${
-				1 - (1 - scaleAmount) * (1 - t)
-			});
-            opacity: ${t};
-        `
-		};
-	}
-	let isBack = false;
-	function navigateBack() {
-		isBack = true;
-		setTimeout(() => {
-			isBack = false;
-		}, 200);
-		window.history.back();
-	}
 </script>
 
 <header
@@ -85,19 +61,6 @@
 >
 	<nav class="flex justify-center items-center overflow-x-auto">
 		<ul class="flex space-x-6 py-4 font-semibold uppercase">
-			<li class="flex items-center">
-				{#if !isBack}
-					<button on:click={navigateBack}>
-						<Icon class="block w-9 h-9" src={ArrowLeft} />
-					</button>
-				{:else}
-					<button disabled>
-						<div in:slideLeftAndShrink>
-							<Icon class=" block w-9 h-9" src={ArrowLeft} />
-						</div>
-					</button>
-				{/if}
-			</li>
 			<li class="flex items-center">
 				<a class="text-xl {isActive('/') ? 'border-b-2 border-black' : ''}" href="/"
 					><span class="hidden sm:block">Home</span>

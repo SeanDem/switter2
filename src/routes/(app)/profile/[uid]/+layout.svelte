@@ -47,7 +47,7 @@
 					</div>
 				</div>
 				<div class="flex flex-col items-center">
-					<div class="font-semibold text-2xl">
+					<div class="font-semibold text-center text-2xl">
 						{isUserProfile ? 'Your Profile' : userProfile.name}
 					</div>
 					<div class="text-gray-500">@{userProfile.handle}</div>

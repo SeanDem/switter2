@@ -9,32 +9,32 @@ function transformToCamelCase(data: Record<string, any>): Record<string, any> {
 }
 
 export class MessageDao {
-	static async createMessage(message: Omit<Message, 'messageId'>): Promise<Message> {
-		const transformedMessage = transformToCamelCase(message);
-		const { data, error } = await supabaseService.from('message').insert([transformedMessage]);
+	static async createMessage(message: Partial<Message>): Promise<Message> {
+		const { data, error } = await supabaseService
+			.from('message')
+			.insert([
+				{
+					conversation_id: message.conversationId,
+					uid: message.uid,
+					text: message.text
+				}
+			])
+			.select('*')
+			.single();
 
-		if (error) throw new Error(error.message);
-		return transformToCamelCase(data![0]) as Message;
+		if (error) throw new Error(error.message + error.hint);
+		return transformToCamelCase(data) as Message;
 	}
 
-	static async getAllMessages(): Promise<Message[]> {
-		const { data, error } = await supabaseService.from('message').select('*');
+	static async getAllMessagesByConversationId(conversationId: string): Promise<Message[]> {
+		const { data, error } = await supabaseService
+			.from('message')
+			.select('*')
+			.eq('conversation_id', conversationId);
 
-		if (error) throw new Error(error.message);
+		if (error) throw new Error(error.message + error.hint);
 		return data!.map((d) => transformToCamelCase(d) as Message);
 	}
-
-	// static async subscribeToMessages(conversationId: string) {
-	// 	return supabaseService
-	// 		.from('Message')
-	// 		.on('INSERT', (liveResponse: any) => {
-	// 			if (liveResponse.new.conversation_id === conversationId) {
-	// 				const newMessage = transformToCamelCase(liveResponse.new) as Message;
-	// 				// Handle the new message (e.g., update UI, state, etc.)
-	// 			}
-	// 		})
-	// 		.subscribe();
-	// }
 
 	static async getInitialMessages(conversationId: string): Promise<Message[]> {
 		let { data, error } = await supabaseService

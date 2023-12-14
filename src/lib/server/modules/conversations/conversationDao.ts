@@ -23,7 +23,8 @@ export class ConversationDAO {
 		const { data, error } = await supabaseService
 			.from('conversation')
 			.select('*')
-			.or(`uid_1.eq.${uid1},uid_2.eq.${uid2}`)
+			.eq('uid_1', uid1)
+			.eq('uid_2', uid2)
 			.maybeSingle<ConversationResponse>();
 
 		if (error) throw new Error(error.details + error.message);

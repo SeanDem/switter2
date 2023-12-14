@@ -22,4 +22,5 @@ export class ConversationService {
 
 		return await ConversationDAO.createConversation(uid, otherUid);
 	}
+
 }
