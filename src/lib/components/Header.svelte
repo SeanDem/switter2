@@ -5,6 +5,7 @@
 	import {
 		ArrowLeft,
 		ArrowPath,
+		Envelope,
 		Home,
 		Icon,
 		MagnifyingGlass,
@@ -83,7 +84,7 @@
 	} font-normal text-base sm:text-lg overflow-hidden`}
 >
 	<nav class="flex justify-center items-center overflow-x-auto">
-		<ul class="flex space-x-7 py-4 font-semibold uppercase">
+		<ul class="flex space-x-6 py-4 font-semibold uppercase">
 			<li class="flex items-center">
 				{#if !isBack}
 					<button on:click={navigateBack}>
@@ -117,6 +118,17 @@
 			</li>
 			<li class="flex items-center">
 				<a
+					class="text-xl {$page.url.pathname.includes('/conversations')
+						? 'border-b-2 border-black'
+						: ''}"
+					href="/conversations"
+				>
+					<span class="block hidden sm:block">Messages</span>
+					<Icon class="block sm:hidden w-9 h-9" src={Envelope} />
+				</a>
+			</li>
+			<li class="flex items-center">
+				<a
 					class="text-xl {$page.url.pathname.includes('/profile') ? 'border-b-2 border-black' : ''}"
 					href="/profile"
 				>
@@ -124,6 +136,7 @@
 					<Icon class="block sm:hidden w-9 h-9" src={User} />
 				</a>
 			</li>
+
 			<li class="flex items-center">
 				{#if !isRotating}
 					<button on:click={refreshPage}>

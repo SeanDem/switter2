@@ -3,6 +3,7 @@
 	import { defaultProfileUrl } from '$lib/const.js';
 	import { follow, unfollow } from '$lib/services/follow.js';
 	import { formatDateBirthday } from '$lib/utils/dateutils.js';
+	import { supabaseClient } from '$lib/utils/supabaseClient.js';
 	import { Cake, Envelope, Icon } from 'svelte-hero-icons';
 	export let data;
 
@@ -15,13 +16,17 @@
 		userProfile.isFollowing ? unfollow(userProfile.uid) : follow(userProfile.uid);
 		userProfile.isFollowing = !userProfile.isFollowing;
 	}
+
+	function handleMessageUser() {
+		console.log('message user');
+	}
 </script>
 
 <div class="flex justify-center mb-4">
 	<div class="flex flex-col items-center bg-white rounded-lg shadow-s card border-1 p-5 w-130 pb-1">
 		<div class="flex w-full">
 			<div class="flex w-full justify-between items-start">
-				<div class="avatar w-40 items-center mt-[-10px]">
+				<div class="avatar w-40 items-center mt-[-8px] ml-[-2px]">
 					<div class="flex-shrink-0 avatar w-24 rounded-full">
 						<img
 							src={userProfile.profileUrl || defaultProfileUrl}
@@ -50,7 +55,7 @@
 							Settings
 						</a>
 					{:else}
-						<button>
+						<button on:click={handleMessageUser}>
 							<Icon src={Envelope} class="w-10" />
 						</button>
 						{#if userProfile.isFollowing}
