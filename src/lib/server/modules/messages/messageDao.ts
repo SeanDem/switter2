@@ -1,49 +1,49 @@
 import { supabaseService } from '$lib/server/utils/supabaseService';
-import type { Message } from './messagesType';
 
-export class MessageDAO {
-	static async createMessage(message: Omit<Message, 'message_id'>): Promise<Message> {
-		const { data, error } = await supabaseService.from('message').insert([message]);
+function transformToCamelCase(data: Record<string, any>): Record<string, any> {
+	return Object.keys(data).reduce((acc, key) => {
+		const camelCaseKey = key.replace(/_([a-z])/g, (g) => g[1].toUpperCase());
+		acc[camelCaseKey] = data[key];
+		return acc;
+	}, {} as Record<string, any>);
+}
 
-		if (error) throw new Error(error.message);
-		return data![0];
-	}
-
-	static async getMessageById(message_id: string): Promise<Message | null> {
-		const { data, error } = await supabaseService
-			.from('message')
-			.select('*')
-			.eq('message_id', message_id)
-			.single();
+export class MessageDao {
+	static async createMessage(message: Omit<Message, 'messageId'>): Promise<Message> {
+		const transformedMessage = transformToCamelCase(message);
+		const { data, error } = await supabaseService.from('message').insert([transformedMessage]);
 
 		if (error) throw new Error(error.message);
-		return data;
-	}
-
-	static async updateMessage(
-		message_id: string,
-		messageUpdates: Partial<Message>
-	): Promise<Message> {
-		const { data, error } = await supabaseService
-			.from('message')
-			.update(messageUpdates)
-			.eq('message_id', message_id);
-
-		if (error) throw new Error(error.message);
-		return data![0];
-	}
-
-	static async deleteMessage(message_id: string): Promise<boolean> {
-		const { error } = await supabaseService.from('message').delete().eq('message_id', message_id);
-
-		if (error) throw new Error(error.message);
-		return true;
+		return transformToCamelCase(data![0]) as Message;
 	}
 
 	static async getAllMessages(): Promise<Message[]> {
 		const { data, error } = await supabaseService.from('message').select('*');
 
 		if (error) throw new Error(error.message);
-		return data!;
+		return data!.map((d) => transformToCamelCase(d) as Message);
+	}
+
+	// static async subscribeToMessages(conversationId: string) {
+	// 	return supabaseService
+	// 		.from('Message')
+	// 		.on('INSERT', (liveResponse: any) => {
+	// 			if (liveResponse.new.conversation_id === conversationId) {
+	// 				const newMessage = transformToCamelCase(liveResponse.new) as Message;
+	// 				// Handle the new message (e.g., update UI, state, etc.)
+	// 			}
+	// 		})
+	// 		.subscribe();
+	// }
+
+	static async getInitialMessages(conversationId: string): Promise<Message[]> {
+		let { data, error } = await supabaseService
+			.from('Message')
+			.select('*')
+			.eq('conversation_id', conversationId)
+			.order('timestamp', { ascending: false });
+
+		if (error) throw new Error(error.message);
+		return data!.map((d) => transformToCamelCase(d) as Message);
 	}
 }

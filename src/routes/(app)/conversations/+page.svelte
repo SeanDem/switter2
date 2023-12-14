@@ -1,11 +1,32 @@
 <script lang="ts">
+	import { defaultProfileUrl } from '$lib/const.js';
+	import { formatDateSmall } from '$lib/utils/dateutils.js';
 	export let data;
 	$: conversations = data.conversations;
 </script>
 
-<h2>Messages</h2>
-
 {#each conversations as conversation}
-	<div>{conversation.conversationId}</div>
-	<div>{conversation.uid}</div>
+	<a href="/conversations/{conversation.conversationId}">
+		<div
+			class="flex flex-row items-center p-4 bg-white rounded-lg shadow-sm card w-96 border border-gray-200"
+		>
+			<div class="flex-shrink-0 pr-4">
+				<img
+					class="w-14 h-14 rounded-full"
+					src={conversation.profileUrl || defaultProfileUrl}
+					alt="{conversation.name}'s profile image"
+				/>
+			</div>
+			<div class="flex-grow mb-x-4">
+				<span class="font-semibold text-lg">{conversation.name}</span>
+				<span class="text-sm text-gray-500">@{conversation.handle}</span>
+				<span class="text-xs text-gray-400">
+					{conversation.lastMessageDate || formatDateSmall(new Date().toLocaleString())}
+				</span>
+				<div class="mt-1 text-sm text-gray-600 truncate">
+					{conversation.lastMessagePreview || 'Last Message Preview'}
+				</div>
+			</div>
+		</div>
+	</a>
 {/each}

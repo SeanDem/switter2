@@ -1,7 +1,8 @@
-export type Message = {
-	message_id: string;
-	conversation_id: string;
+interface Message {
+	messageId: string; 
+	conversationId: string;
 	uid: string;
+	mediaUrls: string; 
 	text: string;
-	timestamp: Date;
-};
+	timestamp: Date; 
+}

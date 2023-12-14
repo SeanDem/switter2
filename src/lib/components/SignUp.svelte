@@ -56,7 +56,6 @@
 			method: 'POST',
 			body: formData
 		});
-		console.log(response);
 	}
 	let file: File;
 	let profileUrl: string;

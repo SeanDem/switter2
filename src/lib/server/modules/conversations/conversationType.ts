@@ -1,5 +1,14 @@
+import type { UserProfile, UserProfilePartial } from '../userProfile';
+
 export type Conversation = {
-	conversation_id: string;
-	uid_1: string;
-	uid_2: string;
+	conversationId: string;
+	uid: string;
+	otherUid: string;
 };
+
+export interface ConversationDetail
+	extends Conversation,
+		Pick<UserProfile, 'uid' | 'handle' | 'bio' | 'name' | 'profileUrl'> {
+	lastMessageDate: string;
+	lastMessagePreview: string;
+}

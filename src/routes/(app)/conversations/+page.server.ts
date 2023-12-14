@@ -5,6 +5,6 @@ export const load = async ({ cookies }) => {
 	const uid = cookies.get('uid');
 	if (!uid) throw redirect(301, '/auth');
 
-	const conversations = await ConversationService.getAllMessagesByUid(uid);
+	const conversations = await ConversationService.getAllConversationListByUid(uid);
 	return { conversations };
 };

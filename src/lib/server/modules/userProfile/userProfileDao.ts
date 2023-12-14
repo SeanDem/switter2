@@ -1,4 +1,3 @@
-import { error } from '@sveltejs/kit';
 import { supabaseService } from '$lib/server/utils/supabaseService';
 import type { UserProfile, UserProfilePartial } from './userProfileType';
 

@@ -1,9 +1,10 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { defaultProfileUrl } from '$lib/const.js';
+	import type { Conversation } from '$lib/server/modules/conversations/index.js';
 	import { follow, unfollow } from '$lib/services/follow.js';
 	import { formatDateBirthday } from '$lib/utils/dateutils.js';
-	import { supabaseClient } from '$lib/utils/supabaseClient.js';
 	import { Cake, Envelope, Icon } from 'svelte-hero-icons';
 	export let data;
 
@@ -17,8 +18,19 @@
 		userProfile.isFollowing = !userProfile.isFollowing;
 	}
 
-	function handleMessageUser() {
-		console.log('message user');
+	async function handleMessageUser() {
+		const response = await fetch('/api/conversation', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				otherUid: userProfile.uid
+			})
+		});
+
+		if (response.ok) {
+			const { conversation }: { conversation: Conversation } = await response.json();
+			goto(`/conversations/${conversation.conversationId}`);
+		}
 	}
 </script>
 
@@ -26,7 +38,7 @@
 	<div class="flex flex-col items-center bg-white rounded-lg shadow-s card border-1 p-5 w-130 pb-1">
 		<div class="flex w-full">
 			<div class="flex w-full justify-between items-start">
-				<div class="avatar w-40 items-center mt-[-8px] ml-[-2px]">
+				<div class="avatar w-40 items-center mt-[-7px] ml-[-2px]">
 					<div class="flex-shrink-0 avatar w-24 rounded-full">
 						<img
 							src={userProfile.profileUrl || defaultProfileUrl}
@@ -64,7 +76,7 @@
 								class="btn btn-sm btn-primary rounded w-20">Unfollow</button
 							>
 						{:else}
-							<button on:click|stopPropagation={handleFollow} class="btn btn rounded w-20"
+							<button on:click|stopPropagation={handleFollow} class="btn btn-sm rounded w-20"
 								>Follow</button
 							>
 						{/if}

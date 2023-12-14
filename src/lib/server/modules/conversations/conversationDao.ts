@@ -1,54 +1,38 @@
 import { supabaseService } from '$lib/server/utils/supabaseService';
-import type { Conversation } from './conversationType';
+import type { Conversation, ConversationDetail } from './conversationType';
 
 export class ConversationDAO {
-	static async createConversation(
-		conversation: Omit<Conversation, 'conversation_id'>
-	): Promise<Conversation> {
-		const { data, error } = await supabaseService.from('conversation').insert([conversation]);
-
-		if (error) throw new Error(error.message);
-		return data![0];
+	static async getConversationListByUid(uid: string): Promise<ConversationDetail[]> {
+		const { data, error } = await supabaseService.rpc('getuserconversations', { _uid: uid });
+		if (error) throw new Error(error.details + error.message);
+		return data!;
 	}
 
-	static async getConversationById(conversation_id: string): Promise<Conversation | null> {
+	static async createConversation(uid: string, otherUid: string): Promise<Conversation | null> {
+		const { data, error } = await supabaseService
+			.from('conversation')
+			.insert([{ uid_1: uid, uid_2: otherUid }])
+			.single<ConversationResponse>();
+
+		if (error) throw new Error(error.details + error.message);
+
+		return { conversationId: data.conversation_id, uid: data.uid_1, otherUid: data.uid_2 };
+	}
+
+	static async getConversationByUid(uid1: string, uid2: string): Promise<Conversation | null> {
 		const { data, error } = await supabaseService
 			.from('conversation')
 			.select('*')
-			.eq('conversation_id', conversation_id)
-			.single();
+			.or(`uid_1.eq.${uid1},uid_2.eq.${uid2}`)
+			.maybeSingle<ConversationResponse>();
 
-		if (error) throw new Error(error.message);
-		return data;
+		if (error) throw new Error(error.details + error.message);
+		if (!data) return null;
+		return { conversationId: data.conversation_id, uid: data.uid_1, otherUid: data.uid_2 };
 	}
-
-	static async updateConversation(
-		conversation_id: string,
-		conversationUpdates: Partial<Conversation>
-	): Promise<Conversation> {
-		const { data, error } = await supabaseService
-			.from('conversation')
-			.update(conversationUpdates)
-			.eq('conversation_id', conversation_id);
-
-		if (error) throw new Error(error.message);
-		return data![0];
-	}
-
-	static async deleteConversation(conversation_id: string): Promise<boolean> {
-		const { error } = await supabaseService
-			.from('conversation')
-			.delete()
-			.eq('conversation_id', conversation_id);
-
-		if (error) throw new Error(error.message);
-		return true;
-	}
-
-	static async getAllConversations(): Promise<ConversationDAO[]> {
-		const { data, error } = await supabaseService.from('conversation').select('*');
-
-		if (error) throw new Error(error.message);
-		return data!;
-	}
+}
+interface ConversationResponse {
+	conversation_id: string;
+	uid_1: string;
+	uid_2: string;
 }
