@@ -39,7 +39,7 @@ export class UserProfileService {
 		});
 	}
 
-	static async getUserProfileById(
+	static async getUserProfileDetailsById(
 		uid: string,
 		profileUid: string
 	): Promise<APIResponse<UserProfile | null>> {
@@ -77,6 +77,11 @@ export class UserProfileService {
 
 			await UserProfileDAO.updateUserProfileUrl(uid, publicUrl);
 			return publicUrl;
+		});
+	}
+	static async getUserProfileByUid(uid: string): Promise<APIResponse<UserProfile | null>> {
+		return executeWithApiResponse<UserProfile | null>(async () => {
+			return UserProfileDAO.getUserProfileById(uid);
 		});
 	}
 }

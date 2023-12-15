@@ -12,10 +12,11 @@ export class ConversationDAO {
 		const { data, error } = await supabaseService
 			.from('conversation')
 			.insert([{ uid_1: uid, uid_2: otherUid }])
+			.select('*')
 			.single<ConversationResponse>();
 
+		console.log(data);
 		if (error) throw new Error(error.details + error.message);
-
 		return { conversationId: data.conversation_id, uid: data.uid_1, otherUid: data.uid_2 };
 	}
 
@@ -25,6 +26,17 @@ export class ConversationDAO {
 			.select('*')
 			.eq('uid_1', uid1)
 			.eq('uid_2', uid2)
+			.maybeSingle<ConversationResponse>();
+
+		if (error) throw new Error(error.details + error.message);
+		if (!data) return null;
+		return { conversationId: data.conversation_id, uid: data.uid_1, otherUid: data.uid_2 };
+	}
+	static async getConversationById(conversationId: string): Promise<Conversation | null> {
+		const { data, error } = await supabaseService
+			.from('conversation')
+			.select('*')
+			.eq('conversation_id', conversationId)
 			.maybeSingle<ConversationResponse>();
 
 		if (error) throw new Error(error.details + error.message);

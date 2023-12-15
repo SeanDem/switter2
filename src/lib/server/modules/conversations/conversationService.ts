@@ -23,4 +23,10 @@ export class ConversationService {
 		return await ConversationDAO.createConversation(uid, otherUid);
 	}
 
+	static async getConversationListByUid(uid: string): Promise<ConversationDetail[]> {
+		return await ConversationDAO.getConversationListByUid(uid);
+	}
+	static async getConversationById(conversationId: string): Promise<Conversation | null> {
+		return await ConversationDAO.getConversationById(conversationId);
+	}
 }

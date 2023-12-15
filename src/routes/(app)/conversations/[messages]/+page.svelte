@@ -9,6 +9,7 @@
 	import { onDestroy, onMount } from 'svelte';
 	export let data;
 	$: messages = data.messages;
+	$: otherUserProfile = data.otherUserProfile;
 
 	let message = '';
 	let channels: RealtimeChannel;
@@ -60,8 +61,12 @@
 			<div class="mr-6">
 				<BackButton />
 			</div>
-			<img src={defaultProfileUrl} alt="Profile" class="w-10 h-10 rounded-full mr-3" />
-			<span class="font-semibold">Other Person's Name</span>
+			<img
+				src={otherUserProfile?.profileUrl || defaultProfileUrl}
+				alt="Profile"
+				class="w-10 h-10 rounded-full mr-3"
+			/>
+			<span class="font-semibold font-md mr-3">{otherUserProfile?.name}</span>
 		</div>
 
 		<div

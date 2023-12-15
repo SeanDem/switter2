@@ -26,7 +26,7 @@
 				otherUid: userProfile.uid
 			})
 		});
-
+		console.log(response);
 		if (response.ok) {
 			const { conversation }: { conversation: Conversation } = await response.json();
 			goto(`/conversations/${conversation.conversationId}`);

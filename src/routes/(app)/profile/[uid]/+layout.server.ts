@@ -8,7 +8,7 @@ export const load = async ({ params, cookies }) => {
 	let isUserProfile = false;
 	if (params.uid === uid) isUserProfile = true;
 
-	const userProfileRes = await UserProfileService.getUserProfileById(uid, params.uid);
+	const userProfileRes = await UserProfileService.getUserProfileDetailsById(uid, params.uid);
 	const userProfile = userProfileRes.data;
 	if (!userProfile) throw error(404, 'User profile not found');
 
