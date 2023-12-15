@@ -12,40 +12,36 @@ export class ConversationDAO {
 		const { data, error } = await supabaseService
 			.from('conversation')
 			.insert([{ uid_1: uid, uid_2: otherUid }])
-			.select('*')
-			.single<ConversationResponse>();
+			.select('conversation_id, uid_1, uid_2')
+			.single<Conversation>();
 
 		console.log(data);
 		if (error) throw new Error(error.details + error.message);
-		return { conversationId: data.conversation_id, uid: data.uid_1, otherUid: data.uid_2 };
+		return data;
 	}
 
 	static async getConversationByUid(uid1: string, uid2: string): Promise<Conversation | null> {
 		const { data, error } = await supabaseService
 			.from('conversation')
-			.select('*')
+			.select('conversationId:conversation_id, uid:uid_1, otherUid:uid_2')
 			.eq('uid_1', uid1)
 			.eq('uid_2', uid2)
-			.maybeSingle<ConversationResponse>();
+			.maybeSingle<Conversation>();
 
 		if (error) throw new Error(error.details + error.message);
 		if (!data) return null;
-		return { conversationId: data.conversation_id, uid: data.uid_1, otherUid: data.uid_2 };
+		return data;
 	}
+
 	static async getConversationById(conversationId: string): Promise<Conversation | null> {
 		const { data, error } = await supabaseService
 			.from('conversation')
-			.select('*')
+			.select('conversationId:conversation_id, uid:uid_1, otherUid:uid_2')
 			.eq('conversation_id', conversationId)
-			.maybeSingle<ConversationResponse>();
+			.maybeSingle<Conversation>();
 
 		if (error) throw new Error(error.details + error.message);
 		if (!data) return null;
-		return { conversationId: data.conversation_id, uid: data.uid_1, otherUid: data.uid_2 };
+		return data;
 	}
-}
-interface ConversationResponse {
-	conversation_id: string;
-	uid_1: string;
-	uid_2: string;
 }

@@ -1,4 +1,4 @@
-import type { UserProfile, UserProfilePartial } from '../userProfile';
+import type { UserProfile } from '../userProfile';
 
 export type Conversation = {
 	conversationId: string;
