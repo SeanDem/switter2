@@ -71,23 +71,25 @@
 
 		<div class="flex flex-grow flex-col-reverse my-1 overflow-y-auto no-scrollbar">
 			<div class="w-full p-3">
-				{#each messages as message}
-					{#if message.uid === $userProfileStore.uid}
-						<div class="chat chat-end">
-							<div class="chat-header">
-								<time class="text-xs opacity-50">{formatDateSmall(message.timestamp)}</time>
+				{#if $userProfileStore?.uid}
+					{#each messages as message}
+						{#if message.uid === $userProfileStore?.uid}
+							<div class="chat chat-end">
+								<div class="chat-header">
+									<time class="text-xs opacity-50">{formatDateSmall(message.timestamp)}</time>
+								</div>
+								<div class="chat-bubble bg-blue-600 break-words">{message.text}</div>
 							</div>
-							<div class="chat-bubble bg-blue-600 break-words">{message.text}</div>
-						</div>
-					{:else}
-						<div class="chat chat-start">
-							<div class="chat-header">
-								<time class="text-xs opacity-50">{formatDateSmall(message.timestamp)}</time>
+						{:else}
+							<div class="chat chat-start">
+								<div class="chat-header">
+									<time class="text-xs opacity-50">{formatDateSmall(message.timestamp)}</time>
+								</div>
+								<div class="chat-bubble bg-slate-400 break-words">{message.text}</div>
 							</div>
-							<div class="chat-bubble bg-slate-400 break-words">{message.text}</div>
-						</div>
-					{/if}
-				{/each}
+						{/if}
+					{/each}
+				{/if}
 			</div>
 		</div>
 
