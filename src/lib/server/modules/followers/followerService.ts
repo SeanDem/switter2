@@ -4,11 +4,11 @@ import type { UserProfilePartial } from '../userProfile';
 import { FollowDao } from './followerDao';
 
 export class FollowerService {
-	static async getFollowers(uid: string): Promise<APIResponse<UserProfilePartial[]>> {
+	static async getFollowers(uid: string): Promise<APIResponse<UserProfilePartial[] | null>> {
 		return executeWithApiResponse(() => FollowDao.getFollowers(uid));
 	}
 
-	static async getFollowing(uid: string): Promise<APIResponse<UserProfilePartial[]>> {
+	static async getFollowing(uid: string): Promise<APIResponse<UserProfilePartial[] | null>> {
 		return executeWithApiResponse(() => FollowDao.getFollowing(uid));
 	}
 

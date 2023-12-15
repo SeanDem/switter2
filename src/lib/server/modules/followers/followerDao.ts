@@ -1,25 +1,27 @@
 import { supabaseService } from '$lib/server/utils/supabaseService';
+import type { UserProfilePartial } from '../userProfile';
 
 export class FollowDao {
-	static async getFollowers(uid: string) {
+	static async getFollowers(uid: string): Promise<UserProfilePartial[]> {
 		const _uid = uid;
 		const { data, error } = await supabaseService.rpc('getuserprofiles', {
 			_uid,
 			type: '_followers'
 		});
 		if (error) new Error(error.details + error.message + error.hint);
-		return data!;
+		console.log(data);
+		return data;
 	}
 
-	static async getFollowing(uid: string) {
+	static async getFollowing(uid: string): Promise<UserProfilePartial[]> {
 		const _uid = uid;
 		const { data, error } = await supabaseService.rpc('getuserprofiles', {
 			_uid,
 			type: '_following'
 		});
 		if (error) new Error(error.details + error.message + error.hint);
-
-		return data!;
+		console.log(data);
+		return data;
 	}
 	static async follow(followerUid: string, followeeUid: string): Promise<any> {
 		const { data, error } = await supabaseService
@@ -27,7 +29,7 @@ export class FollowDao {
 			.insert([{ follower_uid: followerUid, followee_uid: followeeUid }]);
 		if (error) throw new Error(error.details + error.message + error.hint);
 
-		return data!;
+		return data;
 	}
 
 	static async unfollow(followerUid: string, followeeUid: string): Promise<any> {
@@ -36,8 +38,6 @@ export class FollowDao {
 			.delete()
 			.match({ follower_uid: followerUid, followee_uid: followeeUid });
 		if (error) throw new Error(error.details + error.message + error.hint);
-
-		return data!;
 	}
 
 	static async isUserFollowing(uid: string, profileUid: string): Promise<boolean> {
