@@ -2,6 +2,7 @@
 	import { defaultProfileUrl } from '$lib/const';
 	import type { UserProfilePartial } from '$lib/server/modules/userProfile';
 	import { follow, unfollow } from '$lib/services/follow';
+	import { userProfileStore } from '$lib/store/currentUser';
 
 	export let userProfile: UserProfilePartial = {
 		uid: '',
@@ -35,15 +36,17 @@
 			</div>
 		</div>
 		<div class="flex flex-col justify-center">
-			{#if userProfile.isFollowing}
-				<button
-					on:click|stopPropagation|preventDefault={handleFollow}
-					class="btn btn-primary rounded w-24">Unfollow</button
-				>
-			{:else}
-				<button on:click|stopPropagation|preventDefault={handleFollow} class="btn rounded w-24"
-					>Follow</button
-				>
+			{#if userProfile.uid !== $userProfileStore.uid}
+				{#if userProfile.isFollowing}
+					<button
+						on:click|stopPropagation|preventDefault={handleFollow}
+						class="btn btn-primary rounded w-24">Unfollow</button
+					>
+				{:else}
+					<button on:click|stopPropagation|preventDefault={handleFollow} class="btn rounded w-24"
+						>Follow</button
+					>
+				{/if}
 			{/if}
 		</div>
 	</div>
