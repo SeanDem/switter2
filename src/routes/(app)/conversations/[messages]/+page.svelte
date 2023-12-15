@@ -69,9 +69,7 @@
 			<span class="font-semibold font-md mr-3">{otherUserProfile?.name}</span>
 		</div>
 
-		<div
-			class="flex flex-grow flex-col-reverse my-1 overflow-y-auto whitespace-nowrap no-scrollbar"
-		>
+		<div class="flex flex-grow flex-col-reverse my-1 overflow-y-auto no-scrollbar">
 			<div class="w-full p-3">
 				{#each messages as message}
 					{#if message.uid === $userProfileStore.uid}
@@ -79,14 +77,14 @@
 							<div class="chat-header">
 								<time class="text-xs opacity-50">{formatDateSmall(message.timestamp)}</time>
 							</div>
-							<div class="chat-bubble bg-blue-600">{message.text}</div>
+							<div class="chat-bubble bg-blue-600 break-words">{message.text}</div>
 						</div>
 					{:else}
 						<div class="chat chat-start">
 							<div class="chat-header">
 								<time class="text-xs opacity-50">{formatDateSmall(message.timestamp)}</time>
 							</div>
-							<div class="chat-bubble bg-slate-400">{message.text}</div>
+							<div class="chat-bubble bg-slate-400 break-words">{message.text}</div>
 						</div>
 					{/if}
 				{/each}
