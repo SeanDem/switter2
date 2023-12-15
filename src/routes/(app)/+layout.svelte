@@ -1,14 +1,16 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import Header from '$lib/components/Header.svelte';
+	import { navBarStore } from '$lib/store/shellStore';
 	import { onDestroy, onMount } from 'svelte';
 
 	let lastScrollY = 0;
-	let showNavbar = true;
-
 	const handleScroll = () => {
 		const currentScrollY = window.scrollY;
-		showNavbar = currentScrollY < lastScrollY || currentScrollY < 50;
+		navBarStore.set({
+			...$navBarStore,
+			isScrolling: currentScrollY < lastScrollY || currentScrollY < 50
+		});
 		lastScrollY = currentScrollY;
 	};
 
@@ -24,8 +26,12 @@
 	});
 </script>
 
-<main style="padding-top: var(--navbar-height);">
-	<Header {showNavbar} />
+<main
+	style={$navBarStore.isScrolling && $navBarStore.enabled
+		? 'padding-top: var(--navbar-height)'
+		: ''}
+>
+	<Header />
 	<div>
 		<slot />
 	</div>

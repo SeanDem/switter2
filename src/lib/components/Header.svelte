@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
 	import { page } from '$app/stores';
+	import { navBarStore } from '$lib/store/shellStore';
 	import { onMount } from 'svelte';
 	import {
-		ArrowLeft,
 		ArrowPath,
 		Envelope,
 		Home,
@@ -12,7 +12,6 @@
 		Pencil,
 		User
 	} from 'svelte-hero-icons';
-	export let showNavbar: boolean;
 
 	const refreshDuration = 1000;
 	let isRotating = false;
@@ -56,7 +55,7 @@
 
 <header
 	class={`bg-base-100 border-b-2 fixed top-0 left-0 w-full max-w-none z-10 transition-transform duration-300 ${
-		showNavbar ? 'translate-y-0' : '-translate-y-full'
+		$navBarStore.isScrolling && $navBarStore.enabled ? 'translate-y-0' : '-translate-y-full'
 	} font-normal text-base sm:text-lg overflow-hidden`}
 >
 	<nav class="flex justify-center items-center overflow-x-auto">

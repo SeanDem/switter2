@@ -2,6 +2,7 @@
 	import { page } from '$app/stores';
 	import BackButton from '$lib/components/BackButton.svelte';
 	import { defaultProfileUrl } from '$lib/const.js';
+	import { navBarStore } from '$lib/store/shellStore.js';
 	import { userProfileStore } from '$lib/store/userPorfileStore.js';
 	import { formatDateSmall } from '$lib/utils/dateutils';
 	import { supabaseClient } from '$lib/utils/supabaseClient';
@@ -10,11 +11,14 @@
 	export let data;
 	$: messages = data.messages;
 	$: otherUserProfile = data.otherUserProfile;
-
 	let message = '';
 	let channels: RealtimeChannel;
 
 	onMount(() => {
+		navBarStore.set({
+			...$navBarStore,
+			enabled: false
+		});
 		channels = supabaseClient
 			.channel('custom-insert-channel')
 			.on('postgres_changes', { event: '*', schema: 'public', table: 'message' }, (payload) => {
@@ -34,6 +38,10 @@
 			.subscribe();
 	});
 	onDestroy(() => {
+		navBarStore.set({
+			...$navBarStore,
+			enabled: true
+		});
 		if (channels) channels.unsubscribe();
 	});
 
@@ -55,8 +63,8 @@
 	}
 </script>
 
-<div class="flex items-center justify-center" style="max-height: calc(100vh - 5rem)">
-	<div class="flex flex-col max-h-view max-w-md w-full" style="max-height: calc(100vh - 5rem)">
+<div class="flex items-center justify-center max-h-screen overscroll-none">
+	<div class="flex flex-col max-h-screen max-w-md w-full overscroll-none">
 		<div class="flex items-center p-3 border-b-1 sticky z-10">
 			<div class="mr-6">
 				<BackButton />
