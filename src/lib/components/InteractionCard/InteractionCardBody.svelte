@@ -7,7 +7,7 @@
 	export let isMain = false;
 </script>
 
-<div class="flex p-4">
+<div class="flex px-4 pb-4 pt-1">
 	<div class="flex-shrink-0">
 		<a href="/profile/{interaction?.uid}">
 			<img

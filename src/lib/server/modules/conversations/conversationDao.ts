@@ -15,7 +15,6 @@ export class ConversationDAO {
 			.select('conversation_id, uid_1, uid_2')
 			.single<Conversation>();
 
-		console.log(data);
 		if (error) throw new Error(error.details + error.message);
 		return data;
 	}

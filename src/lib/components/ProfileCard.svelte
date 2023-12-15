@@ -2,7 +2,7 @@
 	import { defaultProfileUrl } from '$lib/const';
 	import type { UserProfilePartial } from '$lib/server/modules/userProfile';
 	import { follow, unfollow } from '$lib/services/follow';
-	import { userProfileStore } from '$lib/store/currentUser';
+	import { userProfileStore } from '$lib/store/userPorfileStore';
 
 	export let userProfile: UserProfilePartial = {
 		uid: '',

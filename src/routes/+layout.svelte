@@ -8,7 +8,7 @@
 	import { inject } from '@vercel/analytics';
 	import { supabaseClient } from '$lib/utils/supabaseClient';
 	import { onMount } from 'svelte';
-	import { userProfileStore } from '$lib/store/currentUser';
+	import { userProfileStore } from '$lib/store/userPorfileStore';
 	export let data;
 
 	$: if (browser && data?.analyticsId) {

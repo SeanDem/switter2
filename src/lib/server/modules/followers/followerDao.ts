@@ -9,7 +9,6 @@ export class FollowDao {
 			type: '_followers'
 		});
 		if (error) new Error(error.details + error.message + error.hint);
-		console.log(data);
 		return data;
 	}
 
@@ -20,7 +19,6 @@ export class FollowDao {
 			type: '_following'
 		});
 		if (error) new Error(error.details + error.message + error.hint);
-		console.log(data);
 		return data;
 	}
 	static async follow(followerUid: string, followeeUid: string): Promise<any> {

@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 	import BackButton from '$lib/components/BackButton.svelte';
 	import { defaultProfileUrl } from '$lib/const.js';
-	import { userProfileStore } from '$lib/store/currentUser.js';
+	import { userProfileStore } from '$lib/store/userPorfileStore.js';
 	import { formatDateSmall } from '$lib/utils/dateutils';
 	import { supabaseClient } from '$lib/utils/supabaseClient';
 	import type { RealtimeChannel } from '@supabase/supabase-js';

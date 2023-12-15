@@ -4,6 +4,7 @@
 	import { defaultProfileUrl } from '$lib/const.js';
 	import type { Conversation } from '$lib/server/modules/conversations/index.js';
 	import { follow, unfollow } from '$lib/services/follow.js';
+	import { handleMessageUser } from '$lib/services/message.js';
 	import { formatDateBirthday } from '$lib/utils/dateutils.js';
 	import { Cake, Envelope, Icon } from 'svelte-hero-icons';
 	export let data;
@@ -16,21 +17,6 @@
 	async function handleFollow() {
 		userProfile.isFollowing ? unfollow(userProfile.uid) : follow(userProfile.uid);
 		userProfile.isFollowing = !userProfile.isFollowing;
-	}
-
-	async function handleMessageUser() {
-		const response = await fetch('/api/conversation', {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({
-				otherUid: userProfile.uid
-			})
-		});
-		console.log(response);
-		if (response.ok) {
-			const { conversation }: { conversation: Conversation } = await response.json();
-			goto(`/conversations/${conversation.conversationId}`);
-		}
 	}
 </script>
 
@@ -67,7 +53,7 @@
 							Settings
 						</a>
 					{:else}
-						<button on:click={handleMessageUser}>
+						<button on:click={() => handleMessageUser(userProfile.uid)}>
 							<Icon src={Envelope} class="w-10" />
 						</button>
 						{#if userProfile.isFollowing}
