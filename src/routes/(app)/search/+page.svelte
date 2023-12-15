@@ -1,18 +1,16 @@
 <script lang="ts">
 	import InteractionCardList from '$lib/components/InteractionCard/InteractionCardList.svelte';
-	import type { InteractionType } from '$lib/server/modules/interactions';
+	import ProfileCard from '$lib/components/ProfileCard.svelte';
+	import type { searchType } from '$lib/store/search';
 	import { searchStore } from '$lib/store/search';
-	import { onMount } from 'svelte';
 
-	const interactionTypes: InteractionType[] = ['sweet', 'comment', 'resweet'];
-	let submit = $searchStore.interactionList.length > 0 ? true : false;
+	const interactionTypes: searchType[] = ['profile', 'sweet', 'resweet', 'comment'];
+	$: submit =
+		$searchStore.interactionList.length > 0 || $searchStore.profileList.length ? true : false;
 
 	async function handleSubmit() {
-		if (!$searchStore.searchText) return;
-
 		submit = false;
 		const state = $searchStore;
-
 		const response = await fetch('/api/search', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
@@ -25,7 +23,11 @@
 		if (response.ok) {
 			const data = await response.json();
 			searchStore.update((currentState) => {
-				return { ...currentState, interactionList: data.interactionList };
+				return {
+					...currentState,
+					interactionList: data.interactionList ?? [],
+					profileList: data.profileList ?? []
+				};
 			});
 			submit = true;
 		}
@@ -58,5 +60,13 @@
 </div>
 
 {#if submit}
-	<InteractionCardList interactionList={$searchStore.interactionList} />
+	{#if $searchStore.selectedCategory === 'profile'}
+		{#each $searchStore.profileList as userProfile}
+			<div class="flex justify-center mb-3">
+				<ProfileCard {userProfile} />
+			</div>
+		{/each}
+	{:else}
+		<InteractionCardList interactionList={$searchStore.interactionList} />
+	{/if}
 {/if}

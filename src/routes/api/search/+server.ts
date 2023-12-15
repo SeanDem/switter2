@@ -9,11 +9,16 @@ export async function POST({ request, cookies }) {
 
 	const { searchText, interactionType } = await request.json();
 
-	const interactionListRes = await SearchService.searchInteractionText(uid, {
-		searchText,
-		interactionType
-	});
+	if (interactionType === 'profile') {
+		const profileList = await SearchService.combinedSearchUserProfiles(searchText, searchText);
+		return json({ profileList });
+	} else {
+		const interactionListRes = await SearchService.searchInteractionText(uid, {
+			searchText,
+			interactionType
+		});
 
-	const interactionList = interactionListRes.data;
-	return json({ interactionList });
+		const interactionList = interactionListRes.data;
+		return json({ interactionList });
+	}
 }

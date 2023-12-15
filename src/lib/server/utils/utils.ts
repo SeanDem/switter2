@@ -15,3 +15,13 @@ export async function executeWithApiResponse<T>(
 		};
 	}
 }
+
+export async function executeSafe<T>(func: () => Promise<T>): Promise<T | null> {
+	try {
+		const data = await func();
+		return data;
+	} catch (error: any) {
+		console.error(error);
+		return null;
+	}
+}
