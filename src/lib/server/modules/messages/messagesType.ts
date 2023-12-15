@@ -1,8 +1,17 @@
 interface Message {
-	messageId: string; 
+	messageId: string;
 	conversationId: string;
 	uid: string;
-	mediaUrls: string; 
+	mediaUrls: string;
 	text: string;
-	timestamp: Date; 
+	timestamp: string;
+}
+
+interface MessageDb {
+	message_id: string;
+	conversation_id: string;
+	uid: string;
+	media_urls: string;
+	text: string;
+	timestamp: string;
 }

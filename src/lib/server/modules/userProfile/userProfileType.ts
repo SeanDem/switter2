@@ -24,4 +24,7 @@ export type UserProfilePartial = Pick<
 	| 'followingCount'
 >;
 
-export type userProfileBasic = Pick<UserProfile, 'uid' | 'handle' | 'name' | 'profileUrl'>;
+export type userProfileBasic = Pick<
+	UserProfile,
+	'uid' | 'handle' | 'name' | 'profileUrl' | 'bio' | 'birthday'
+>;

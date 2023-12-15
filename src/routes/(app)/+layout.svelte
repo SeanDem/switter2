@@ -24,10 +24,16 @@
 	});
 </script>
 
-<main class="pt-12">
+<main style="padding-top: var(--navbar-height);">
 	<Header {showNavbar} />
-	<div class="my-10">
+	<div>
 		<slot />
 	</div>
 	<footer />
 </main>
+
+<style>
+	:root {
+		--navbar-height: 5rem;
+	}
+</style>

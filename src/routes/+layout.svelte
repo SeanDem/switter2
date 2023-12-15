@@ -8,6 +8,7 @@
 	import { inject } from '@vercel/analytics';
 	import { supabaseClient } from '$lib/utils/supabaseClient';
 	import { onMount } from 'svelte';
+	import { userProfileStore } from '$lib/store/currentUser';
 	export let data;
 
 	$: if (browser && data?.analyticsId) {
@@ -26,6 +27,7 @@
 			console.info('AuthStateChange: ', event);
 			if (session && session.user && session.user.aud === 'authenticated') {
 				document.cookie = `uid=${session.user.id}; path=/;`;
+				userProfileStore.set({ uid: session.user.id });
 			} else {
 				document.cookie = 'uid=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
 			}
@@ -34,9 +36,3 @@
 </script>
 
 <slot />
-
-<style global>
-	@import 'tailwindcss/base';
-	@import 'tailwindcss/components';
-	@import 'tailwindcss/utilities';
-</style>

@@ -11,19 +11,8 @@
 	<body
 		data-sveltekit-preload-data="hover"
 		data-sveltekit-preload-code="viewport"
-		style="scrollbar-width: none"
+		class="no-scrollbar"
 	>
 		<div style="display: contents">%sveltekit.body%</div>
 	</body>
 </html>
-
-<style>
-	body::-webkit-scrollbar {
-		display: none;
-	}
-
-	.body {
-		-ms-overflow-style: none; /* IE and Edge */
-		scrollbar-width: none; /* Firefox */
-	}
-</style>
