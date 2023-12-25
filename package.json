@@ -14,7 +14,7 @@
 	},
 	"devDependencies": {
 		"@fontsource/fira-mono": "^5.0.8",
-		"@neoconfetti/svelte": "^1.0.0",
+		"@neoconfetti/svelte": "^2.2.1",
 		"@playwright/test": "^1.40.1",
 		"@supabase/ssr": "^0.0.10",
 		"@supabase/supabase-js": "^2.39.0",
